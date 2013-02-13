@@ -1,0 +1,104 @@
+1 on clientbuild add the list asociated with create and decay
+  a farming
+  b resources
+  
+2 verify that resource mining is working as well as the farming 
+
+3 alter farming to resource gathering and just have it move to an item and wait a while (based on an item attribute)
+and then pick up when done).  Pick up does the wait
+
+1 change farming to have a lot more items
+   a apricot
+   b choko
+   c meat
+   d cheese
+   e wheat
+   f nuts
+   g mushroom
+2 change resource mining to do the same
+   a clay
+   b gold
+   c iron
+   d copper
+   e agate
+   f jade
+   g opal
+   h steel
+   i silver
+   d wood
+
+1 add the list of people walking by
+   a make attack work based off of enemy or ally lists associated with team
+   b make monster entrance start creating the people that move when not in debug mode
+
+4 favor is now reputation
+5 people with low reputation try new things
+     a Trade positive profession (the person will trade for something positive
+       and associated with an available profession (preferring active ones)
+     b start new profession  
+6 alter economy to have a 16 hour state.  8 hours of work, and then 8 hours of socializing
+  
+
+
+
+
+1 one template method with oolist
+   a seperate out templates to just be template meta
+   b actions just repeat the action
+2 seperate out the building stuff to just be the single tiles
+   a on buildmap put popups for individual items once they get too many
+   
+
+1 add extra stuff (cause currently recruitable is low and water is low then water gets stuck
+   a expand the item stuff like the shop buying games 10-20 items
+2 resource gatherer
+   a on creation have a large extended area with trees / stone /and a small amount of metal mining
+
+3 item making spots.  
+   a Place item making spots in the place to drop stuff down
+   b make the recruitable be builder  
+   c add a way of laying out the map initially to have a debug version on game start
+   d blacksmith
+   e carpenter
+   f mason
+   g threadweaver
+   h cook (pastry / bread / cheese / wine / etc)
+
+4 expand the size of the farm and add a lot of ingredients (nuts / vegtables / potatoes / mushrooms)
+   a add a wooded area that supplies part of the ingredients that does not need to be maintained
+   b make some mushrooms start a "trip"
+
+5 have the builder use resources from the miner or just natural
+     resources to build
+  a each one that comes in should come in with a randomized amount of their own resources
+  b they should be able to gather enough to finish even without specialty items
+  c maybe even some tiles will take a while to finish and the builder just goes dormant
+  d put resource specific requirements on tiles for special tiles
+
+6 randomized people
+
+
+
+
+
+
+
+
+
+   
+4 possiblity of random items and resources created upon building
+  
+5 expand the items created and make sure sew works
+  a wood / stone / metal (mining goes out to the respective spots and gathers resources)
+  b weapon making/ house building/ house repairing
+  c all sorts of foods.  The farms should randomly generate randomly from a list of ingredients (additionally maybe some
+  outside of farm
+  d make complex item makes the foods (wheat/bread/cheese/meat/etc)
+7 start the people coming through with random items
+8 monsters will come to them and trade, and they will go in turn to trade.  
+
+extra
+  a add a debug and non debug stats
+  b make stuff take longer
+  c make click on portals move them
+  d make the official version be slow and sedate

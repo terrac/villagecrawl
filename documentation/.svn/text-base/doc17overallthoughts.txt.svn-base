@@ -1,0 +1,27 @@
+1 few choices, many things
+  a placing things
+    1 3 things to place at any given time (at most)
+    2 simple trades happen once placed (ie wheat to baker for favor)
+    3 too low favor might cause people to leave
+  b direct quests
+    1 choices that affect stats and give a chance of leaving/staying/dying
+    2 results (like diseases in case of low health)
+  c traderandom
+    1 seperate out market concept (and start with it)
+    2 trades contracts (large amounts to make it interesting)
+    3 also has very small individual trades occasionally as well (basically no switching)
+  d simulation aspects
+    1 GDP (total sum of wealth)
+    2 health ( the average % of maxhealth in relation to 100 )
+    3 happiness (based on favor)   
+2 directly affect individuals in simulation
+3 focused on individual stories
+4 specially chosen quests direct you at the beginning
+  a start with placing something for your first individuals to build
+  b then you get a new member who starts with nothing but clothing
+  c then a special kobold wants to trade a relatively small number of leather armors for some human cheese
+  d 
+  
+5 a "hello" sound
+6 dulcet tones for placing, and choosing
+7 dulcet tones for the things people do on the screen  

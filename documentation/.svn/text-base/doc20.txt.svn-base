@@ -1,0 +1,334 @@
+1 sell one is going before chopping wood (should do after)
+#2 trading for the second set of gold seems to just do an additional put rather than an add
+3 look more into the display item on trades
+4 make too taxed people leave and remove their buildings(rather than just die)
+  a get the move store position and delete the gate
+  b also remove all farms within a certain radius
+  
+  
+  
+1 goal?
+  a make profitable trades
+  b put down some buildings
+1 individual stories using the different elements
+  a a quest where you can choose to be fair or harsh.  If you choose fairness you have a 30% chance of things turning out alright
+    if you choose harsh it is a 60% chance of turning out ok
+
+1 make each race like certain types (like say merfolk don't like dairy, orcs don't like books)
+  a this makes for additional logic in trading
+    1 not trading certain items
+    2 providing extra money for others
+    3 seeking out the best matched items
+
+
+
+
+
+1 look more at deals -> indicators of price (and think about fuzzying the value a little (like 4-6) instead of 4 5 or 6
+
+
+#2 destitution
+3 stories woven in (including country)
+
+
+1 make the background trades advantage the itemshop (and have a constant that lets money be more valuable than goods)
+  a make the itemshop just take money (and become destitute and leave if none)
+  b make individual farms take money from the farmer as well (and become destitute if none)  
+     1 vparam
+     2 run through all the people
+     3 subtract X amount of money
+     4 if money is 0 change the clothing to rags/remove
+     5 if this is the itemshop person pop up a you lose alert (and throw a lose execption)
+     
+  c make the buildings you drop down only sell goods (sometimes they might sell above or below market prices)
+
+1 think about the idea of crashes
+
+
+#1 haggle needs to actually add on accept
+#2 make formula be like 60% above and 40% below
+
+
+#1 put each building with its parameters
+#2 then the haggle
+3 get the specific effects from the image page
+4 test
+5 merc and country
+
+
+#1 algo to move the effects/buildings down and fill in any spaces
+
+
+1 structure haggling / items + those random events you can press
+  #a put tcr into the vparams map and call on runbefore throug that
+  #b create a mapdata with the runbefore
+  (simplemd just add runbefore
+  c decide on random types with effect that get created in a certain order (and for now they might just log or something)
+  d over time things are given in relation to things
+  e this will be a base one
+  haggle->20%
+  building->20%
+  merc->20%
+  country->20%  (these are constantly filled, but occasionally moved over time)
+2 test adding the touch to gcanvas and reducing the map size for mobile  
+  
+  
+  
+  
+  
+  
+
+#make the trade take in a null value to replace debt for now
+
+#1 fix the item amounts (they are doubling somewhere probably on sellone (the background trade thing
+#  a check this some more
+2 balance (so that haggle comes every so often and if you have done well you can accept on the first offer, but you do not have to)  
+  a the special effects that deploy random events (and allow you to do extra)
+
+3 interest over time (add more features as time goes on to make things more interesting, but initially just put it out with this) 
+  ( the other docs after this)
+  
+  
+
+
+
+1 sell one by choice (to make supply lines important)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 playing
+  a each person sells and keeps their own internal money
+  b you can put down banks and borrow money (in addition to a set amount to start with)
+  c focus on the addition of other countries personalities (for example austerity vs growth)
+    and how it alters your strategies
+
+1 interest in playing
+  a haggle trades are rare
+  b building should be relatively complex
+  c mercs and places for them to go (only one at a time)
+1 debug config thing
+
+#1 constrain haggle by the amount of value in gilgamesh's items (money first)
+  #a make items have a total value method
+  #b create a subtractmoneyandthenitems method
+  #c check initial amount and do a bong if no good
+  #d check new amount and same
+  #e if successful call the subtractitemsandmoney method
+  #f get l.owned = itemshop and use that person
+  #g test
+2 add more buildings
+3 rework the level up give buildings thing
+4 decide on the item types being influenced by events
+  
+1 work on mercernaries and scenarios for that  
+
+
+
+1 organize items so that you only see the top 8
+
+#1 fix farms
+
+#1 make sell work more frequently (maybe 100% of the time)
+#2 make itemdisplay display 2 down and then move horizontally
+ # 1
+
+
+
+#1 reduce radius
+#2 make woodcutter not use farms
+#3 figure out why itemsdisplay is not being run
+#4 wheat image fix
+
+#1 item display to html with images
+#2  recheck normal haggle to test (and make sure the things bought can be resold)
+#3 make sure normal background sales increase gold
+4 background sales increase amount on the number of people on the map
+5 resource gathering people can move through each other
+6 there can be marketplaces that act as intermediaries for the people
+#7 their resource gathering is altered to be directly created by them (and they only have a few, but those few are productive
+8 the background trade is altered from picking an item to repeatedly pick items till the amount they have to spend is satisfied
+
+1 hiring mercenaries
+  a they come like normal traders
+  b they give an option to hire them for a specific quest
+  c your local guards can also do the same, but you can equip those
+  d eventually add obstacles that these can engage in as well to give the map some danger
+  
+1 add kingdom gold
+2 recheck normal haggle to test (and make sure the things bought can be resold)
+3 make sure normal background sales increase gold
+4 make sure that people sales go to the itemshop (ie the kingdom's gold)
+5 on traderoute add taxes 
+  a (the taxes are based on the number of farms and the general level of the buildings)
+  b taxes happen like background trades
+6 if taxes cannot be paid the kings soldiers go around and destroy farms until they are satisfied 
+  a a tax man comes
+  b gold goes negative
+  c soldiers come and destroy farms, reducing negative number
+  
+
+1 secondary buildings have a smaller radius but higher value items and the ability to convert items
+2 barns have a big radius.  It gets bigger by subtracting the farmer's wealth as they sell.
+
+1 add a vinyard that directly produces wine.
+#2 wheat goes to beer or bread
+
+
+
+1 general overlays for sellitem
+2 costs
+3 sell item only sells to people who don't have a certain amount of that item already (for woodcutter)
+
+
+
+1 make barns have a bigger radius (2) than bakery and a count of 5
+2 make bakery have a count of 1
+
+
+1 work on making sure the right number of buildings come (ie smooth it out by changing the randomness based on the count)
+
+
+
+
+
+#1 sell item takes the culture itemname->building name and tries to sell
+#2 fill map with personality (ie mountains, rocky areas, and lush areas around water)
+
+
+#1 add the random % fire chance to templates
+2 add trade item to trade for specific things based on the culture
+
+#1 do sell to itemshop
+#  a take current items
+#  b 
+2 do bakery gets from itemshop or barn
+
+#1 debug resource gather
+
+1 do interactions
+  a add hunter
+    1 animals appear often with maybe a bias towards water
+    2 wolves can attack
+    3 hunter goes after dangerous and safe animals
+  b add doctor
+    1 sickness is working
+    2 doctor heals
+    3 doctor also heals guards
+  c add guard, 
+    1 bandits are like animals, but no safe ones (generally will just rob, but might attack traders, make the traders naked after)
+    2 only guards attack bandits
+    3 
+1 woodmaker - "gather resources"
+  #a pulls from culturelists a type
+  #b moves to each spot for 5 turns and waits
+  
+
+#1 barn makes wheat and milk
+#2 cheesemaker/bakery both pull items from barns, or itemshop if available
+3 all of them also sell to the itemshop depending
+4 then look at haggle with types
+5 more layered interactions
+6 quests and such that change all that
+
+1 make the building people trade with itemshop and nearby (buildings have compatible types)
+  a add search nearby for buildings with associated properties
+  b if a person is on them trade with that person
+1 make haggle affect the selling value of every item ( with a type compatibility determining the amount for each (could be positive or negative, but mostly positive)
+  a selling value is based on item
+  b haggle's % and types get saved in game.culture.haggle
+
+1 think about each action and representation associated with the different things as well as the item connections
+  a all buildings -> woodcutter ( need wood to repair buildings)
+  b bakery -> wheat on barn
+  c beermaker - > wheat on barn
+  d blacksmith -> woodcutter(or mined coal)/traded or mined minerals
+  e miner - > goes to each rock within a radius and mines it
+  f barn -> farms have specific things in relation to specific tiles similar too miner 
+1 play to increased items to level 3 (on tablet) (make sure haggle works)
+
+1 then add in some other choices maybe
+
+
+
+#1 remove the water stuff right now
+2
+
+#1 add starting items to seller
+#2 add the "addbuilding" logic to background trade
+
+#1 test with a single barn
+2 replace gdp with items and gold
+  a trades trade based on items and gold
+3 make sure the random chance on trade gives an associated building (but only a 60% chance of doing that
+  and not a random one)
+4 test with barns    
+
+1 people come in and automatically buy extra
+  a this gives a random chance of the next level of things to be given as a building
+  b extra is defined as more than 5 + rand 4 of something  
+  #c trade item to buy item ( sell to background trade)
+  d add in template
+  e on template add a runafter on buy item that has a %chance of adding a building based on the level
+  
+1 map with ground in the center
+  a nothing is dirt
+  b grass is under
+
+1 barns (with both wheat/meat/cheese))
+  a templates have a random chance of executing (if no random 100%, otherwise % of 100)
+  #b trade items trades with central character  (sellitem)
+2 woodcutter
+  a cuts on trees
+  b (eventually trees grow back)
+  c (eventually repairs need to be made)
+  d trades with central character
+3 the rest get initial items like food/wood/water on a regular basis  
+
+1 inner buildings have very few additional parts (like a radius of 1 would be pretty large and a radius of 0 might be normal
+  a a small house instead of a farm
+
+1 indirect choices create place 
+  a put down builder, it influences things
+  b more analytical things, but put behind choices
+    1 roads
+    2 etc
+1 events
+  a put in stairs down
+  b have people occasionally come in and go down the stairs
+  c much more infrequently have them come up and make comments
+  d do an event where some characters are chasing a bandit and will kill him/her if they come up
+  e do a priest expidition
+  f sludge elf thing
+  g and so on related to the game
+
+1 dwarf + armor
+2 merfolk + trident
+3 orc + orc armor
+
+1 each race has its own armor (and weapon) list
+2 they also have an item list (but they can also pull from generic items)
+3 race specific lines
+  a in the name of begoh this is too low a price
+  by

@@ -1,0 +1,4 @@
+types
+response.type = response
+structure.type= 1toresponse
+

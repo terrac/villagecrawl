@@ -1,0 +1,221 @@
+1 few relevant stats 
+2 make the quests pop up right off to start with a couple, but then mostly infrequently
+3 do a choice quest to start with
+  a a simple one
+  b also start with a random result fairly soon
+
+
+2 quests that direct the different aspects of the game (like explaining trade and so on)
+  a trade affects gdp
+  b trade affects town health (based on individuals max health)
+  c low maxhealth will cause people to leave
+  d maxhealth is based on food supply
+   
+3 quest generator replaces trade route, or maybe just some aspects of it
+
+
+1 do the different objects in clientbuild
+  b displayresult
+    #a do person display
+    b convert the client stuff to pbases
+  c leave stay or die
+    #a for randomness get between 1 and 100, subtract from the random amount up to 
+    #  3 times, and once the random amount is equal or below zero fire the appropriate section
+    #b leave adds to a list on questgenerator
+    #c stay makes sure the person is back in town (if they were temporarily gone for a quest)
+    #d die kills the person
+      
+  d outsidethetown
+    #a exactly like personkeyvalue, except runs on list in questgenerator
+  e recentlydone
+    a only executes at most 1 out of every 100 turns
+    b places a turn amount on itself
+    c if turn is greater than 100 then fire (check random)
+  #f stats
+    #a add in gchart
+    #b think about a simpler chart later  
+3 test
+
+
+
+3 crude gdp
+  1 every turn run through all of the people and sum up their total GDP value, post it 
+5 types of quests
+  a choices
+  b big event
+  c small event (popup in corner)
+6 most turns nothing happens  
+   
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+1 quest that makes a person smarter or stronger
+  a new PersonKeyValue("stat1",null)
+  addDisplayChoice("person xxx is coming to a fork in their development.  Should they hit the books, or hoe on the farm", hit the books, hoe on the farm)
+2 quest that makes a person more charming or wise
+  person yyy can choose to take a one night stand.  Should they take it
+3 quest that makes two people dislike each other, and another like them both
+  
+1 the statistics are shown as colored labeled bars that move on a change
+3 make all wide searches be based on a "main" label 
+4 make a search that searches only people (and extended quests based on people)
+5 charm, intelligence etc level two (ie the next progression in the storyline, gives a story and maybe a choice or maybe not
+
+1 GDP score
+
+1 strength helps a blacksmith that turns iron into swords
+  a quest to setup blacksmith on strong person
+2 charming helps to get better trade prices
+  b alter jobs so that certain traits take certain jobs
+  c make add need take an associated trait
+  d make charming grab the associated job and keep it
+  e 
+3 wise offers a quest to identify items
+  a quest to place a seer hut
+  b quest to identify traded for items
+4 intelligence
+
+
+4
+ a quest to build a house (built and then more people start coming in)
+   1 list that starts with a display and ok popping up with an explanation (and an optional checkbox for voices)
+   2 the explanation says that to build a house you need a GDP of 50 and then you need to place a gateway in one of the
+     potential gates (the gateway is to the left and the potential gates look like (image)
+   3 add gateway at pos 0,0 of bag map for dropping     
+ b quest to stop bandits (choose people and equipment and send them off)
+   1 the explanation says that bandits are stopping trade and that you need to build a team to defeat the bandits
+     in order to build a team you select them and press the "add button".  Once you have selected 4 people you select
+     go.
+   2 there is a change equip button which allows you to outfit them with their own equipment or equipment from the market
+   3 additionally there is a status button that lets you control their abilites
+   4 on go they go and fight the enemy.  All you can do is order them to attack or move to a specific location.  There is a retreat button
+   5 on retreat they heal, on victory they heal.  The go also charges some gold from the market
+ c notifier saying that the town is going to be attacked by bandits.  it says to build an alarm to send people inside to defend the market
+   1 the explanation says to place a guardpost which people will go into and shoot the attacking bandits
+   2 it adds a guardpost at 0,1
+   3 it also sends a single enemy towards the market to steal some gold or an item from it. the enemy takes ranged damage from manned guardposts
+   4 when enemies enter an area a shout goes out and the people get to the guard posts  
+ d a dispute between two brothers about a woman (the winner will start a family with the woman)
+   1 the explanation saying the merit of the two brothers and what kind of child will be born depending on each
+   2 on selection just alter some statistics and tags about the town 
+ e  a dispute between mom and sons going off (the son will leave, you have several choices)
+   1 
+
+
+
+
+1 fonts and color for text
+2 fun to trade
+  a sounds
+  b graphics
+  c conflict and story
+3 conflict (much like the trade windows story conflicts come up and drive the story)
+  a develop a list of possible storylines
+    1 disputes
+    2 quests
+    3 positive events
+    4 attacks
+  b those storylines have an effect on the simulation
+    2 positive event of local banditry stopping (more and richer trade)
+    3 
+    4 
+    5 6
+    7 a dispute about land (two people with various statistics both lay claim on a mine)    
+    8 a person from a recently ransacked village wants to stay in your town
+
+1 larger text for buttons and money
+2 make the displayandok show up at the top
+3 do some popup display detailed designs
+4 decide how to put them into a random working thing
+5 decide how additional options will be created for them
+6 make loading a long song part of the process
+
+
+
+
+
+mention 3 things thinking about next (graphics, work more on item identification and preferences, add in a tower defense element)
+1tower defense to start with
+  a during hour 2 a person is created who goes to the market and tries to steal something and return
+  b people move inside buildings and fire on person
+
+
+
+2 item preferences
+3 graphics
+4 identification of items
+
+4 mark certain items as money
+  a the money pops out graphically on a successful sale and goes to the other side
+    1 might have a "pickpocket/swindle" feature that allows you to grab some of that money as it flies out
+    2 it is smaller than the items(maybe?, mugiht put a size feature)
+  b the items pop out graphically as well and go to the other side  
+  c anything can be money
+  d the money is calculated and auto traded on an unbalanced trade
+4a trade method for money
+  a swap already has calculated the extra trade amount 
+  b if positive then runs through the seller's inventory and pulls out enough money to trade
+  c if negative then the reverse
+  d given the value type adds an extra % amount
+  e if the cpu has the appropriate need for the type then pop up an accepted graphic
+  f calculate the extra money needed if arny
+  g pull out the items and put them into image graphics and send them out and onto their way.
+  
+5 several layers of identification on items
+  a you or the cpu can sell unidentified items for a certain price    
+  b there is a "seer hut" (house with an eyeball) to go to and identify items
+  c the seer hut has a chance of getting visitors
+  d if someone is manning it as a priest there is a chance of identification when an outsider comes by
+  e the identified items could be cursed
+  f unidentified items cannot be used
+  
+6 an inn that takes in visitors and charges money (but also needs a steady supply of resources and food to maintain a quality level)
+
+7 for the dancing and singing it should be a minigame of some sort that is a visual representation of the current status of the
+  village.  The minigame more or less is the ability to make certain people show themselves off
+
+
+
+
+3 graphics (trade window specifically)
+  a inventories
+    
+      
+    9 on submit add and subtract values and then multiply by desire to decide if to accept or decline
+    10 initially humans desire kobold goods and kobolds desire human goods
+        a mark every item with a race
+        b have desire be a list of attributes for the item so like race.human or race.kobold
+        c 1 desire equals high priced, 2 equals expensive
+        
+  b effect
+
+
+
+
+
+
+
+
+
+
+
+4 tutorial
+5 extra trade gameplay
+6 tower defense
+
+
+
+
+    5 have a draw image with an optional load image option to allow for dynamic image loading as
+      well as base type images

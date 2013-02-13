@@ -1,0 +1,83 @@
+1 today 
+  a replace goblins with people and make their costumes varied (with varied items
+     #1 added items
+     2 put items into lists for random generation
+     3 make random person creation create the items
+     #4 make lb draw all of the items associated
+     5 associate each item with the appropriate image (default if none exists)
+     5 item creation object to control the random generation
+  b add random items to be discovered upon building a house (in build unbuilt
+     1 add a little popup box and a log entry
+  b figure out hunger again (previously was low priority everything else I think
+     1
+  c make the lbs of create and decay explore the current fmd (and possibly eat the food)
+  d attack template
+  e guarding added back in
+  f clicking for all
+  a make the monster entrance add families (use the follow child meta for the child
+  
+2 person choices
+  a clicking to alter next step
+  b clicking to attack enemy (put an on damage then add attackenemymeta)
+  c making sure that the people don't get too hungry and leave
+  d clicking to build stuff (like jeweler/potter/so on)
+
+
+1 today
+  #a add back in the just one house and the house on the bagmap
+  #b add in the potential gateways
+  #c move the monster entrance to initially just give the one family
+  #d keep the extra and trade areas
+  #e check food, alter farming to go to extra area
+  h add a attack template and make monster entrance occasionally set that
+  d make click include a way to do the current action when having a specific job (IE instead of replacing the action it
+    just sets it if the action has a specific interface
+  #g commit
+1 today
+  d make click include a way to do the current action when having a specific job (IE instead of replacing the action it
+    just sets it if the action has a specific interface
+  e check food, alter farming to go to extra area
+  #g make the trade area larger so that stuff is distant
+  h add a attack template and make monster entrance occasionally set that
+
+1 larger symbolic map for lots of food
+   #a trees 
+   (spawns acorns,apple,rarely honeycomb)
+   #b add image for bush 
+   (spawns snakes, berries)
+   b grass (spawns animals like yaks, elephans,wyverns, maybe find a darker color)
+#2 food area doesn't need to be built
+3 make jobs dynamic 
+  a some go to build first
+  b but they only stick with jobs that do something.  They only occasionally revsit the currently unnecessary ones 
+    1  save the turn that the job starts on the need
+    2  if the turn is within 10 or 20 maybe then put that need back on the end of the need list with a marker saying "not needed"
+    3  if all for the current state are not needed then pull from the wrong state (like singing and dancing)
+4 extra steps for building food (like with acorns, put in cloth, put in river, wait, take out)
+5 jeweler / potter / etc
+  a jeweler mines in the resource area off of the extra area, goes to blacksmith,waits so long, makes a jewel
+  b potter goes to mudpit and then to kiln, waits so long and makes a pot
+
+2 build singing and dancing 
+  a dancing overlay + moverandom
+  b singing overlay + wait  
+  c goal could be to build drums
+  d put on state as second half of day
+  
+3 add the list of people walking by
+   #a just add an enemy list with a simple move
+   b ( a little out of range of normal movement, but near the water)
+4 add the shout for guard.  Guard does it automatically, but there will be a button to press as well
+
+
+
+
+
+
+1 make an ovelay of decay work for items
+  a also make sure that the under gets displayed correctly
+  when a person walks over it
+  b have the concept of transparent layers (like the hmd has
+  a list of transparent layers, and the livingbeing too)
+  
+ 

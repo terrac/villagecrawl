@@ -1,0 +1,32 @@
+#1 make move go to the right portal
+2 add a display panel that displays trades
+   try displaydesc
+   if doesnt work create an empty ui container to be added to
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+3 make it so that farm breaks the chain if it is working correctly
+
+2 make it so that personal needs are taken care of
+   #a start out with just hunger and thirst
+   b fix up consume and trade with hunger
+     1 make trade non repeating so that it doesn't get stuck on the highest priority.
+     2 make it so that consume both adds farming and trading
+   c make thirst go to water and then reset the stat

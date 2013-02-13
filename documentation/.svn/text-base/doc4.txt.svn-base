@@ -1,0 +1,13 @@
+#1 change monster entrance to count and make it hit twice
+2 make needs have a cap and be unique 
+  a add a boolean repeatable is true.  if that is the case
+  when the need is unregistered it goes back into the pile
+3 add the guard need
+4 add the sewing need
+5 add the trade need
+
+
+6 need upgrades
+  a needs runs through everything in the list and picks off 
+  the best one according to an algorithm
+  b

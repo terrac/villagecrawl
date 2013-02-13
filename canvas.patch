@@ -1,0 +1,2061 @@
+### Eclipse Workspace Patch 1.0
+#P villagedc
+Index: src/gwt/server/datamodel/JsonData.java
+===================================================================
+--- src/gwt/server/datamodel/JsonData.java	(revision 178)
++++ src/gwt/server/datamodel/JsonData.java	(working copy)
+@@ -18,6 +18,17 @@
+ 		super();
+ 		this.name = name;
+ 	}
++	
++	public JsonData(String name,GUser us) {
++		super();
++		this.name = name;
++		ownerId = us.id;
++	}
++	public JsonData(String name,String userId) {
++		super();
++		this.name = name;
++		ownerId = userId;
++	}
+ 	Blob data;
+ 	public @Id
+ 	Long id;
+@@ -29,5 +40,6 @@
+ 		return name;
+ 	}
+ 	
++	public String ownerId;
+ 	
+ }
+Index: src/gwt/client/output/html/ClickBase.java
+===================================================================
+--- src/gwt/client/output/html/ClickBase.java	(revision 168)
++++ src/gwt/client/output/html/ClickBase.java	(working copy)
+@@ -1,12 +0,0 @@
+-/**
+- * 
+- */
+-package gwt.client.output.html;
+-
+-import gwt.client.output.SEventClick;
+-
+-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+-
+-class ClickBase {
+-	SEventClick<GWTCanvas> mouseDown;
+-}
+\ No newline at end of file
+Index: notes8.txt
+===================================================================
+--- notes8.txt	(revision 181)
++++ notes8.txt	(working copy)
+@@ -1,12 +1,15 @@
+ 1 a summoner (give some lines of dialogue)
+ 2 a pack of kobolds ( make automatically attack)
+ 3 thieves attacking a nobleman
+-4
++4 basic classes archer/fighter/mage/priest
++each has abilities in a list which have an attached bit of logic that says when they should fire
++the default is to go from the top down, but the person can also select the first one used.
++5 add to attach a removeafterexecute property to make it only fire once
+ 
+ 
+ 
+-#add init to the process after a json is built up or the objects are manually created
++
++#add a randomness object that can either set the seed or generate one
++#this allows game creators to set their own randomness
++
+ wip-() go for a couple different games on buildfeatures
+-
+-add a randomness object that can either set the seed or generate one
+-this allows game creators to set their own randomness
+\ No newline at end of file
+Index: src/gwt/client/game/ItemEquipCanvas.java
+===================================================================
+--- src/gwt/client/game/ItemEquipCanvas.java	(revision 179)
++++ src/gwt/client/game/ItemEquipCanvas.java	(working copy)
+@@ -1,5 +1,16 @@
+ package gwt.client.game;
+ 
++import gwt.client.EntryPoint;
++import gwt.client.game.display.UIVParams;
++import gwt.client.game.vparams.ui.SelectAddItem;
++import gwt.client.item.Item;
++import gwt.client.main.Point;
++import gwt.client.main.VConstants;
++import gwt.client.main.base.LivingBeing;
++import gwt.client.map.MapData;
++import gwt.client.output.HtmlOut;
++import gwt.client.output.html.GCanvas;
++
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Map.Entry;
+@@ -8,27 +19,9 @@
+ import com.google.gwt.event.dom.client.MouseDownEvent;
+ import com.google.gwt.event.dom.client.MouseDownHandler;
+ import com.google.gwt.user.client.Window;
+-import com.google.gwt.user.client.ui.Grid;
+-import com.google.gwt.user.client.ui.HorizontalPanel;
+-import com.google.gwt.user.client.ui.Image;
+ import com.google.gwt.user.client.ui.Widget;
+-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+ import com.google.gwt.widgetideas.graphics.client.ImageLoader;
+ 
+-import gwt.client.EntryPoint;
+-import gwt.client.game.display.UIVParams;
+-import gwt.client.game.vparams.ui.SelectAddItem;
+-import gwt.client.item.Item;
+-import gwt.client.main.Point;
+-import gwt.client.main.VConstants;
+-import gwt.client.main.base.LivingBeing;
+-import gwt.client.main.base.PBase;
+-import gwt.client.map.AreaMap;
+-import gwt.client.map.MapData;
+-import gwt.client.output.HtmlOut;
+-import gwt.client.output.OutputDirector;
+-import gwt.client.output.html.Click;
+-
+ public class ItemEquipCanvas extends UIVParams{
+ 
+ 	SelectAddItem sai;
+@@ -65,7 +58,7 @@
+ 
+ 
+ 	public void update() {
+-		canvas.drawImage(ie,0,0);
++		canvas.getContext2d().drawImage(ie,0,0);
+ 		
+ 		for(Entry<String,Point> ent : typeLocation.entrySet()){
+ 			
+@@ -83,7 +76,7 @@
+ 			EntryPoint.game.getHtmlOut().drawImage(canvas, ent.getValue().y, ent.getValue().x, text);
+ 		}
+ 	}
+-	public GWTCanvas canvas;
++	public GCanvas canvas;
+ 	//use htmlout draw image at specific points that are tied to specific types
+ 	
+ 	//the items will be in a selectable hmd
+@@ -95,7 +88,7 @@
+ 	@Override
+ 	public Widget getWidget() {
+ 
+-		return canvas;
++		return canvas.can;
+ 	}
+ 	
+ 	@Override
+@@ -118,9 +111,11 @@
+ 	}
+ 	@Override
+ 	public void init() {
+-		canvas = new GWTCanvas(500, 500);
+-canvas.addDomHandler(new MouseDownHandler() {
++		canvas = new GCanvas(500, 500);
++		canvas.can.addMouseDownHandler(new MouseDownHandler() {
+ 			
++			
++			
+ 			@Override
+ 			public void onMouseDown(MouseDownEvent event) {
+ 				double distance = 1000;
+@@ -157,7 +152,7 @@
+ 				
+ 				
+ 			}
+-		}, MouseDownEvent.getType());
++		});
+ 
+ 	}
+ }
+Index: src/gwt/client/game/vparams/VMessage.java
+===================================================================
+--- src/gwt/client/game/vparams/VMessage.java	(revision 181)
++++ src/gwt/client/game/vparams/VMessage.java	(working copy)
+@@ -5,6 +5,7 @@
+ import com.google.gwt.user.client.Window;
+ 
+ import gwt.client.main.VConstants;
++import gwt.client.main.base.PBase;
+ import gwt.shared.datamodel.VParams;
+ 
+ public class VMessage extends VParams {
+@@ -21,4 +22,10 @@
+ 	public void execute(Map<String, Object> map) {
+ 		Window.alert(getS(VConstants.message));
+ 	}
++	@Override
++	public PBase clone() {
++		
++		return new VMessage().copyProperties(this);
++	}
++	
+ }
+Index: src/gwt/client/game/RandomTypeCreation.java
+===================================================================
+--- src/gwt/client/game/RandomTypeCreation.java	(revision 180)
++++ src/gwt/client/game/RandomTypeCreation.java	(working copy)
+@@ -54,8 +54,8 @@
+ 		
+ 		
+ 		for(HashMapData hmd : fmd){
+-			if(VConstants.random.nextInt(100) <= getInt(VConstants.percent)){
+-				String sitem=getItems().get(VConstants.random.nextInt(getItems().size()));
++			if(VConstants.getRandom().nextInt(100) <= getInt(VConstants.percent)){
++				String sitem=getItems().get(VConstants.getRandom().nextInt(getItems().size()));
+ 				MapData item=((MapData) fmd.getParent().getParent().game.getMap(getS(VConstants.type)).get(sitem)).clone();
+ 				hmd.putAppropriate(item);
+ 			}
+Index: src/gwt/client/main/MoveRandomHashMapData.java
+===================================================================
+--- src/gwt/client/main/MoveRandomHashMapData.java	(revision 172)
++++ src/gwt/client/main/MoveRandomHashMapData.java	(working copy)
+@@ -24,8 +24,8 @@
+ 	int count = 0;
+ 	HashMapData md = null;
+ 	while(md == null&&count < 10){
+-		int xr = VConstants.random.nextInt(getRadius()*2 +1);
+-		int yr = VConstants.random.nextInt(getRadius()*2+1);
++		int xr = VConstants.getRandom().nextInt(getRadius()*2 +1);
++		int yr = VConstants.getRandom().nextInt(getRadius()*2+1);
+ 		xr -= getRadius();
+ 		yr -= getRadius();
+ 		if(xr == 0&& yr== 0){
+Index: src/gwt/client/game/buildgame.java
+===================================================================
+--- src/gwt/client/game/buildgame.java	(revision 180)
++++ src/gwt/client/game/buildgame.java	(working copy)
+@@ -23,6 +23,8 @@
+ import gwt.client.game.display.PersonChoiceDisplay;
+ import gwt.client.game.display.SpeedDisplay;
+ import gwt.client.game.display.TemplateDisableDisplay;
++import gwt.client.game.vparams.PutMap;
++import gwt.client.game.vparams.VMessage;
+ import gwt.client.game.vparams.ui.AddTogetherPeople;
+ import gwt.client.game.vparams.ui.CloneDeposit;
+ import gwt.client.game.vparams.ui.Score;
+@@ -162,6 +164,9 @@
+ 		addO(new PlaySound());
+ 		addO(new TemplateDisableDisplay());
+ 		addO(new PersonChoiceDisplay());
++		addO(new CreateRandom());
++		addO(new PutMap());
++		addO(new VMessage());
+ 
+ 		JSONObject jo;
+ 		try {
+@@ -189,6 +194,7 @@
+ 			}
+ 			//fmd.init();
+ 			fmd.setParent(game.getMapArea().getMap());
++			fmd.initIfNeeded();
+ 			for(HashMapData hmd : fmd){
+ 				LivingBeing lb = hmd.getLivingBeing();
+ 				
+@@ -325,464 +331,4 @@
+ 	}
+ 
+ 
+-
+-	
+-
+-
+-	
+-
+-
+-	
+-
+-
+-	public static String game1 = "{\"classname\": \"gwt.client.main.Game\", \"vparams\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"bagmapname\":\r\n" + 
+-			"{\"classname\": \"gwt.client.edit.BagMap\", \"bagmap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.MapDataAreaMap\", \"ysize\":10, \"xsize\":10, \"imd\":[[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Person\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"gather\":\"gatheritems\"}}, \"level\":3, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"damage\":1, \"value\":7, \"type\":\"weapon\"}}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"physicalfighter\", \"allskills\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"speed\":10, \"name\":\"Haste\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"strength\":10, \"name\":\"Strength\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"name\":\"Dodge\", \"pevade\":10, \"experience\":70}], \"levelup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.LevelUp\"}, \"gold\":50, \"team\":\"1\", \"percenttake\":5},null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null]]}, \"clickfmd\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.CloneDeposit\"}], \"preset\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.VExpression\", \"settercannotbenegative\":true}], \"depositpoint\":[[0,0],[7,7]]}, \"updateptake\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.AddTogetherPeople\", \"type\":\"percenttake\"}, \"levelup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.display.LevelUpDisplay\", \"type\":\"experience\"}, \"percenttake\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.Score\", \"toget\":\"attacher\", \"description\":\"percentage taken by mercs\", \"type\":\"percenttake\"}, \"itembuy\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.display.ItemBuyDisplay\", \"items\":[\"gloves\"], \"type\":\"gold\"}}, \"person\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"snake\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Animal\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"type\":\"animal\"}}, \"level\":1, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\"}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"snake\", \"team\":\"snake\"}, \"physicalfighter\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Person\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"gather\":\"gatheritems\"}}, \"level\":3, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"damage\":1, \"value\":7, \"type\":\"weapon\"}}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"physicalfighter\", \"allskills\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"speed\":10, \"name\":\"Haste\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"strength\":10, \"name\":\"Strength\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"name\":\"Dodge\", \"pevade\":10, \"experience\":70}], \"levelup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.LevelUp\"}, \"gold\":50, \"team\":\"1\", \"percenttake\":5}, \"rat\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Animal\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"type\":\"animal\"}}, \"level\":1, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\"}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"rat\", \"team\":\"rat\"}}, \"updateptake\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.AddTogetherPeople\", \"type\":\"percenttake\"}, \"ggroup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\"}, \"turns\":3000, \"percenttake\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.Score\", \"toget\":\"attacher\", \"description\":\"percentage taken by mercs\", \"type\":\"percenttake\"}, \"pause\":false, \"applydamage\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.ApplyDamage\", \"altertypes\":[\"damage\",\"armor\",\"pevade\"]}, \"statedata\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\"}, \"levelup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.display.LevelUpDisplay\", \"type\":\"experience\"}, \"oObject\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"pickitemsup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.PickUp\"}, \"explore\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.MoveRandomHashMapData\", \"description\":\"explore\", \"radius\":1}, \"movetonearestitem\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.MoveClosest\", \"value\":null, \"radius\":20, \"key\":\"items\"}, \"gatheritems\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.OobList\", \"list\":[\"movetonearestitem\",\"pickitemsup\"]}}, \"fullmapdata\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\"}, \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"root\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.PTemplate\", \"name\":\"root\", \"actionlist\":[]}, \"gatheritems\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.PTemplate\", \"metaoobject\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.AttackEnemyMeta\"}, \"name\":\"gatheritems\", \"actionlist\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.ActionHolder\", \"action\":\"gatheritems\"}]}, \"animal\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.PTemplate\", \"metaoobject\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.AttackEnemyMeta\"}, \"name\":\"animal\", \"actionlist\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.ActionHolder\", \"action\":\"explore\"}]}}, \"bagmapname\":\r\n" + 
+-			"{\"classname\": \"gwt.client.edit.BagMap\", \"bagmap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.MapDataAreaMap\", \"ysize\":10, \"xsize\":10, \"imd\":[[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Person\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"gather\":\"gatheritems\"}}, \"level\":3, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"damage\":1, \"value\":7, \"type\":\"weapon\"}}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"physicalfighter\", \"allskills\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"speed\":10, \"name\":\"Haste\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"strength\":10, \"name\":\"Strength\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"name\":\"Dodge\", \"pevade\":10, \"experience\":70}], \"levelup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.LevelUp\"}, \"gold\":50, \"team\":\"1\", \"percenttake\":5},null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null]]}, \"clickfmd\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.CloneDeposit\"}], \"preset\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.VExpression\", \"settercannotbenegative\":true}], \"depositpoint\":[[0,0],[7,7]]}, \"turn\":0, \"speed\":90, \"mapInitList\":[], \"htmlout\":\r\n" + 
+-			"{\"classname\": \"gwt.client.output.HtmlOut\", \"refreshlist\":[\"bagmapname\"], \"flextable\":[[[0,1],\"bagmapname\"],[[0,2],\"percenttake\"]], \"tab\":[\"itembuy\",\"levelup\"], \"selecttab\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.vparams.ui.VEquals\", \"object\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.display.PersonChoiceDisplay\"}, \"toequal\":3}]}, \"initList\":[], \"itembuy\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.display.ItemBuyDisplay\", \"items\":[\"gloves\"], \"type\":\"gold\"}, \"human\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\"}, \"idnum\":0, \"item\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"cap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"cap\", \"armor\":1, \"value\":7, \"type\":\"head\"}, \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"armor\":1, \"value\":7, \"type\":\"glove\"}, \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}, \"shield\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"shield\", \"armor\":1, \"value\":7, \"type\":\"shield\"}, \"leather armor\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"leather armor\", \"armor\":1, \"value\":7, \"type\":\"armor\"}, \"corpse\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"corpse\", \"value\":7, \"type\":null}, \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"damage\":1, \"value\":7, \"type\":\"weapon\"}}, \"statecount\":0, \"maparea\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.MapArea\", \"maxhealth\":100, \"damage\":10, \"map\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.SymbolicMap\", \"template\":null, \"personadded\":[\"updateptake\",\"percenttake\"], \"ysize\":1, \"death\":[\"updateptake\",\"percenttake\"], \"xsize\":2, \"gold\":100, \"imd\":[[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.FullMapData\", \"ysize\":15, \"personstartonmap\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.RandomTypeCreation\", \"percent\":5, \"items\":[\"sword\",\"shield\",\"gloves\",\"leather armor\",\"cap\"], \"type\":\"item\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.game.RandomTypeCreation\", \"percent\":5, \"items\":[\"gold\"], \"type\":\"item\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.game.RandomTypeCreation\", \"percent\":2, \"items\":[\"rat\",\"snake\"], \"type\":\"person\"}], \"xsize\":17, \"imd\":[[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"cap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"cap\", \"value\":7, \"armor\":1, \"type\":\"head\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"livingbeing\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Animal\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"type\":\"animal\"}}, \"level\":1, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\"}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"snake\", \"team\":\"snake\"}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"cap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"cap\", \"value\":7, \"armor\":1, \"type\":\"head\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"value\":7, \"armor\":1, \"type\":\"glove\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"cap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"cap\", \"value\":7, \"armor\":1, \"type\":\"head\"}}},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"shield\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"shield\", \"value\":7, \"armor\":1, \"type\":\"shield\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"value\":7, \"armor\":1, \"type\":\"glove\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}, \"shield\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"shield\", \"value\":7, \"armor\":1, \"type\":\"shield\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"value\":7, \"damage\":1, \"type\":\"weapon\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"cap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"cap\", \"value\":7, \"armor\":1, \"type\":\"head\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"livingbeing\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Person\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"gather\":\"gatheritems\"}}, \"level\":3, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"damage\":1, \"value\":7, \"type\":\"weapon\"}}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\", \"strength\":5, \"maxhealth\":100, \"defaultattack\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"range\":1, \"radius\":1, \"damagetype\":\"physical\"}}, \"name\":\"physicalfighter\", \"allskills\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"speed\":10, \"name\":\"Haste\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"strength\":10, \"name\":\"Strength\", \"rechargetime\":30, \"experience\":400},\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"name\":\"Dodge\", \"pevade\":10, \"experience\":70}], \"experience\":70, \"levelup\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.LevelUp\"}, \"team\":\"1\", \"gold\":50, \"percenttake\":5}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"cap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"cap\", \"value\":7, \"armor\":1, \"type\":\"head\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"value\":7, \"damage\":1, \"type\":\"weapon\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"livingbeing\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Animal\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"type\":\"animal\"}}, \"level\":1, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\"}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"rat\", \"team\":\"rat\"}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"value\":7, \"damage\":1, \"type\":\"weapon\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}, \"sword\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"sword\", \"value\":7, \"damage\":1, \"type\":\"weapon\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"value\":7, \"armor\":1, \"type\":\"glove\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"value\":7, \"armor\":1, \"type\":\"glove\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"shield\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"shield\", \"value\":7, \"armor\":1, \"type\":\"shield\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"value\":7, \"armor\":1, \"type\":\"glove\"}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"livingbeing\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.Animal\", \"template\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.LocalTemplate\", \"templatemap\":\r\n" + 
+-			"{\"classname\": \"gwt.client.main.base.PBase\", \"type\":\"animal\"}}, \"level\":1, \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\"}, \"stats\":\r\n" + 
+-			"{\"classname\": \"gwt.client.personality.Stats\"}, \"name\":\"rat\", \"team\":\"rat\"}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gloves\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"consumable\":false, \"name\":\"gloves\", \"value\":7, \"armor\":1, \"type\":\"glove\"}}},null,null],[\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\", \"items\":\r\n" + 
+-			"{\"classname\": \"gwt.client.map.Items\", \"gold\":\r\n" + 
+-			"{\"classname\": \"gwt.client.item.Item\", \"amount\":10, \"consumable\":false, \"name\":\"gold\", \"value\":1, \"type\":null}}},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.map.HashMapData\"},null,null]]},null],[null,null]], \"percenttake\":5, \"exit\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.SellAll\"},\"itembuy\"]}, \"clickfmd\":[\r\n" + 
+-			"{\"classname\": \"gwt.client.game.IfKey\", \"param\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.PlaySound\"}, \"key\":\"livingbeing\"},\r\n" + 
+-			"{\"classname\": \"gwt.client.game.IfKey\", \"param\":\r\n" + 
+-			"{\"classname\": \"gwt.client.game.display.TemplateDisableDisplay\"}, \"key\":\"livingbeing\"}], \"damagetype\":\"physical\"}}";
+-
+-}
+-
++}
+\ No newline at end of file
+Index: src/gwt/client/output/html/GCanvas.java
+===================================================================
+--- src/gwt/client/output/html/GCanvas.java	(revision 172)
++++ src/gwt/client/output/html/GCanvas.java	(working copy)
+@@ -19,168 +19,239 @@
+ import gwt.client.map.HashMapData;
+ import gwt.client.output.HtmlOut;
+ 
++import com.google.gwt.canvas.client.Canvas;
++import com.google.gwt.canvas.dom.client.Context2d;
++import com.google.gwt.canvas.dom.client.CssColor;
++import com.google.gwt.canvas.dom.client.FillStrokeStyle;
++import com.google.gwt.dom.client.NativeEvent;
++import com.google.gwt.event.dom.client.MouseDownEvent;
++import com.google.gwt.event.dom.client.MouseDownHandler;
++import com.google.gwt.event.dom.client.MouseMoveEvent;
++import com.google.gwt.event.dom.client.MouseMoveHandler;
++import com.google.gwt.event.dom.client.MouseUpEvent;
++import com.google.gwt.event.dom.client.MouseUpHandler;
+ import com.google.gwt.user.client.DOM;
+ import com.google.gwt.user.client.Event;
+ import com.google.gwt.widgetideas.graphics.client.Color;
+ import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+ 
+-public class GCanvas extends GWTCanvas {
++public class GCanvas {
+ 	/**
+ 	 * 
+ 	 */
+-	private final HtmlOut htmlOut;
++	//private final HtmlOut htmlOut;
+ 
+ 	{
+ 
+-		sinkEvents(Event.ONMOUSEUP | Event.ONDBLCLICK | Event.ONCONTEXTMENU
+-				| Event.ONMOUSEMOVE);
+-		setLineWidth(1);
+-		setStrokeStyle(Color.GREEN);
++		
++//		setLineWidth(1);
++//		setStrokeStyle(Color.GREEN);
+ 
+ 		// saveContext();
+ 
+ 	}
+ 	Point point;
+-	
+-
++	public GCanvas( int coordX, int coordY) {
++		
++		can =Canvas.createIfSupported();
++		can.setCoordinateSpaceWidth(coordX);
++		can.setCoordinateSpaceHeight(coordY);
++		con = can.getContext2d();
++		
++		con.setFillStyle(CssColor.make(40, 40, 40));
++		con.fill();
++		con.setStrokeStyle(CssColor.make(0,255, 0));
++		
++	}
++	public Canvas can;
++	HtmlOut htmlOut;
+ 	public GCanvas(HtmlOut htmlOut, int coordX, int coordY) {
+-		super(coordX, coordY);
++		this(coordX,coordY);
+ 		this.htmlOut = htmlOut;
+-	}
++		can.addMouseDownHandler(new MouseDownHandler() {
++			
++			@Override
++			public void onMouseDown(MouseDownEvent event) {
++				
++				if (event.getNativeButton() == NativeEvent.BUTTON_LEFT) {
+ 
+-	public void onBrowserEvent(Event event) {
+-		// GWT.log("onBrowserEvent", null);
+ 
+-		event.stopPropagation();
+-		event.preventDefault();
+-		if (DOM.eventGetButton(event) != Event.BUTTON_RIGHT) {
+-			super.onBrowserEvent(event);
+-		}
++					point = new Point(event.getX(),event.getY());
++				}				
++			}
++		});
++		
++		can.addMouseUpHandler(new MouseUpHandler() {
++			
++			@Override
++			public void onMouseUp(MouseUpEvent event) {
+ 
+-		int x, y;
+-		switch (DOM.eventGetType(event)) {
+-		case Event.ONMOUSEDOWN:
+-			if (DOM.eventGetButton(event) == Event.BUTTON_LEFT) {
+-				x = getCanvasX(event);
++				if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
++					
++					event.stopPropagation();
++					event.preventDefault();
++					
++				}
++				int x,y;
++				if (event.getNativeButton() == NativeEvent.BUTTON_LEFT) {
++					if(point != null){
++						x = event.getX();
+ 
+-				y = getCanvasY(event);
++						y = event.getY();
++						//take the current pos, take the point.  Every point inside the rectangle
++						//is checked and if a lb is there then it is added to the list
++						GCanvas.this.htmlOut.cfList .clear();
++						Point upperLeft = point;
++						Point lowerRight = new Point(x,y);
++						if(upperLeft.x > lowerRight.x){
++							int xu = upperLeft.x;
++							upperLeft.x = lowerRight.x;
++							lowerRight.x = xu;
++						}
++						if(upperLeft.y > lowerRight.y){
++							int yu = upperLeft.y;
++							upperLeft.y = lowerRight.y;
++							lowerRight.y = yu;
++						}
++						for(Entry<FullMapData,GCanvas> ent : GCanvas.this.htmlOut.fmdMap.entrySet()){
++							if(ent.getValue().equals(GCanvas.this)){
++								for(HashMapData hmd : ent.getKey()){
++									Point hmdpoint = hmd.getPosition();
++									hmdpoint.x *= GCanvas.this.htmlOut.imagesize + GCanvas.this.htmlOut.imagesize;
++									hmdpoint.y *= GCanvas.this.htmlOut.imagesize + GCanvas.this.htmlOut.imagesize;
++									hmdpoint.x -= GCanvas.this.htmlOut.imagesize/2;
++									hmdpoint.y -= GCanvas.this.htmlOut.imagesize/2;
++									if(hmd.getLivingBeing() != null){
++										if(GameUtil.getPlayerTeam().equals(hmd.getLivingBeing().get(VConstants.team))){
++											if(!point.outsideRect(upperLeft,lowerRight, hmdpoint)){
++												GCanvas.this.htmlOut.cfList.add(hmd.getLivingBeing());
++											}	
++										}
++										
++										
++									}
++								}
++							}
++						}
++						GCanvas.this.htmlOut.cfList = GameUtil.getPlayerTeam(GCanvas.this.htmlOut.cfList);
++						if(GCanvas.this.htmlOut.cfList.size() > 0&&!GCanvas.this.htmlOut.cfList.contains(GCanvas.this.htmlOut.currentlyFollowed)){
++							GCanvas.this.htmlOut.currentlyFollowed = GCanvas.this.htmlOut.cfList.get(0);
++						}
++						
++						GCanvas.this.htmlOut.refreshFmds();
++						point = null;
++					}
+ 
+-				point = new Point(x, y);
+-			}
+ 
+-			break;
++				}
+ 
+-		case Event.ONMOUSEMOVE:
+-			if (point == null) {
+-				break;
+-			}
++				if (event.getNativeButton() == NativeEvent.BUTTON_RIGHT) {
++					event.preventDefault();
++					// GWT.log("Event.BUTTON_RIGHT", null);
++					x = event.getX();
+ 
+-			x = getCanvasX(event);
++					y = event.getY();
+ 
+-			y = getCanvasY(event);
+-			System.out.println(x + " " + y);
+-			this.strokeRect(point.x, point.y, -point.x + x, -point.y + y);
++					
++					LivingBeing currentlyFollowed = GCanvas.this.htmlOut.currentlyFollowed;
++					if(currentlyFollowed == null||currentlyFollowed.getParent() == null){
++						return;
++					}
++					HashMapData hmd = currentlyFollowed.getParent().getParent()
++							.getData(x / GCanvas.this.htmlOut.imagesize, y / GCanvas.this.htmlOut.imagesize);
+ 
+-			break;
+-		case Event.ONMOUSEUP:
+-			if (DOM.eventGetButton(event) == Event.BUTTON_LEFT) {
+-				if(point != null){
+-					x = getCanvasX(event);
+-
+-					y = getCanvasY(event);
+-					//take the current pos, take the point.  Every point inside the rectangle
+-					//is checked and if a lb is there then it is added to the list
+-					htmlOut.cfList .clear();
+-					Point upperLeft = point;
+-					Point lowerRight = new Point(x,y);
+-					if(upperLeft.x > lowerRight.x){
+-						int xu = upperLeft.x;
+-						upperLeft.x = lowerRight.x;
+-						lowerRight.x = xu;
++					if(GCanvas.this.htmlOut.cfList.size() < 1){
++						GCanvas.this.htmlOut.cfList.add(currentlyFollowed);
+ 					}
+-					if(upperLeft.y > lowerRight.y){
+-						int yu = upperLeft.y;
+-						upperLeft.y = lowerRight.y;
+-						lowerRight.y = yu;
+-					}
+-					for(Entry<FullMapData,GWTCanvas> ent : this.htmlOut.fmdMap.entrySet()){
+-						if(ent.getValue().equals(this)){
+-							for(HashMapData hmd : ent.getKey()){
+-								Point hmdpoint = hmd.getPosition();
+-								hmdpoint.x *= HtmlOut.imagesize;
+-								hmdpoint.y *= HtmlOut.imagesize;
+-								hmdpoint.x -= HtmlOut.imagesize/2;
+-								hmdpoint.y -= HtmlOut.imagesize/2;
+-								if(hmd.getLivingBeing() != null&&!point.outsideRect(upperLeft,lowerRight, hmdpoint)){
+-									htmlOut.cfList.add(hmd.getLivingBeing());
+-								}
+-							}
++					for(LivingBeing cf : GCanvas.this.htmlOut.cfList){
++						cf.getTemplate().clear();
++						// should fix to put in a proper action , and then attach
++						// via a param (or maybe just an oobject?)
++						
++						LivingBeing  lb = hmd.getLivingBeing();
++						if(lb != null&&lb.get(VConstants.team) != null&&!lb.get(VConstants.team).equals(cf.get(VConstants.team))){
++							cf.getTemplate().push(new Attack(lb));
++							break;
+ 						}
++						cf.getTemplate().push(new PickUp());
++						cf.getTemplate().push(
++								new Move(hmd, "movetoandgather"));
+ 					}
+-					htmlOut.cfList = GameUtil.getPlayerTeam(htmlOut.cfList);
+-					if(htmlOut.cfList.size() > 0&&!htmlOut.cfList.contains(htmlOut.currentlyFollowed)){
+-						htmlOut.currentlyFollowed = htmlOut.cfList.get(0);
+-					}
+-					
+-					htmlOut.refreshFmds();
+-					point = null;
++
++				}				
++			}
++		});
++		
++		can.addMouseMoveHandler(new MouseMoveHandler() {
++			
++			@Override
++			public void onMouseMove(MouseMoveEvent event) {
++				if (point == null) {
++					return;
+ 				}
+ 
+ 
+-			}
+ 
+-			if (DOM.eventGetButton(event) == Event.BUTTON_RIGHT) {
+-				// GWT.log("Event.BUTTON_RIGHT", null);
+-				x = getCanvasX(event);
++				getContext2d().strokeRect(point.x, point.y, -point.x + event.getX(), -point.y + event.getY());
+ 
+-				y = getCanvasY(event);
+-
+ 				
+-				LivingBeing currentlyFollowed = this.htmlOut.currentlyFollowed;
+-				HashMapData hmd = currentlyFollowed.getParent().getParent()
+-						.getData(x / HtmlOut.imagesize, y / HtmlOut.imagesize);
+-
+-				if(htmlOut.cfList.size() < 1){
+-					htmlOut.cfList.add(currentlyFollowed);
+-				}
+-				for(LivingBeing cf : htmlOut.cfList){
+-					cf.getTemplate().clear();
+-					// should fix to put in a proper action , and then attach
+-					// via a param (or maybe just an oobject?)
+-					
+-					LivingBeing  lb = hmd.getLivingBeing();
+-					if(lb != null&&lb.get(VConstants.team) != null&&!lb.get(VConstants.team).equals(cf.get(VConstants.team))){
+-						cf.getTemplate().push(new Attack(lb));
+-						break;
+-					}
+-					cf.getTemplate().push(new PickUp());
+-					cf.getTemplate().push(
+-							new Move(hmd, "movetoandgather"));
+-				}
+-
+ 			}
+-			break;
+-		case Event.ONDBLCLICK:
+-			break;
+-
+-		case Event.ONCONTEXTMENU:
+-			// GWT.log("Event.ONCONTEXTMENU", null);
+-			break;
+-
+-		default:
+-			break; // Do nothing
+-		}// end switch
++		});
+ 	}
+ 
+-	protected int getCanvasX(Event event) {
+-		return event.getClientX() - getAbsoluteLeft()
+-				+ getElement().getScrollLeft()
+-				+ getElement().getOwnerDocument().getScrollLeft();
++//	public void onBrowserEvent(Event event) {
++//		// GWT.log("onBrowserEvent", null);
++//
++//		event.stopPropagation();
++//		event.preventDefault();
++//		if (DOM.eventGetButton(event) != Event.BUTTON_RIGHT) {
++//			can.onBrowserEvent(event);
++//		}
++//
++//		int x, y;
++//		switch (DOM.eventGetType(event)) {
++//		case Event.ONMOUSEDOWN:
++//
++//
++//			break;
++//
++//		case Event.ONMOUSEMOVE:
++//
++//			break;
++//		case Event.ONMOUSEUP:
++//
++//			break;
++//		case Event.ONDBLCLICK:
++//			break;
++//
++//		case Event.ONCONTEXTMENU:
++//			// GWT.log("Event.ONCONTEXTMENU", null);
++//			break;
++//
++//		default:
++//			break; // Do nothing
++//		}// end switch
++//	}
++//
++//	protected int getCanvasX(MouseDownEvent event) {
++//		return event.getClientX() - can.getAbsoluteLeft()
++//				+ can.getElement().getScrollLeft()
++//				+ can.getElement().getOwnerDocument().getScrollLeft();
++//	}
++//
++//	private int getCanvasY(MouseDownEvent event) {
++//		return event.getClientY() - can.getAbsoluteTop()
++//				+ can.getElement().getScrollTop()
++//				+ can.getElement().getOwnerDocument().getScrollTop();
++//	}
++	Context2d con;
++	public Context2d getContext2d() {
++		// TODO Auto-generated method stub
++		return con;
+ 	}
+ 
+-	private int getCanvasY(Event event) {
+-		return event.getClientY() - getAbsoluteTop()
+-				+ getElement().getScrollTop()
+-				+ getElement().getOwnerDocument().getScrollTop();
++	public void clear() {
++		//does nothing
++		
+ 	}
+ }
+\ No newline at end of file
+Index: src/gwt/server/datamodel/ServerGame.java
+===================================================================
+--- src/gwt/server/datamodel/ServerGame.java	(revision 178)
++++ src/gwt/server/datamodel/ServerGame.java	(working copy)
+@@ -42,7 +42,7 @@
+ 	public List<JsonData> getJsonDatasByGame(){
+ 		if(jsonData == null){
+ 			jsonData = new ArrayList<Key<JsonData>>();
+-			jsonData.add(SDao.getJsonDataDao().put(new JsonData("new")));
++			jsonData.add(SDao.getJsonDataDao().put(new JsonData("new",userId)));
+ 		}
+ 		List<JsonData> jdlist = new ArrayList<JsonData>();
+ 		for(Key<JsonData> k : jsonData){
+@@ -51,6 +51,7 @@
+ 		}
+ 		return jdlist;
+ 	}
++	String userId;
+ 
+ 
+ 	
+Index: src/gwt/client/game/CreateRandom.java
+===================================================================
+--- src/gwt/client/game/CreateRandom.java	(revision 181)
++++ src/gwt/client/game/CreateRandom.java	(working copy)
+@@ -23,7 +23,7 @@
+ 	@Override
+ 	public Returnable execute(FullMapData fullMapData, LivingBeing person) {
+ 		List l = getList(VConstants.list);
+-		MapData md=(MapData) l.get(VConstants.random.nextInt(l.size()));
++		MapData md=(MapData) l.get(VConstants.getRandom().nextInt(l.size()));
+ 		HashMapData hmd=fullMapData.getNearestEmpty(person);
+ 		hmd.putAppropriate(md);
+ 		return null;
+Index: war/WEB-INF/web.xml
+===================================================================
+--- war/WEB-INF/web.xml	(revision 181)
++++ war/WEB-INF/web.xml	(working copy)
+@@ -74,7 +74,7 @@
+   
+   <servlet-mapping>
+     <servlet-name>editDisplayPerson</servlet-name>
+-    <url-pattern>/editjson</url-pattern>
++    <url-pattern>/profile</url-pattern>
+   </servlet-mapping>
+   
+   
+Index: src/gwt/client/game/GameUtil.java
+===================================================================
+--- src/gwt/client/game/GameUtil.java	(revision 169)
++++ src/gwt/client/game/GameUtil.java	(working copy)
+@@ -18,4 +18,7 @@
+ 		}
+ 		return people;
+ 	}
++	public static String getPlayerTeam(){
++		return "1";
++	}
+ }
+Index: src/gwt/client/output/html/Click.java
+===================================================================
+--- src/gwt/client/output/html/Click.java	(revision 168)
++++ src/gwt/client/output/html/Click.java	(working copy)
+@@ -6,21 +6,21 @@
+ import gwt.client.output.MainPanel;
+ import gwt.client.output.SEventClick;
+ 
++import com.google.gwt.canvas.client.Canvas;
+ import com.google.gwt.event.dom.client.MouseDownEvent;
+ import com.google.gwt.event.dom.client.MouseDownHandler;
+-import com.google.gwt.widgetideas.graphics.client.GWTCanvas;
+ 
+-public class Click extends ClickBase implements MouseDownHandler {
++public class Click implements MouseDownHandler {
+ 
+-	
++	SEventClick<Canvas> mouseDown;
+ 	@Override
+ 	public void onMouseDown(MouseDownEvent event) {
+ 
+-		mouseDown.execute(event.getX(), event.getY(), (GWTCanvas) event
++		mouseDown.execute(event.getX(), event.getY(), (Canvas) event
+ 				.getSource());
+ 	}
+ 
+-	public Click(SEventClick<GWTCanvas> mouseDown) {
++	public Click(SEventClick<Canvas> mouseDown) {
+ 
+ 		this.mouseDown = mouseDown;
+ 	}
+Index: src/gwt/client/game/vparams/PutMap.java
+===================================================================
+--- src/gwt/client/game/vparams/PutMap.java	(revision 0)
++++ src/gwt/client/game/vparams/PutMap.java	(revision 0)
+@@ -0,0 +1,68 @@
++package gwt.client.game.vparams;
++
++import java.util.Map;
++
++import gwt.client.EntryPoint;
++import gwt.client.edit.BagMap;
++import gwt.client.main.VConstants;
++import gwt.client.main.base.PBase;
++import gwt.client.map.FullMapData;
++import gwt.client.map.HashMapData;
++import gwt.client.map.MapData;
++import gwt.shared.datamodel.VParams;
++
++public class PutMap extends VParams{
++
++	public PutMap() {
++		// TODO Auto-generated constructor stub
++	}
++	public PutMap(int xs, int ys, int xf, int yf, String key, Object value,String type) {
++		put(VConstants.xsymbolic,xs);
++		put(VConstants.ysymbolic,ys);
++		setVals(xf, yf, key, value, type);
++	}
++	public PutMap(String bm, int xf, int yf, String key, Object value,String type) {
++		put(VConstants.bagmap,bm);
++		setVals(xf, yf, key, value, type);
++	}
++	private void setVals(int xf, int yf, String key, Object value, String type) {
++		put(VConstants.xfull, xf);
++		put(VConstants.yfull,yf);
++		put(VConstants.key, key);
++		put(VConstants.value,value);
++		put(VConstants.type,type);
++	}
++	
++	@Override
++	public void execute(Map<String, Object> map) {
++		
++		Object o = get(VConstants.value);
++		if( o instanceof String){
++			o = ((PBase)EntryPoint.game.getMap(getS(VConstants.type)).get(o)).clone();
++		}
++		
++		String bm = getS(VConstants.bagmap);
++		if(bm != null){
++			BagMap bag=(BagMap) EntryPoint.game.getVParams().get(bm);
++			bag.getBagMap().initIfNeeded();
++			bag.getBagMap().setData(getInt(VConstants.xfull),getInt( VConstants.yfull),(MapData) o);
++			
++		} else {
++			FullMapData fmd=EntryPoint.game.getMapArea().getMap().getData(getInt(VConstants.xsymbolic),getInt(VConstants.ysymbolic));
++			fmd.initIfNeeded();
++			HashMapData hmd=fmd.getData(getInt(VConstants.xfull),getInt( VConstants.yfull));
++			hmd.putAppropriate((MapData)o);
++		}
++		
++		
++		
++		
++		//if value is string then get from map based on type
++	}
++	
++	@Override
++	public PBase clone() {
++		
++		return new PutMap().copyProperties(this);
++	}
++}
+Index: src/gwt/client/map/FullMapData.java
+===================================================================
+--- src/gwt/client/map/FullMapData.java	(revision 180)
++++ src/gwt/client/map/FullMapData.java	(working copy)
+@@ -33,7 +33,7 @@
+ 		{
+ 			setXsize(17);
+ 			setYsize( 15);
+-			init();
++			//init();
+ 		}
+ 
+ 		public FullMapData(String value) {
+Index: notes5.txt
+===================================================================
+--- notes5.txt	(revision 168)
++++ notes5.txt	(working copy)
+@@ -14,7 +14,7 @@
+ 					public void run() {
+ 						
+ 						Object[] o=imap.values().toArray();
+-						symbolicShell2.drawImage((ImageElement) o[VConstants.random.nextInt(o.length)], 0,0);
++						symbolicShell2.drawImage((ImageElement) o[VConstants.getRandom().nextInt(o.length)], 0,0);
+ 						symbolicShell2.drawImage(imap.get("none"), x* 30+30, y* 30+30);
+ 						symbolicShell2.drawImage(ie, x* 30, y* 30);
+ 					}
+Index: src/gwt/client/game/display/ItemBuyDisplay.java
+===================================================================
+--- src/gwt/client/game/display/ItemBuyDisplay.java	(revision 180)
++++ src/gwt/client/game/display/ItemBuyDisplay.java	(working copy)
+@@ -62,7 +62,7 @@
+ 		while(lb.getItemCount() < toDisplay){
+ 			
+ 			
+-			String item = getItems().get(VConstants.random.nextInt(getItems().size()));
++			String item = getItems().get(VConstants.getRandom().nextInt(getItems().size()));
+ 			Item itemAct = EntryPoint.game.getItemMap().get(item);
+ 			String itemDisplay = item+" "+itemAct.getItemValue();
+ 			itemsMap.put(itemDisplay, itemAct);
+Index: .settings/com.google.appengine.eclipse.core.prefs
+===================================================================
+--- .settings/com.google.appengine.eclipse.core.prefs	(revision 141)
++++ .settings/com.google.appengine.eclipse.core.prefs	(working copy)
+@@ -1,3 +1,3 @@
+-#Wed Feb 09 06:57:51 EST 2011
++#Tue Apr 26 20:14:14 EDT 2011
+ eclipse.preferences.version=1
+-filesCopiedToWebInfLib=
++filesCopiedToWebInfLib=appengine-api-1.0-sdk-1.4.3.jar|appengine-api-labs-1.4.3.jar|appengine-jsr107cache-1.4.3.jar|jsr107cache-1.1.jar|datanucleus-appengine-1.0.8.final.jar|datanucleus-core-1.1.5.jar|datanucleus-jpa-1.1.5.jar|geronimo-jpa_3.0_spec-1.1.1.jar|geronimo-jta_1.1_spec-1.1.1.jar|jdo2-api-2.3-eb.jar
+Index: src/gwt/shared/ClientBuild.java
+===================================================================
+--- src/gwt/shared/ClientBuild.java	(revision 181)
++++ src/gwt/shared/ClientBuild.java	(working copy)
+@@ -23,6 +23,7 @@
+ import gwt.client.game.display.ItemBuyDisplay;
+ import gwt.client.game.display.LevelUpDisplay;
+ import gwt.client.game.display.TemplateDisableDisplay;
++import gwt.client.game.vparams.PutMap;
+ import gwt.client.game.vparams.VMessage;
+ import gwt.client.game.vparams.ui.AddTogetherPeople;
+ import gwt.client.game.vparams.ui.CloneDeposit;
+@@ -205,9 +206,10 @@
+ 	
+ 	
+ 	public static PBase doThievesAttackingMarquis(){
++		//eventually combine into 1 game with the complicated item randomization
++		//and additional people/abilities
+ 		
+ 		
+-		
+ 		PBase pb = new PBase();
+ 		
+ 		pb.put(VConstants.classname, Game.class.getName());
+@@ -225,7 +227,7 @@
+ 		}
+ 		AttachUtil.attach(AttachUtil.gamestart, new RandomTypeCreation(list(0,0),VConstants.person,2,"rogue"), pb);
+ 
+-		String addp=addG("addperson", pb,new PutMap(0,0,15,15,VConstants.livingbeing,"marquis"));
++		String addp=addG("addperson", pb,new PutMap(0,0,15,15,VConstants.livingbeing,"marquis",VConstants.person));
+ 		AttachUtil.attach(AttachUtil.gamestart, addp, pb);
+ 		AttachUtil.attach(AttachUtil.gamestart, new VMessage(" You, nobility, help me with this rabble"), pb);
+ 		AttachUtil.attach(AttachUtil.gamestart, new VMessage(" Lose condition the marquis dies"), pb);
+@@ -254,7 +256,7 @@
+ 	
+ 		AttachUtil.attach(AttachUtil.gamestart, new RandomTypeCreation(list(0,0),VConstants.person,2,"knights"), pb);
+ 
+-		String addp=addG("addperson", pb,new PutMap(0,0,15,15,VConstants.livingbeing,"marquis"));
++		String addp=addG("addperson", pb,new PutMap(0,0,15,15,VConstants.livingbeing,"marquis",VConstants.person));
+ 		AttachUtil.attach(AttachUtil.gamestart, addp, pb);
+ 		AttachUtil.attach(AttachUtil.gamestart, new VMessage(" I have come against you because you help the less fortunate"), pb);
+ 		AttachUtil.attach(AttachUtil.gamestart, new VMessage(" Win condition, kill the marquis"), pb);
+@@ -394,10 +396,11 @@
+ 		String fighter = "fighter";
+ 		Person sp =addFighter(0,game, person, fighter,VConstants.physical);
+ 		
+-
+-		String addp=addG("addperson", game,new PutMap(0,0,5,5,VConstants.livingbeing,"physicalfighter"));
+-		AttachUtil.attach(AttachUtil.gamestart, addp, game);
+-		clone.put(VConstants.experience,70);
++		{
++			String addp=addG("addfmdperson", game,new PutMap(0,0,5,5,VConstants.livingbeing,"physicalfighter",VConstants.person));
++			AttachUtil.attach(AttachUtil.gamestart, addp, game);
++			//game.getMapArea().getMap().getData(0, 0).initIfNeeded();
++		}
+ 		
+ 		
+ 		sp.getStats().put(VConstants.maxhealth, 100);
+@@ -422,8 +425,9 @@
+ 		
+ 		sp.getList(VConstants.allskills).add(pb);
+ 		
+-		bagmap.getBagMap().setData(0, 0,sp);
+ 		
++		String addp=addG("addbagperson", game,new PutMap(bagmapname,0,0,VConstants.livingbeing,"physicalfighter",VConstants.person));
++		AttachUtil.attach(AttachUtil.gamestart, addp, game);
+ 
+ 
+ 		
+Index: src/gwt/server/datamodel/GUser.java
+===================================================================
+--- src/gwt/server/datamodel/GUser.java	(revision 181)
++++ src/gwt/server/datamodel/GUser.java	(working copy)
+@@ -21,7 +21,8 @@
+ 		id = userId;
+ 		displayName = nickname;
+ 	}
+-	@Id String id;
++	@Id
++	public String id;
+ 	public String displayName;
+ 	
+ 	List<Key<ServerGame>> sglist;
+@@ -40,7 +41,7 @@
+ 			sglist = new ArrayList<Key<ServerGame>>();
+ 			ServerGame sg = new ServerGame("new game");
+ 			
+-			JsonData jd = new JsonData("new json");
++			JsonData jd = new JsonData("new json",this);
+ 			jd.setData(new Blob(ClientBuild.game1.getBytes()));
+ 			Key k=SDao.getJsonDataDao().put(jd);
+ 			sg.jsonData = new ArrayList<Key<JsonData>>();
+Index: src/gwt/server/build/BuildFeatures.java
+===================================================================
+--- src/gwt/server/build/BuildFeatures.java	(revision 181)
++++ src/gwt/server/build/BuildFeatures.java	(working copy)
+@@ -9,6 +9,7 @@
+ import gwt.server.LoginService;
+ import gwt.server.PersonLoginInfo;
+ import gwt.server.SDao;
++import gwt.server.datamodel.GUser;
+ import gwt.server.datamodel.JsonData;
+ import gwt.server.datamodel.ServerGame;
+ import gwt.shared.ClientBuild;
+@@ -38,11 +39,11 @@
+ 		}
+ 		
+ 		AttachUtil.shouldRun = false;
+-		info.person.add(addFeature("Dungeon crawl empty",ClientBuild.doDC1()));
+-		info.person.add(addFeature("Dungeon crawl first level",ClientBuild.doDC1(),ClientBuild.doFirstMapEnemies()));
+-		info.person.add(addFeature("Dungeon crawl first level and second level",ClientBuild.doDC1(),ClientBuild.doFirstMapEnemies(),ClientBuild.doExitDisplayAndSecondMap()));
++		info.person.add(addFeature(info.person,"Dungeon crawl empty",ClientBuild.doDC1()));
++		info.person.add(addFeature(info.person,"Dungeon crawl first level",ClientBuild.doDC1(),ClientBuild.doFirstMapEnemies()));
++		info.person.add(addFeature(info.person,"Dungeon crawl first level and second level",ClientBuild.doDC1(),ClientBuild.doFirstMapEnemies(),ClientBuild.doExitDisplayAndSecondMap()));
+ 		
+-		info.person.add(addFeature("Dungeon crawl first level",ClientBuild.doDC1(),ClientBuild.doSummoner()));
++		info.person.add(addFeature(info.person,"Dungeon crawl first level",ClientBuild.doDC1(),ClientBuild.doSummoner()));
+ 		SDao.getGUserDao().put(info.person);
+ 		
+ //		Game doAnimalBabies = ClientBuild.doAnimalBabies();
+@@ -55,16 +56,16 @@
+ //		resp.getWriter().write(""+SDao.getServerGameDao().ofy().query(ServerGame.class).list());
+ 	}
+ 
+-	private Key<ServerGame> addFeature(String string, Game doDC1,PBase... pblist) {
++	private Key<ServerGame> addFeature(GUser user,String string, Game doDC1,PBase... pblist) {
+ 		ServerGame sg = new ServerGame(string);
+-		JsonData jd = new JsonData(string+"json");
++		JsonData jd = new JsonData(string+"json",user);
+ 		
+ 		jd.setData(new Blob(doDC1.export().getBytes()));
+ 		sg.add(SDao.getJsonDataDao().put(jd));
+ 		
+ 		int num = 2;
+ 		for(PBase pb : pblist){
+-			jd = new JsonData(string+"json"+num);
++			jd = new JsonData(string+"json"+num,user);
+ //			
+ 			jd.setData(new Blob(pb.export().getBytes()));
+ 			sg.add(SDao.getJsonDataDao().put(jd));
+Index: src/gwt/client/main/base/under/FoodGroup.java
+===================================================================
+--- src/gwt/client/main/base/under/FoodGroup.java	(revision 168)
++++ src/gwt/client/main/base/under/FoodGroup.java	(working copy)
+@@ -29,7 +29,7 @@
+ //	addHealth(10);
+ //	
+ //	
+-//	Direction d =Direction.values()[VConstants.random.nextInt(Direction.values().length)];
++//	Direction d =Direction.values()[VConstants.getRandom().nextInt(Direction.values().length)];
+ //	HashMapData hmd=getParent().getParent().getData(getX()+d.getX(), getY()+d.getY());
+ //	
+ //	if(hmd == null){
+Index: src/gwt/client/main/VConstants.java
+===================================================================
+--- src/gwt/client/main/VConstants.java	(revision 181)
++++ src/gwt/client/main/VConstants.java	(working copy)
+@@ -1,5 +1,6 @@
+ package gwt.client.main;
+ 
++import gwt.client.EntryPoint;
+ import gwt.client.main.base.ActionHolder;
+ 
+ import java.util.List;
+@@ -13,7 +14,7 @@
+ 	public static final String template = "template";
+ 	public static final String livingbeing = "livingbeing";
+ 	public static final String foodgroup = "foodgroup";
+-	public static final Random  random= new Random(1);
++	public static final String random = "random";
+ 	public static final String dominant = "dominant";
+ 	public static final String defaultT = "default";
+ 	public static final String instinct = "instinct";
+@@ -148,9 +149,19 @@
+ 	public static final String bagmap = "bagmap";
+ 	public static final String poison = "poison";
+ 	public static final String message = "message";
++	public static final String xsymbolic = "xsymbolic";
++	public static final String ysymbolic = "ysymbolic";
++	public static final String xfull = "xfull";
++	public static final String yfull = "yfull";
++	public static final String seed = "seed";
+ 	
+ 	public static String string = "string";
+ 	public static String getRandomEnumString(Enum[] en){
+-		return en[random.nextInt(en.length)].name();
++		return en[getRandom().nextInt(en.length)].name();
+ 	}
++	public static Random getRandom() {
++		Random rand=EntryPoint.game.getRandom();
++		
++		return rand;
++	}
+ }
+Index: .externalToolBuilders/com.google.appengine.eclipse.core.enhancerbuilder.launch
+===================================================================
+--- .externalToolBuilders/com.google.appengine.eclipse.core.enhancerbuilder.launch	(revision 0)
++++ .externalToolBuilders/com.google.appengine.eclipse.core.enhancerbuilder.launch	(revision 0)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8" standalone="no"?>
++<launchConfiguration type="org.eclipse.ant.AntBuilderLaunchConfigurationType">
++<booleanAttribute key="org.eclipse.ui.externaltools.ATTR_BUILDER_ENABLED" value="false"/>
++<stringAttribute key="org.eclipse.ui.externaltools.ATTR_DISABLED_BUILDER" value="com.google.appengine.eclipse.core.enhancerbuilder"/>
++<mapAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS"/>
++<booleanAttribute key="org.eclipse.ui.externaltools.ATTR_TRIGGERS_CONFIGURED" value="true"/>
++</launchConfiguration>
+Index: src/gwt/client/map/AreaMap.java
+===================================================================
+--- src/gwt/client/map/AreaMap.java	(revision 178)
++++ src/gwt/client/map/AreaMap.java	(working copy)
+@@ -88,6 +88,7 @@
+ 		imd.get(x).set(y, o);
+ 	}
+ 	public void init() {
++		
+ 		setiMD(getXsize(),getYsize());
+ 
+ 		for (int x = 0; x < getXsize(); x++) {
+@@ -99,6 +100,14 @@
+ 		visited=new boolean[getXsize() + 1][getYsize() + 1];
+ 
+ 	}
++	public void initIfNeeded(){
++		if(get(VConstants.imd) == null){
++			init();
++		}
++		if(visited == null){
++			visited=new boolean[getXsize() + 1][getYsize() + 1];
++		}
++	}
+ 
+ 	public int getXsize() {
+ 		return getInt(VConstants.xsize);
+Index: gwt-image-loader-1.1.4.jar
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+
+Property changes on: gwt-image-loader-1.1.4.jar
+___________________________________________________________________
+Added: svn:mime-type
+   + application/octet-stream
+
+Index: .settings/com.google.gdt.eclipse.core.prefs
+===================================================================
+--- .settings/com.google.gdt.eclipse.core.prefs	(revision 141)
++++ .settings/com.google.gdt.eclipse.core.prefs	(working copy)
+@@ -1,4 +1,4 @@
+-#Wed Feb 09 06:57:53 EST 2011
++#Fri Mar 11 04:58:28 EST 2011
+ eclipse.preferences.version=1
+-jarsExcludedFromWebInfLib=
+-warSrcDir=
++warSrcDir=war
++warSrcDirIsOutput=true
+Index: src/gwt/client/main/MoveRandomFullMapData.java
+===================================================================
+--- src/gwt/client/main/MoveRandomFullMapData.java	(revision 172)
++++ src/gwt/client/main/MoveRandomFullMapData.java	(working copy)
+@@ -22,8 +22,8 @@
+ 	int count = 0;
+ 	FullMapData md = null;
+ 	while(md == null&&count < 10){
+-		int xr = VConstants.random.nextInt(getRadius()*2 +1);
+-		int yr = VConstants.random.nextInt(getRadius()*2+1);
++		int xr = VConstants.getRandom().nextInt(getRadius()*2 +1);
++		int yr = VConstants.getRandom().nextInt(getRadius()*2+1);
+ 		xr -= getRadius();
+ 		yr -= getRadius();
+ 		if(xr == 0&& yr== 0){
+Index: .settings/com.google.gwt.eclipse.core.prefs
+===================================================================
+--- .settings/com.google.gwt.eclipse.core.prefs	(revision 141)
++++ .settings/com.google.gwt.eclipse.core.prefs	(working copy)
+@@ -1,3 +1,5 @@
+-#Sun Feb 06 13:22:52 EST 2011
++#Wed Jun 01 18:47:21 EDT 2011
+ eclipse.preferences.version=1
+-gwtCompileSettings=PGd3dC1jb21waWxlLXNldHRpbmdzPjxsb2ctbGV2ZWw+SU5GTzwvbG9nLWxldmVsPjxvdXRwdXQtc3R5bGU+T0JGVVNDQVRFRDwvb3V0cHV0LXN0eWxlPjxleHRyYS1hcmdzPjwhW0NEQVRBW11dPjwvZXh0cmEtYXJncz48dm0tYXJncz48IVtDREFUQVstWG14NTEybV1dPjwvdm0tYXJncz48L2d3dC1jb21waWxlLXNldHRpbmdzPg\=\=
++entryPointModules=
++filesCopiedToWebInfLib=gwt-servlet.jar
++gwtCompileSettings=PGd3dC1jb21waWxlLXNldHRpbmdzPjxsb2ctbGV2ZWw+SU5GTzwvbG9nLWxldmVsPjxvdXRwdXQtc3R5bGU+REVUQUlMRUQ8L291dHB1dC1zdHlsZT48ZXh0cmEtYXJncz48IVtDREFUQVtdXT48L2V4dHJhLWFyZ3M+PHZtLWFyZ3M+PCFbQ0RBVEFbLVhteDUxMm1dXT48L3ZtLWFyZ3M+PC9nd3QtY29tcGlsZS1zZXR0aW5ncz4\=
+Index: src/gwt/shared/SideBar.java
+===================================================================
+--- src/gwt/shared/SideBar.java	(revision 181)
++++ src/gwt/shared/SideBar.java	(working copy)
+@@ -110,7 +110,7 @@
+ 	}
+ 	public static String getClientRep(String signinrep,String url){
+ 		return 
+-		getRep(signinrep, url)+" "+getRep("gamelist", "/displaypersongames")+ getRep("profile", "/profile");
++		getRep(signinrep, url)+" "+getRep("gamelist", "/displaypersongames")+" "+ getRep("profile", "/profile");
+ 	}
+ 
+ 
+Index: src/gwt/client/output/HtmlOut.java
+===================================================================
+--- src/gwt/client/output/HtmlOut.java	(revision 179)
++++ src/gwt/client/output/HtmlOut.java	(working copy)
+@@ -32,6 +32,7 @@
+ import java.util.Map;
+ import java.util.Set;
+ 
++import com.google.gwt.canvas.client.Canvas;
+ import com.google.gwt.dom.client.ImageElement;
+ import com.google.gwt.event.dom.client.ErrorEvent;
+ import com.google.gwt.event.dom.client.ErrorHandler;
+@@ -49,7 +50,7 @@
+ import com.google.gwt.widgetideas.graphics.client.ImageLoader;
+ import com.google.gwt.widgetideas.graphics.client.impl.CanvasGradientImplDefault;
+ 
+-public class HtmlOut extends MainPanel<GWTCanvas> {
++public class HtmlOut extends MainPanel<GCanvas> {
+ 
+ 	public static final String DISPLAY_MAP_DATA = "displayMapData";
+ 	public static final String refreshList = "refreshlist";
+@@ -180,15 +181,16 @@
+ 
+ 	Set<String> missingImages = new HashSet<String>();
+ 	String[] equipOrder = new String[]{VConstants.weapon,VConstants.gloves};
+-	public void drawAreaMap(AreaMap parent,final GWTCanvas symbolicShell2) {
++	public void drawAreaMap(AreaMap parent,final GCanvas symbolicShell2) {
+ 		
+ 		
+ 		//label = (Label) shell.getChildren()[0];
+ 		if(missingImages.size() > 0){
+ 			List<String> l = new ArrayList();
+ 			for(String a : missingImages){
+-				l.add("/images/"+a+".png");
++				l.add("/images/"+a.replace(" ", "_")+".png");
+ 			}
++			
+ 			loadImages(l.toArray(new String[0]));
+ 		}
+ 		missingImages.clear();
+@@ -224,7 +226,7 @@
+ 				 	
+ 		
+ 	}
+-	public void drawImage(final GWTCanvas symbolicShell2, final int y,
++	public void drawImage(final GCanvas symbolicShell2, final int y,
+ 			final int x, String text) {
+ 		if (imap == null) {
+ 			return;
+@@ -243,7 +245,8 @@
+ 		}
+ 		final ImageElement ie = imap.get(text);
+ 		if(ie != null){
+-			symbolicShell2.drawImage(ie, x * imagesize, y * imagesize);	
++		
++			symbolicShell2.getContext2d().drawImage(ie, x * imagesize, y * imagesize);	
+ 		}
+ 		
+ 
+@@ -291,7 +294,7 @@
+ 	}
+ 	public FullMapData currentFMD;
+ 	@Override
+-	public void remove(GWTCanvas canvas) {
++	public void remove(GCanvas canvas) {
+ 		// for (int row = 0; row < panel.getRowCount(); row++) {
+ 		// for (int col = 0; col < panel.getCellCount(row); col++) {
+ 		// Widget w = panel.getWidget(row, col);
+@@ -306,30 +309,30 @@
+ 		clearedList.add(canvas);
+ 	}
+ 
+-	List<GWTCanvas> clearedList = new ArrayList<GWTCanvas>();
++	List<GCanvas> clearedList = new ArrayList<GCanvas>();
+ 	int scount = 0;
+ 	HorizontalPanel canvasPanel;
+ 
+ 	@Override
+-	protected GWTCanvas addShell(AreaMap parent, int sizex, int sizey,
++	protected GCanvas addShell(AreaMap parent, int sizex, int sizey,
+ 			SEventClick ml) {
+ 		if (scount > getFmdSize()) {
+ 
+ 			return clearedList.remove(0);
+ 		}
+-		GWTCanvas gwtcanvas = new GCanvas(this, sizex, sizey);
++		GCanvas canvas = new GCanvas(this, sizex, sizey);
+ 		
+ //		
+ //		CanvasGradientImplDefault canvasGradientImplDefault = new CanvasGradientImplDefault();
+-//		gwtcanvas.setStrokeStyle(canvasGradientImplDefault);
++//		Canvas.setStrokeStyle(canvasGradientImplDefault);
+ //		canvasGradientImplDefault.addColorStop(0, new Color(71, 108, 108));
+ //		
+-		gwtcanvas.setBackgroundColor(new Color(40, 40, 40));
++		//canvas.getContext2d().setBackgroundColor(new Color(40, 40, 40));
+ 
+ 		// add one that calls the event handler
+ 		Click c = new Click(ml);
+-		gwtcanvas.addDomHandler(c, MouseDownEvent.getType());
+-
++		//canvas.addDomHandler(c, MouseDownEvent.getType());
++		canvas.can.addMouseDownHandler(c);
+ 		// if (scount == 0) {
+ 		// VerticalPanel vp = new VerticalPanel();
+ 		// HorizontalPanel hp = new HorizontalPanel();
+@@ -350,9 +353,9 @@
+ 		// panel.setWidget(HtmlOutRow, 1, vp);
+ 		// }
+ 		scount++;
+-		canvasPanel.add(gwtcanvas);
++		canvasPanel.add(canvas.can);
+ 
+-		return gwtcanvas;
++		return canvas;
+ 
+ 	}
+ 
+@@ -376,10 +379,8 @@
+ 			uv.update();
+ 		}
+ 		super.refreshFmds();
+-		for(GWTCanvas ss: fmdMap.values()){
+-			
+-		}
+ 		
++		
+ 	}
+ 	
+ 	public static void loadImages(final String[] files) {
+Index: src/gwt/client/main/base/PercentageMap.java
+===================================================================
+--- src/gwt/client/main/base/PercentageMap.java	(revision 168)
++++ src/gwt/client/main/base/PercentageMap.java	(working copy)
+@@ -38,7 +38,7 @@
+ 			if(b == null){
+ 				b = map.get(a);
+ 			}
+-			if(b >VConstants.random.nextInt(100)){
++			if(b >VConstants.getRandom().nextInt(100)){
+ 				return a;
+ 			}
+ 		}
+Index: src/gwt/client/map/SymbolicMap.java
+===================================================================
+--- src/gwt/client/map/SymbolicMap.java	(revision 176)
++++ src/gwt/client/map/SymbolicMap.java	(working copy)
+@@ -26,6 +26,7 @@
+ 	
+ 	}
+ 
++
+ //	@Override
+ //	protected void init() {
+ //		iMD = new MapData[xsize][ysize];
+Index: src/gwt/server/EditJson.java
+===================================================================
+--- src/gwt/server/EditJson.java	(revision 179)
++++ src/gwt/server/EditJson.java	(working copy)
+@@ -37,9 +37,10 @@
+ 		long id;
+ 		JsonData jd;
+ 
++
+ 		if (request.getParameter("new") != null) {
+ 
+-			jd = new JsonData("new");
++			jd = new JsonData("new",info.person);
+ 			jd.setData(new Blob("aoeu".getBytes()));
+ 			Key k = SDao.getJsonDataDao().put(jd);
+ 
+@@ -67,6 +68,9 @@
+ 		
+ 		String parameter = request.getParameter("jsonname");
+ 		if(parameter != null){
++			if(info.person == null||!info.person.id.equals(jd.ownerId)){
++				return;
++			}
+ 			jd.name = parameter;
+ 			jd.setData(new Blob(request.getParameter("text").getBytes()));
+ 			SDao.getJsonDataDao().put(jd);
+Index: src/gwt/client/main/mapobjects/AddAnimals.java
+===================================================================
+--- src/gwt/client/main/mapobjects/AddAnimals.java	(revision 168)
++++ src/gwt/client/main/mapobjects/AddAnimals.java	(working copy)
+@@ -18,12 +18,12 @@
+ 
+ 		
+ 		
+-			if(VConstants.random.nextInt(20) == 0){
++			if(VConstants.getRandom().nextInt(20) == 0){
+ 
+ 				addPack(fmd, "wolf");
+ 					
+ 			}
+-			if(VConstants.random.nextInt(20) == 1){
++			if(VConstants.getRandom().nextInt(20) == 1){
+ 
+ 				addPack( fmd, "deer");
+ 				System.out.println(fmd.getPosition());	
+Index: src/gwt/client/edit/BagMap.java
+===================================================================
+--- src/gwt/client/edit/BagMap.java	(revision 179)
++++ src/gwt/client/edit/BagMap.java	(working copy)
+@@ -19,6 +19,7 @@
+ import gwt.client.output.OutputDirector;
+ import gwt.client.output.SEventClick;
+ import gwt.client.output.html.Click;
++import gwt.client.output.html.GCanvas;
+ import gwt.shared.datamodel.VParams;
+ 
+ import com.google.gwt.core.client.GWT;
+@@ -27,6 +28,7 @@
+ import com.google.gwt.event.dom.client.ClickEvent;
+ import com.google.gwt.event.dom.client.ClickHandler;
+ import com.google.gwt.event.dom.client.MouseDownEvent;
++import com.google.gwt.event.dom.client.MouseDownHandler;
+ import com.google.gwt.user.client.ui.Button;
+ import com.google.gwt.user.client.ui.Label;
+ import com.google.gwt.user.client.ui.TextBox;
+@@ -51,23 +53,25 @@
+ 
+ 	}
+ 
+-	public GWTCanvas bagCanvas;
++	public GCanvas bagCanvas;
+ 
+ 	public void init() {
+ 
+-		bagCanvas = new GWTCanvas(getInt(VConstants.xsize) * HtmlOut.imagesize,
++		bagCanvas = new GCanvas(getInt(VConstants.xsize) * HtmlOut.imagesize,
+ 				getInt(VConstants.ysize) * HtmlOut.imagesize);
+-		bagCanvas.setBackgroundColor(new Color(40, 40, 40));
+-		Click c = new Click(bag);
+-		bagCanvas.addDomHandler(c, MouseDownEvent.getType());
++		//bagCanvas.setBackgroundColor(new Color(40, 40, 40));
++		
++		//bagCanvas.addDomHandler(c, MouseDownEvent.getType());
++		bagCanvas.can.addMouseDownHandler(bag);
+ 
+ 	}
+ 
+-	SEventClick<GWTCanvas> bag = new SEventClick<GWTCanvas>() {
+-
++	MouseDownHandler bag = new MouseDownHandler() {
++		
+ 		@Override
+-		public void execute(int x, int y, GWTCanvas sender) {
+-
++		public void onMouseDown(MouseDownEvent event) {
++			int x= event.getX();
++			int y = event.getY();
+ 			Object md = getBagMap().getData(x / HtmlOut.imagesize,
+ 					y / HtmlOut.imagesize);
+ 			if (md == null) {
+@@ -75,10 +79,13 @@
+ 			}
+ 			AttachUtil.run(AttachUtil.clickfmd, md, BagMap.this);
+ 
+-			update();
++			update();			
+ 		}
+-	};
++	}; 
++		
++		
+ 
++
+ 	public MapDataAreaMap getBagMap() {
+ 		return (MapDataAreaMap) get(VConstants.bagmap);
+ 	}
+@@ -95,7 +102,7 @@
+ 	@Override
+ 	public Widget getWidget() {
+ 
+-		return bagCanvas;
++		return bagCanvas.can;
+ 	}
+ 
+ 	@Override
+Index: src/gwt/client/main/ChildsPlay.java
+===================================================================
+--- src/gwt/client/main/ChildsPlay.java	(revision 172)
++++ src/gwt/client/main/ChildsPlay.java	(working copy)
+@@ -15,7 +15,7 @@
+ 		if(person.getItems().size() > 0){
+ 			addToList(person, new ReturnFood());
+ 		} 
+-		if(VConstants.random.nextInt(10) < 6){
++		if(VConstants.getRandom().nextInt(10) < 6){
+ 			LivingBeing child = null;
+ 			for(LivingBeing lb :person.getGroup().getFamily()){
+ 				if(!lb.equals(person)&&lb.getName().contains("child")){
+Index: .project
+===================================================================
+--- .project	(revision 141)
++++ .project	(working copy)
+@@ -1,28 +1,35 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<projectDescription>
+-	<name>test</name>
+-	<comment></comment>
+-	<projects>
+-	</projects>
+-	<buildSpec>
+-		<buildCommand>
+-			<name>org.eclipse.jdt.core.javabuilder</name>
+-			<arguments>
+-			</arguments>
+-		</buildCommand>
+-		<buildCommand>
+-			<name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
+-			<arguments>
+-			</arguments>
+-		</buildCommand>
+-		<buildCommand>
+-			<name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
+-			<arguments>
+-			</arguments>
+-		</buildCommand>
+-	</buildSpec>
+-	<natures>
+-		<nature>org.eclipse.jdt.core.javanature</nature>
+-		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
+-	</natures>
+-</projectDescription>
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>villagedc</name>
++	<comment></comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.jdt.core.javabuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>com.google.gwt.eclipse.core.gwtProjectValidator</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>com.google.appengine.eclipse.core.projectValidator</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.jdt.core.javanature</nature>
++		<nature>com.google.appengine.eclipse.core.gaeNature</nature>
++		<nature>com.google.gwt.eclipse.core.gwtNature</nature>
++	</natures>
++</projectDescription>
+Index: src/gwt/client/main/MapArea.java
+===================================================================
+--- src/gwt/client/main/MapArea.java	(revision 180)
++++ src/gwt/client/main/MapArea.java	(working copy)
+@@ -193,6 +193,7 @@
+ 	}
+ 
+ 	private void runAllMapDatas(FullMapData fmd) {
++		fmd.initIfNeeded();
+ 		for(HashMapData hmd:fmd){
+ 			for(MapData md:hmd.values()){
+ 				if(md instanceof GEvent){
+Index: src/gwt/client/main/MList.java
+===================================================================
+--- src/gwt/client/main/MList.java	(revision 168)
++++ src/gwt/client/main/MList.java	(working copy)
+@@ -143,7 +143,7 @@
+ //		return list.toString();
+ //	}
+ 	public T getRandom() {
+-		return list.get(VConstants.random.nextInt(size()));
++		return list.get(VConstants.getRandom().nextInt(size()));
+ 	}
+ 	@Override
+ 	public String toString() {
+Index: src/gwt/client/game/ApplyDamage.java
+===================================================================
+--- src/gwt/client/game/ApplyDamage.java	(revision 181)
++++ src/gwt/client/game/ApplyDamage.java	(working copy)
+@@ -56,7 +56,7 @@
+ 		if(!VConstants.physical.equals(type)){
+ 			evade =(Integer)s1.get(mevade);
+ 		}
+-		if(evade != null&&VConstants.random.nextInt(100) <= evade){
++		if(evade != null&&VConstants.getRandom().nextInt(100) <= evade){
+ 			//do miss animation and return
+ 			damage = 0;
+ 		}
+Index: .settings/org.eclipse.jdt.core.prefs
+===================================================================
+--- .settings/org.eclipse.jdt.core.prefs	(revision 141)
++++ .settings/org.eclipse.jdt.core.prefs	(working copy)
+@@ -1,12 +1,12 @@
+-#Tue Sep 14 10:35:55 EDT 2010
+-eclipse.preferences.version=1
+-org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
+-org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
+-org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
+-org.eclipse.jdt.core.compiler.compliance=1.6
+-org.eclipse.jdt.core.compiler.debug.lineNumber=generate
+-org.eclipse.jdt.core.compiler.debug.localVariable=generate
+-org.eclipse.jdt.core.compiler.debug.sourceFile=generate
+-org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+-org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+-org.eclipse.jdt.core.compiler.source=1.6
++#Fri Mar 18 22:32:10 EDT 2011
++eclipse.preferences.version=1
++org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
++org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
++org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
++org.eclipse.jdt.core.compiler.compliance=1.6
++org.eclipse.jdt.core.compiler.debug.lineNumber=generate
++org.eclipse.jdt.core.compiler.debug.localVariable=generate
++org.eclipse.jdt.core.compiler.debug.sourceFile=generate
++org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
++org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
++org.eclipse.jdt.core.compiler.source=1.6
+Index: src/gwt/client/main/Game.java
+===================================================================
+--- src/gwt/client/main/Game.java	(revision 180)
++++ src/gwt/client/main/Game.java	(working copy)
+@@ -22,6 +22,7 @@
+ import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Random;
+ import java.util.Set;
+ 
+ import javax.persistence.Embedded;
+@@ -451,4 +452,22 @@
+ 		
+ 		super.put(key, object);
+ 	}
++
++
++
++	public Random getRandom() {
++		
++		Object random =  get(VConstants.random);
++		if(random == null){
++			Integer seed = (Integer) get(VConstants.seed);
++			if(seed != null){
++				random = new Random(seed);	
++			} else {
++				random = new Random();
++			}
++			
++			put(VConstants.random,random);
++		} 
++		return (Random) random;
++	}
+ }

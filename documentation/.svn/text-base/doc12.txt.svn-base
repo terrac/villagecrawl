@@ -1,0 +1,147 @@
+1 expand and fix up trading
+  #a make favor like money (ie not in item list)
+  b put every race + gnolls into the list and give each race a money value
+  c the money value determines how high you should go (1+ through +5) or (-1 through -5) (translates to percentages
+  d then there is an additional + or - 1 random element
+  e add to the trader job a "replenish stores" action.  If the trader is low on money it tries to sell goods.  If the trader is high on money
+    and low on items then it tries to buy goods (it does this with the friendly people
+11 marketplace
+   a in between hour 5 and 6 everyone should go to the marketplace
+   b they should then trade items.  Each person should have a goal of having X
+    food, X basic goods, X weapons,etc.  Then the trading should check their jobs 
+    for additional needs ( like a goldsmith needing gold, a baker needing wheat, etc
+     
+2 add the sleep overlay to the sleep template
+  #a on sleep make the people move to the bed and fall asleep 
+  #b make several beds 
+  c and have them claim a bed (by putting their id on it)
+3 add enemy monsters and new friendly people
+  
+4 start working on the professions
+  a bakery - baker should gather and trade for wheat and then make bread
+  b tannery - tanner should gather leather (produced from an animal corpse) and then make boots/leather caps/ leather skirts / leather pants/ leather armor
+  c blacksmith - should gather iron and copper and then make swords/maces/hammers/scythes/axes
+  d masonry - should gather clay and make blocks.  Blocks should eventually be required for all sorts of buildings
+
+
+
+
+
+
+
+
+
+1 make the sounds go onto the template as sound 
+(so that trading other can be trading to)
+2 hunger
+
+3 make the sounds as hits (ie for example a fight noise and flashing
+when an enemy attacks)
+4 add the enemy attacker in monster entrance
+5 add the extra people in monster entrance
+
+
+
+
+
+1 hunger
+  a make sure trade is added in with the favor concept
+  b in addition favor can be traded for money or other items
+2 sounds
+  a middle sound (neither side won in the trade
+  #b a dancing sound  (probably some rythmic music)
+  #c a singing sound  (simple small tune
+  #d a walking sound ( several steps
+  #e a building sound (like a hammer)
+  #f a farming sound (cows pigs, something like that)
+  #g a trading sound (like maybe a merchant area sound)
+  
+  #h for the sounds all of the people are looked through
+    and 1 is played about each second (need to control for speed)
+    at random
+
+5 put the last game front and center on the site
+  a on the build script add to a "lastgame added variable", display on site
+
+2 work on trading more
+3 make it so that farmers place food in barns
+4 make hunger go to the water to drink and the barns to eat
+5 try some of the additional buildings
+6 basically the buliding should create a job that then trades with the current trader, selling their items
+7 make more people come in and stay if there are enough jobs
+8
+
+
+
+
+
+
+#1 make trade actually trade
+#2 make the button close the trade popup
+#3 make the monster leave after trading 
+#4 integrate the dropped spots with the jobs.
+#  a for placed create an add job vparam and add it to all of the different things using a method
+# Add spots for farming #(a barn)( a house with a small pig)
+#  recruitable is still the same
+  trading should directly be tied to the job
+  make sure the cloneselect or copyselect calls placed
+
+
+
+1 make the draw equipment draw it onto a canvas and then put that canvas in the id to be directly drawn
+  #for the most part done
+  a figure out why none of the equipment is being seen.  
+  b try putting out all of the canvas elements to the canvas area in order to check
+  c implement changing it later
+2 research why drawing the arrows makes things so slow 
+  #(and to start with change it to draw a single arrow rather than one for each tile)
+  b understand cache better
+
+
+1 make farming hunt too
+1 make trade actually trade
+2 make the button close the trade popup
+3 expand trading significantly
+4 make the sim elements do the basics well
+5 add all the different creation items
+   a a general action that takes items with properties and creates a good
+   b an action that sets the specific items to be created and that moves to the right spot
+     1 tannery - leather armor, gloves, boots
+     2 blacksmith - hammer , sword, scythe 
+     3 goldsmith - gold ring, iron ring, ring of slaying
+     4 bakery - bread , pizza
+     5 masonry - brick (you start out with bricks to build the unbuilt areas, and build more to build more areas)
+6 add the wandering monsters
+
+
+
+
+
+
+
+interaction
+  a trade
+    1 do the start   
+  b set things up so that there is easy interaction on the phone
+     1 focus interaction on placing items
+     2 one item will be a " come guards" item
+     3 one will be a wall item to funnel people
+     4 make it so that you can move people on the phone (especially combat people)
+  c make sure the random monsters attack
+  d make the extended item creation and resource gathering set
+  e have a series of tutorial games showing the usage of each type of item
+  
+  log
+  1 log when can't find a sewing machine / trade area / etc (they then just do the wait template, and suggest a sewing machine)
+  2 ( also make the action break at this point)
+  
+  placements
+  1 placing a place should add an additional job for that
+  
+  
+  3 trading (the trader moves to the closest person and tries to initiate trade
+       c each trader comes out with some randomly generated items
+         1 some basic goods (food/cloth/metal/tea/spices/etc)
+           a create basic good list on random item generator
+         2 plus some rare items (weapons/other eqpipment/trinkets with a history)\
+           a create rare item list on random item generator

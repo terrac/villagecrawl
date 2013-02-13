@@ -1,0 +1,1750 @@
+story game (radius starts at 4) (inherits from culture and uses methods from it)
+1 initially you are given a breadmaker
+2 then bob the beermaker comes in through trading
+3 then a choice between a tannery or a bookmaker (someone wants to choose one or the other)
+5 then a guardhouse comes 
+4 then a bookmaker/tannery quest (bookmaker wants to print something risque/the guard wants to go off and fight some bandits) 
+  if the guard wins you get a few extra trades due to safer trade routes and the occasional comment by merchants
+6 an animal attacks
+7 then a doctors house comes
+8 sickness strikes someone
+9 more choices about buildings (and at this point the happiness/other stats start being visibly affected by the placement and choices you have made)
+10 some quest associated with the amount of the buildings you choose
+
+1 choices that influence the buildings that you build
+  a direct this or that choices (like bookmaker or guardhouse, but make it random)
+2 some reason to actually have the different buildings
+  a events come out based on the amount and types of buildings you have
+  b for example several beermakers will start a beerfest (if you have bob he starts it (because of a trait))
+    1 the beerfest brings all but the most antisocial people to dance, and it creates a makeshift area for that
+  c bookstores will allow a university to be built by some famous person called mariangela
+    1 starts journalism related subquests ( like israeli type suppression will make her mad, and do stuff, if you don't she will leave for 
+      some other country that does
+    2 she is doing an inquest into one of the other types you have (like the guards and corruption
+  d guards will create gilgamesh (and his associated stuff)
+    (up to einkadu and party, leaving, and then him dying of disease)
+    
+  e goldsmiths add a lot to gdp, but attract the occasional bandit who demands tribute and you have to pay if you don't have enough guards
+  f a tannery will upgrade the guards to leather
+  g a courthouse would cut down on mafia increases from too much money
+  h and of course the doctor
+1 stat change
+  a make stats infectious
+
+4 culture.person has a list of types pointing to stats pointing to stat changes
+  a add personal stats
+  b create the change in stat actions
+  c test by running again
+  
+5 create a secondary "default structure that allows for gameplay testing
+   a need win or lose
+   b need structure from beginning to end
+   c map based ideally to provide diversity
+  
+5 (then people take the appropriate stat changes and change them in the overlay
+  a and c
+1 on complex add a method that creates a two story choice 
+  a take from culture list a list of traits
+  b description of the traits
+  c and given a choice (X wants to hire between two people, which would you suggest) 
+  d they then alter stats based on the type of person 
+    1 ENTJ 1 for leader
+    2 INFP for temple
+      ES for beermaker
+      IN for books
+      IS for tannery
+      ES for breadmaker
+    3 the closer to the right meyer briggs they wil do better
+    4 plus some bad apples with various issues (that just apply an additional negative thing)
+1 a series of visual cues
+  a complaints
+  b happy and sad overlays for a turn (depending on happiness)
+  c fill need takes the initial stat, does the thing that alters it, and then gives the specific overlay for the number of turns that it changed
+    (so for example if it does a mal adaptive thing it might go down in sadness for 10 turns
+1 chat issues (
+  What's poisonous is contempt and resentment. When you disagree, do you discuss the issue or the person? Is it, "I want sushi, but you want pizza" or is it, "You always want sushi, I never get pizza."
+
+Subtle difference, but those little things are so much more important than most people realize. The latter phrase shows the person is the problem, uses absolute always/never language which pushes the other away, shows that someone is "keeping score" and thus not letting go of negative feelings (resentment), and a sense of blaming the partner for "causing" the pain and disregard for the partner's desires (contempt).
+
+1 fillneed -> social (find another person based on critera and interact in various ways) (chatroom stuff)
+              #food (get item or forage if none)
+              water (good pottery helps)
+
+1 unique characters introduced to each other who then interact
+   a a list of "sees" and "dos" that are given to each person
+   b see unhappiness -> talk bad about person to leader.
+   c leader recieves action and reacts based on their action
+   d then the jerk might try to one up it by directly confronting and telling them to leave.
+   
+   e another might try acts of service
+   f another might try quality time
+   g another might try words of affirmation
+   h another might try a hug
+   i another might give a gift (give all of these a percentage from 0 to 100)
+   
+   j the team making doesn't happen instantly.  It happens over time and actions
+   h and so on team related things
+2 incompetence
+  
+
+   
+2 trading items should base the price on how well the village is producing that item
+3 unique events as well
+4
+
+#1 move log back out to front
+#2 make storyevent do log if given some parameter or some lack of parameter
+3 add in a personal vparam that moves personal stats
+#4 make storyevent add the person name in front on a log
+
+1 first map
+  #a create state that creates a baker
+  b it complaints
+  #c give a beermaker
+  d both go and fill needs at the beermaker
+  f goal (for now just do based on turns )
+ 2 complaints
+   a put in culture.need.stats 
+   b have fill need pull from that
+   c 
+
+1 fill need alter behavior with the general corruption stuff
+  a move the appropriate lines to culture.need.stats
+  b make the lines moved appropriately change stats (locally happiness up, maybe. other stats as well)
+  c keep on going with the stats and the fill need concept
+
+1 quests
+  a should we implement an incentive system for X (yes no, stats depend on which industry)
+  b should we add more market based ideas? (same)
+  c should we encourage busy work when people have nothing to do?  (same)
+  d how should we hire people? (add more later)
+
+
+2 figure out the checkstat thing
+3 do team and then more
+
+1 fill need
+  a goes into culture and tries to fill whatever needs are low
+  b the only need to start with is happiness
+  c it adds in complaint and jerk (depending on person)
+  d secondly do health (food) 
+  e note that if a stat is low and can't be filled it only goes down 20%
+
+1 do all of that (addition of team too)
+  a initial lines
+  b second revision
+  c 
+  d
+  
+2 then go deeper into specific complaints by personality type
+  a implement jerk as a feel need (basically on high stress jerk gets activated and does something jerkish
+  b implement complaints as feel need too (same)
+  c also meditation
+  d socializing ( smalltalk)
+  e team stuff
+
+1 5 complaints > 20 corruption (too much corruption)
+ a 2 complaints < 30 corruption  ( too little)   
+2 3 complaints > 40 corruption
+
+3 3 complaints < 40 niceness
+4 2 other team quotes (if part of team)
+5 2 same team quotes (if same team)
+6 2 leader quotes (if leader)
+7 1 team event (quest) (if part of team) (alters stats)
+
+1 negative team events (these alter the stats additionally)
+  a 1 person talk behind another's back  < 20 niceness
+  b 1 person cheats a person on the same team > 40 corruption
+  c                             a different team > 20 corruption
+  d 1 one person talks behind another's back who has a low niceness level < 40 niceness
+
+2 positive team events 
+  a one person helps another with something (adds to stats)
+  b two people share a general positive chat  
+ 
+
+1 goal nice atmosphere
+ (subgoals)
+  a reform jerk  (yes no that alter jerk stat)
+    1 reform jerk #1
+    2             #2
+    3             #3
+  b get rid of jerk (yes no that alter jerk happiness
+    1 
+    2 
+    3
+  c marganilize jerk (yes no that alter's society jerk stats
+    1
+    2
+    3
+2 goal thriving economy
+  a so much gdp
+  b so many people
+  c etc
+
+(all of this pops up at the end and gives a report)
+
+
+
+
+  
+1 quests are same as comments
+2 put all comments as meyers  briggs 1 or something
+3 skill mappings (ie when you look for a skill and it doesn't exist then try to get it from the mappings
+
+1 create team object
+  a create team template and put on all people
+  b team goes through everyone with the same team (not neutral)
+  c team weights nearness + leader + current leaders and decides if the current person should be a leader
+  d then it does the same to determine which team it should be a part of
+  e then it does team related actions
+2 team related actions
+  a if jerk is high (on society)
+    pulls a list of jerk society complaints 
+  b same with team and leader (different complaints)
+(test)
+1 meyer's briggs
+  a seperate out all comments by meyer's briggs
+  
+
+1 seperate out things like quests the same way
+2 focus on a specific storyline and the generic things
+3 after accumulating a few quests release it
+4 focus on problems today translated
+5 give a chatroom feel
+
+Jerk = TJ + niceness of society
+
+1 team action
+  a determine leader by leader stat (extro + judging)
+  b do so by nearness
+  c also by combination of two (ie you might have many small leaders or a heirarchy of leaders)
+  
+2 events and reactions based on meyer's briggs + leaders + random chance  
+  a just go with experiences  
+
+1 compressed individual maps with a clear and consistent story
+2 simple goals (like jerk to X, number of turns gives score)
+
+1 specific story
+  a % chance of salesman or engineer coming first
+  b then other follows
+  c (intro through initial trading)
+  d salesman has a proposal to
+
+
+1 salesman and engineer
+  a the engineer and the salesman both come on in a fairly short time.
+  b the salesman starts out a complete manipulative jerk
+  c your job is to manage the two characters and a host of minor characters into a friendly team
+
+1 jerk
+  a talking about people behind their back
+  b double dealing (ie trying to take a large share of profits
+  c give a backstory (ie I can do this to others because this is how I was raised
+  d good salesman
+  e will hire people with similar traits    
+  
+1 hiring process
+  a should the most efficent person direct the hiring process?
+  b should the nicest person direct the hiring process?
+  c should a balanced person direct the hiring process
+  d people hire others like themselves.  If the nicest person is a builder for example
+   they will hire other mostly similar builders 
+  
+1 quests
+  a should we implement an incentive system?
+  b should we add more market based ideas?
+  c should we encourage busy work when people have nothing to do?  
+  d how should we hire people?
+1 goal nice atmosphere
+ (subgoals)
+  a reform jerk
+  b get rid of jerk
+  c marganilize jerk
+2 goal thriving economy
+  a so much gdp
+  b so many people
+  c etc
+1 log action
+2
+
+1 general actions
+  a check a society and personal
+  b check personal wealth
+  c execute action
+
+1 do stories that are breaking culture 
+  a story of someone leaving due to bad working conitions
+    1 check jerkish society
+    2 check personal jerkish
+    3 check amount of personal wealth (ie how many farms)
+    4 have that determine the random chance of leaving
+    
+  b story of someone getting startled due to same
+    1 check personal and soc
+    2 log jump
+  c story of engineer trying to fix conditions by building something
+    #1 high jerkish level
+    2 tries to improve efficency with product
+    #3 does, but doesn't alter jerkish
+  d story of bad working conditions (ie complaints)
+    1 complaint about jerkish behaviors from random people (similar to startling
+  e story of finally improving by trickery (ie taking sick leave to improve)
+    a the efficency has been upgraded, but it is being stopped by something (like say random chance of something)
+    b the story is about the character doing something to unstop it
+2 do a general jerk story with more emphasis on how a jerk alters the behavior of the people around them and a few story endings
+   a jerk gets the team they are on or creates it
+   b jerk alters the points of the team they are on
+  (like one where he goes off to do sales, another where he is driven out, etc)
+3 general team stories (ie things like saying go team, specific team cultural things, team identifiers)
+  
+4 the goal is to have people coming in and these tiny stories being executed among them constantly
+  so that each individual has a story (with some more set than others
+
+
+
+
+1 break each storyevent into things that happen due to certain attributes being set and a random % probablity
+2 so then you have people randomly coming in who can follow semirandom stories
+3 then do more stories
+
+
+
+1 barganing with gilgamesh (if successful then you get a guardhouse with a giant( gilgamesh)
+2 once you place it gilgamesh has both the mafia and the guard templates 
+   ( without the story its just a guardhouse with the additional mafia template that can be cured by some sort of time occupying thing)
+
+1 then given a litle while einkadu shows up with his animals (also a giant)
+2 a temple is given and once it is placed the prostitute will go and stay a while
+3 then einkadu is no longer neutral and the animals flee.
+4 he gets a hunter template and starts to ward off animals
+  (without the wildman is not a giant, and an existing temple will work as well, also less animal)
+
+1 a beermaker and a breadmaker are given (if they don't exist)
+  b a party is thrown and people celebrate with einkadu as guest of honor
+    (guest is chosen semirandomly otherwise
+
+1 break each historical story into small stories
+  a gilgamesh
+  b einkadu and prostitute
+  c einkadu meets civilization 
+  d eninkadu meets gilgamesh
+  e they leave to slay a monster
+  f one is killed by disease
+  g team creation
+2 they reference people by name and use a generic person if no name
+3 the initial ones offer some initial choice (like for example barganing with gilgamesh) and then 
+
+1 create a ordered list action
+  a add a person component to story events
+  b for ease just let it use a specific name 
+  c make the story set up or get the names
+  d
+  
+  
+  
+  
+  
+  
+
+1 lists of actions that point from a specific set of stats 
+  a 
+2 break up and have multiple stats point if needed
+3 then the requirement checks and executes
+  
+1 implement each specefic story in the simplest way possible
+2 repeatedly play to find enjoyment in game 
+
+1 person who is freaked out by a simple conversation starting
+  a when you place them down someone vists and says hello
+  b person jumps up, says ahh you startled me
+  c % chance shy on high jerk, % lowers when someone does it
+  d slightly increases anxiety level
+2 person who is unhappy and leaves shortly after without saying anything, but complains then
+  a correspond with leaving on negative personal traits (for example they can't fill needs)
+3 person who is a builder and can't deal with the jerk
+  a they go and say X is suffering (because X genuinely is suffering) and needs Y
+  b jerk says, we need to focus on customer needs, they need to work harder to deal
+  c builder tries to offer to build a solution, but jerk denies it 
+4 person who is a jerkey type, but mostly an engineer
+  a wants to be nice, but has no capacity for it
+  b makes up dirty jokes
+  c tries to 
+5 genuinely nice guy who knows what he is doing and has years of experience
+6 laid back guy who smokes
+7 guy who is constantly complaining, but is not unhappy
+8 person who just sucks and can't do anything, but is nice
+9 local person who has a history here
+10 guy who runs a lot
+11 guy who used to be a musician
+12 genuinely nice guy who sold shoes
+13 mostly a jerk, but somewhat of an engineer and became a manager
+14 overly precise person
+15 the "average" person
+16 laid back person
+17 person who genuinely wants to do good, but is selfish
+18 builder
+  a occasionally explodes in anger about some random thing when too much jerkishness and consequential overwork
+19 high levels of jerkishness makes the one in charge occasionally makes random pronouncements (like bread must be made a certain
+   way for religious reasonsor whatever
+20 the foriegener who doesn't quite fit in
+  a follows the local religon
+  b harasses the men and women fairly innocently (tries to set up dates, says men with lower efficency nearby are her bitch, says like women
+    with big tits)
+  c
+21 the unlucky team (a few close together)
+  a they have to deal with some consequence that makes them worse off
+  b then a rivalry deepens between a team (another few close together who diss them back and forth)    
+22 the lesbian woman who suddenly reveals herself and that her wife is having a child
+23
+        
+1 expand the leaving part to be more complex
+  a people with nothing tying them down leave if things get bad
+  b ties can make them stay in an adverse situation
+  
+2 proper management
+  a the jerk is a great salesman and leaves to make big deals to other countries
+    more and more (if managed properly) 
+  b up to speed property makes new people develop faster
+  c shy person doesn't gain a great efficency advantage from being high in heirarchy  
+  d builders are necessary to unlock building special buildings and require less maintenance than average 
+  
+
+1 story choices
+  a the shy (young) person is situated near the jerk and eventually becomes one
+  c the jerk is a terrible manager and will actively harass others if high in the heirarchy
+  d shy person doesn't gain a great advantage from being high in heirarchy  
+  f new choices come constantly, but they take a while to get up to speed
+  g there is an attribute that makes them up to speed faster
+
+1 choices about hiding information and results
+  a santa
+  b corruption
+  c some innocent mistake
+
+2 economic choices
+  a all still personal
+3 choices illustrating that people care about what you are going to do, not what you have done
+  a negotiating for the future = success
+  b based on past = failure
+  c
+
+
+1 personality combinations make advanced personalities
+  a high jerk/salesman = "The customer is always right" 
+  b high jerk/temple = "You will burn in the fires of Gehenna'
+  c TJ = jerk
+  d ES = salesman
+  e EN = priest  
+2 people come in with specific personalities
+1 personality traits are next to a number
+  a the goal would be to manage the people to pull out their strengths in a diverse environment
+  b or to get rid of them by altering the environment so they leave or are kicked out
+  c having a lot of the same could be done, but it would be harder due to random chance and not as productive
+  
+1 catchphrases
+  a the customer is always right (jerk)
+
+1 very specific story and time
+2 clearly defined personalities
+  a character development
+  a shy can show extreme intelligence, but will get pushed around by jerks
+    until a certain level of authority in the heirarchy is achieved after initially
+    dealing with them
+3 back and forth exchanges between types
+4 need more stats that change and alter the behaviors
+  a also a reason why to care
+  b people talk about their place in the heirarchy
+  c for example an alcoholic with a lot would encourage huge drunken parties every so often
+  d slutty would encourage more general sex
+5 need drama and conflict your goal could be to  
+ 
+1 additional characters with different sets of phrasings based on type
+  a shy
+    1
+  b nerdy 
+  c housebuilder 
+    1 extra effort put into improving house
+  d alcoholic
+    1 extra visits to beermaker
+    2 becomes drunken
+  e social butterfly
+    1 visits others and dose some smalltalk
+  f religious 
+    1 extra visits to temple
+    2 talks about gilgamesh religion
+  g conspiracy
+    1 rants about conspiracies
+    
+  h slutty
+    1 tries to sex others (not shy/nerdy)
+  i wild  
+  j despotic leader ( essentially gilgameshes personality of harassment until finding a rival)
+    1 mafia action
+    2 can also do stuff when another
+  k salesman  
+2 after phrasings decide on actions
+  a interactions between
+  b normal interactions
+
+
+1 make sure that jerk personality gets set
+  #a temporarily alter it so that it has a 100% chance of happening
+  #b make sure it works
+  #c alter it back
+  d add in a "aww you don't like me response"
+
+
+
+
+1 list of dirty rumors
+  #a jerk oobject
+  #b a picks a person on the fmd
+  #c pops up two choices of get rid of or don't
+  #d not doing so adds a little niceness
+  #e doing so removes a lot
+  #f a lot of niceness makes the jerk leave
+  j a little bit makes the jerk a lot more efficient
+
+1 add second character
+  a is a jerk
+  b is a baker(or goldsmith maybe)
+
+
+1 add personality template=jerk
+  a personality gets translated to a template personality
+  
+  
+1 jerks occasionally pick a random character, and make stuff up about them
+  a if you choose to accept what they make up then the relative niceness of 
+
+
+
+2 the first character is a builder
+
+3 as you get random buildings and people the second person gains efficency and happiness as you make rude decisions
+4 the first one gains efficency as you make nice ones    
+5 given a certain level of each one of them will leave
+6 the jerk occasionally goes to people and harasses them which improves gdp a little
+7 the builder goes to people and gives them somewthing which improves gdp a little
+8 the random people are more likely to have the associated traits given the level of niceness of your society
+9 decide on a storyline to add in more people with more decisions that affect the society that you create
+10 jerkish behavior tends to favor certain trades and niceness favors others
+11 and events have a chance of happenning depending on that as well
+
+#1 fix the hair issues
+#2 make add equipment
+
+2 heirarchy
+  a based on favor (and trades)
+  b so high personal efficency would cause the higehst in the heirarchy
+  c they make generic and specific comments based on that
+
+1 special haggle with image and text and executions
+  a questpb persontrade that specialhaggle has a list of in culture
+  b it takes one based on a list (with maybe a random range eventually)
+  c it then executes the runafter on the pb if successful
+  d use the saved map of people and the name
+2 individual people like a card system
+3 people from life
+4 overall storyline is about how the people you surround yourself with shape your society
+  a to remove people you have to add someone who removes others
+  b if people die their stuff dissapears (ideally it would need to be maintained, and forests would grow)
+  c inital person is bob the beermaker who sells mead.  If you are nice to him he settles down near you (next building is a beermaker
+    and the persons name is bob and it has the same facial hair)
+  d a musician with blond facial hair 
+  e some sort of salesman who likes to be nice and then guess and then celebrate.  Is a jerk to those under him
+  f people will naturally find their place in the overall heirarchy based on your decisions (a jerk does well in a stressed out atmosphere
+    so low happiness would increase his wealth and efficency)
+  g     
+
+1 add haggle with image and possibly special text
+2 remove the extra gdp more choices
+3 make the people be more choices
+  a choices are personal
+  b people reveal their personality in choices (things like saying thank you and so on)
+  c this changes your corruption and so on
+
+
+1 gilgamesh
+2 flood
+3 random scaled up with a score (gdp vs time) (lots of different maps and such)
+4 neighbors
+
+1 do initial stages
+  a simple and extreme choices to start with
+2 get to gilgamesh 
+  a honor to a certain level
+     1 starts at 100
+     #2 generic choice + 30 
+        ( once a guardhouse has een built)
+     #3 once at that level do the extended guard house (add extended
+        only if a guardhouse has been built)
+  c a random chance of extended guard house (extended uses a different base house)
+    a (a should we build choice which adds the building to the list
+3 get to blackmarket  
+  a honor to a certain lower threshold
+    generic choice - 30 ( if no guardhouse has been built )
+  b random chance of given black market (with the godfather person)
+  c regular people kill wolves probably if they are attacked, but don't get gdp bonus
+  a blackmarket adds gdp when people go to it
+  b but it spawns extra mafia and a special mafia called godfather (for now does the same thing, just twice the gdp loss)
+4 black plague and zombies
+  a if no doctor has been built
+    offer a -30 wellness choice
+  b this will start black plague ( randomly kills 1 out of three with extreme uncurable sickness 
+  c offer another -30 wellness choice
+  d this creates a zombie that kills (all deaths convert into zombies)
+
+5 choice of two different buildings to build
+
+1 test fill needs on complex
+2 make the complex test move straight to the final stage
+3 start heavily testing
+
+1 on a sale you additionally sell all items created and not used for that price
+6 then the statistics that cause this to be useful
+  a low wellness = sickness
+  b low honor = chance of creating mafia
+  c low happiness = chance of being sad for a turn, high = chance of being happy for a turn
+
+5 add in the special guard house that creates gilgamesh.      
+ 6 temple for flood story
+ 7 courthouse = story on names
+ 8 black market = corruption is high
+ 9 too much sickness = black plague or zombie apocaplyse 
+   a these are events given an avg of 60 and 20 respectively
+   b black plague infects and kills 1/3rd of your population
+   c zombie apocalypse turns one character into a zombie. anything it kills then turns into a zombie
+
+2 complex creates items with the appropriate owned tag which fill needs filters through
+  #a create a find key that finds by property using the items get by property
+  #b make fill need 
+  #c add owned to complex
+3 doctors and guards have a chance of creation upon visiting a farm
+  #a doctor (finish)
+  b guard
+#4 balance - needs unmet aren't reduced to zero, just to 20 less than the current player amount
+  (the. idea is that civilization isn't necessary, just mostly useful)
+#5  avg stat comes from player amount
+  
+1 then allow for the specific buildings based on choices that changes the avergae, the buildings only come up when certain conditions are met  
+     
+ `````
+1 filling needs should have a strong balance
+  a but not be overly restrictive in choices.  You need food
+  
+2 then more choices (with generic names and a nice order, and some nice special choices)
+
+1 give the initial build people the resources to build everything quickly
+  #a make build take wood
+  #b put wood on initial people
+  c add some initial items for filling needs
+  
+1 people build farms
+2 then the fill their needs based on each other
+
+
+1 add overlays for templates
+
+1 pull out needs once you have multiple usages
+
+#1 inventory for breadmaker/beermaker
+ should be working
+2 make need subtract and fill themselves and each other
+  a culture -> trade item (just add favor I guess) -> remove traded item and add the appropriate amount
+    (put that on log to test)
+
+  
+1 each person gets a set amount of inventory that they pick up
+2 if they fill up then they pick up no more inventory and generate no more gdp
+3 duplicate mortgage crisis
+  a banker wants lending restrictions removed (risk++)
+  b this causes extra farms to be built and maintained
+  c risk acts like efficency, but then it goes away
+  d so suddenly new farms aren't being built or maintained
+  e so you need to place a bank and masonry/woodcutters in order to take advantage of the extra risk
+  f but once the risk goes away they aren't needed, fall into unemployment, and eventually disappear
+  g but you can make additional choices to keep them in fake work
+  h this adds to debt.  and basically too much debt reduces the effectiveness of further debt choices
+    while adding in a negative effect of subtracting gdp constantly
+
+4 a second template that controls filling needs like happiness and so on
+  a a fill need action
+  b it takes from culture
+    
+4 create a series of choices with no story, fill in story later and do gameplay now  
+
+
+1 create a function that does a diverse array of random buildings
+2 set corruption to high
+3 test
+4 set health to low
+5 test lots of sickness
+6 individual stats for people based on moving to buildings
+7 add stats that control relative growth of things
+
+
+#1 on steal give the mafia a chance of being caught 
+   a based on the number of guards available
+2 setup so that a steady supply of choices and buildings are given
+3 make sure that the sickness/stealing/economy stuff works in normal playthroughs
+4 focus on expanding anciliary tasks and resource trading in order to get more complex behaviors
+5 beermaker + to happiness/ food + to health / guard - to corruption / 
+6 happiness is a stat that has no real effect.  Low happiness occasionally causes people to be sad for a turn
+  high causes them to be happy for a turn.  They take the city stats and change their personal stats based on the buildings they visit
+
+1 economy ju
+  a too much takes away from others and causes unemployment
+  b move nearest not owned
+  c complex occasionally checks owned and sets to "unemployment"
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+1 keep on with story
+2 flood story as well (not as a part of the gilgamesh story)
+3 general stuff
+4 make the choice of stories be random and have some effect on the overall building (flood being a pretty big thing)
+
+1 each additional stat beyond corruption produces a special building
+2 authority = courthouse
+3 religion = mecca
+4 smithing = big ol smith
+5 banking = wall street
+6 beermaking = house of beer
+
+These should be historical if possible, come with their own bit of speaking, and have some effect
+
+
+
+Supreme over other kings, lordly in appearance,
+he is the hero, born of Uruk, the goring wild bull.
+He walks out in front, the leader,
+and walks at the rear, trusted by his companions.
+Mighty net, protector of his people,
+raging flood-wave who destroys even walls of stone!
+
+1 
+       "There is no rival who can raise a weapon against him.
+       "His fellows stand (at the alert), attentive to his (orders !),
+       "Gilgamesh does not leave a son to his father,
+       "day and night he arrogantly ...
+       "Is he the shepherd of Uruk-Haven,
+       "is he their shepherd...
+       "bold, eminent, knowing, and wise,
+       "Gilgamesh does not leave a girl to her mother(?)!"
+ Give some buildings and make a main giant harass the people in the buildings 
+      (he moves to each person and does a heart symbol on them
+      1 movepersonordered (moveclosestperson
+      2 wait+ overlay     
+2 after the harassment      
+      "it was you, Aruru, who created mankind(?),
+      now create a rival to it/him.
+      Let him be equal to his (Gilgamesh's) stormy heart,
+      let them be a match for each other so that Uruk may find peace!"      
+ create the giant wild man and make him hairy if possible.  he runs around with animals and drinks    
+3 prostitution event
+  a play the prostitution success choice
+  b give the player a temple (on of the altars
+  c on placement a prostitute       
+  d the prostitute meets
+    wait a while( they show the heart symbol on a display popup
+  e the animals run off
+4 gilgamesh and einkadu then have sex
+  a einkadu starts killing wild animals
+5 create a beermaker
+  a some statement about beer
+  b the prostitute and wild man go there
+  c they get drunk and stuff
+6 they both travel off (wait a wihle)
+  a they come back with cedar and make a gate
+  b einkadu becomes sick and dies
+  c gilgamesh wanders off again  
+    
+  
+
+1 an event saying that the 
+2 a giant wild man 
+
+1 gameplay of items
+2 do choices to create gilgamesh storyline
+3
+
+1 alter to make last step alternate between choices and buildings
+2 the "meat" are the choices and how they affect everything
+3 mafiosos
+4 specific storyline
+
+
+1 make over 50 for gdp in trade do a nice sound and effect
+2 make efficiency add 1 to radius for every 5 efficiency
+3 make complex move peoples template back to the build step when efficency goes up
+
+1 choices
+  a prostitution comes randomly and starts a chain of events
+    1 a priest gets a disease from a prostitute and curses prostitution
+    2 a wildman comes by and gets converted by a prostitute
+    
+  b disallowing it creates the illegal issues of corruption
+  c allowing it too much can heavily push up disease
+  
+  1 you can choose your leader (one attribute difference)
+    a the leader dies and his son starts harassing everyone (demanding sex and starting fights)u
+    b if the wild man is converted then he just harasses the wild man
+  
+    
+  d a choice to place a tarriff on a good comes up
+  e if yes then efficency gets higher, but value from market trades is lower and corruption is higher
+  f additionally you get a blackmarket randomly somewhere and the mafioso start coming from it
+  g if you create additional unfair tarrifs eventually mafia bosses appear and start fighting each other
+
+  a third choice path involving the puritan work ethic (can push towards amish)
+ 
+  a fourth one involving indentured servants
+  
+  
+  
+
+1 make the farms differently colored maybe (create a building that shows owned as part of its image
+2 make economy affect the radius of the farms built
+3 make the buildings able to retroactively build farms
+4 make sure the action is skipping over trees (maybe just put them in as plants)
+5 expand choices and make sure they have a real visible effect
+  a if you get a good choice randomly you should be pretty happy
+6 corruption and mafioso
+7 make it fun to get to 10,000 gdp
+8 make high levels of something have special effects (like a mafia boss, zombie plague, or all the rich farmers making
+dumb decisions with their extra cash and causing an economic downturn and mass unemployment)
+
+1 make complex just go through and do that part by hand
+1 make stages
+  a initial stage (no negative effects that need immediate countering)
+    1 trade
+    2 add building
+    3 wait a little
+    4 move to stage 2
+  b stage 2
+    1 choice
+    2 trade
+    3 trade
+    4 building
+    5 ill effect
+  c stage 3 (repeating
+    1 maybe choice
+    2 maybe trade
+    3 maybe ill effect  
+    4 maybe building
+
+3 make choices alter efficency/health/corruption
+4 make efficency increase the radius of farms
+5 make low health cause more random sickness to occur
+6 make corruption add mafioso
+9 make victory happen at 10000 gdp
+10 do not make things balanced.  There should be unambiguously good choices and bad ones that only have
+   a good story behind them
+
+1 leave choices with GDP
+2 add more buildings
+3 add stats
+
+1 lots of buildings that come semirandomly based on gdp and choice
+  a stonemason 
+  b blacksmith (weapons/metal armor)
+  c tannery ( leather)
+  d goldsmith ( rings)
+  e fletcher ( arrows)
+    all generate farms and come based on choices
+2
+
+1 overall flow
+  1 a few trades
+  2 a choice
+  3 time to place and grow
+
+2 stats
+  a efficency
+  b health
+  c corruption
+  d population (
+
+3 bad trades = better gdp from those items when built locally
+
+1 the doctor randomly visits farms and produces gdp on visiting
+  #a something picks a certain number of tiles and if a farm then it executes a move 
+  #b put moverandomgate onto clientbuild dungeon
+#2 it also cures sicknesses
+#  a run through all the people.  if they have the sick flag the doctor seeks them out and 
+#    reduces the counter on the sickness
+  #b complex randomly adds a sicness action  
+#3 it also heals anyone who was damaged quicker    
+#3 sickness is caused randomly and the person is giving a sickness action with a sickness
+#  overlay where they just wander around 
+   a and possibly infect others nearby
+4 a beermaker also creates farms.
+  a in addition they go around and cure anyone with the unhappiness label
+5 the temple randomly visits farms
+  a if the choice of prostitution has been made then the woman can cure unhappiness
+  b otherwise the person just adds gdp
+6 the bankers visit farms
+   a a high gdp increase
+   b if you don't allow them to do things like corner the market they have a % chance of leaving
+7 mafioso type visit farms and reduce gdp until vanquished
+8 wild men attack like animals, but can be countered by temple prostitution
+9 for now just have a list of gdp amounts and names of the buildings available.
+10 for the randomness
+   a have a high pop thing.  If it is 
+
+1 structure
+  a initial map
+    1 beer maker (peasley)
+    2 guard (daniel)
+    3 baker (anju)
+    5 doctor (gausey)
+    6 baker (surekha)
+    7 baker ( alex)
+    8 leader (reggie)
+    9 leader ( corbin)
+    10 temple priest (jack)
+    11 baker (crecente)
+    12 baker (futrell)
+ b a character left the capital city for simpler areas like this one (terra)    
+    1 she starts out relatively quiet and becomes a baker
+ c a new directive comes down saying that baked goods must be cooked in a certain way to sanctify the god of baking
+    1 the goal behind this is to introduce uniformity and promote a certain minimum.
+    2 there are grumblings and it takes a little while for them to start.  Less GDP when they do.
+ d shortly after the other person comes the leader leaves and they have a good bye ceremony
+    1 a few people say words
+    2 they all pour out a beer they have bought
+    3 (corbin) leads the ceremony with some jokes
+ e a farmer gets sick with a sickness that can only be mananged
+    1 (gausey) tells the farmer that he wont ever get better, but he can ease the pain
+ f anju says something "crazy foriegener"   
+    1 she says "X is my bitch"
+    2 (jack) makes some comment like "be glad we don't have the archbishops here"
+ g a trader is coming through and anju asks if he is married
+    1 she is trying to marry off a young woman and is asking all the traders
+ h there is a chili cookoff
+   a each person cooks a chili and names it
+ i complaints about the sanctifying bread ritual.
+   a the rules on it are shoddy and full of holes
+   b new export issues cause a lot of additional time wasted.      
+ j (futrell) has a habit of occasionally just screaming out curse words.  Not much else      
+ k the beermaker sees that the guard has a certain breed of dog
+   a he just yells out that that breed of dog is for people with small dicks
+   b the guard says something relatively nonoffensive as this pretty much came out of nowhere
+   c later on the guard mentions it later in the context of the fact that he doesn't suppress his anger
+ l a new baker comes in.
+   a he tries to be friendly
+   b he absolutely cannot deal with disagreement or failure to do what he says (hes arrogant, is not nice, but can actually do the work)
+   c he gets a promotion to a priest position
+   d ( the baker nearest to him who is vulrnable gets exiled, he starts antagonizing that person and they argue back)
+   e this also happens to someone else
+ m the doctor leaves
+   a he sits on the back of a wagon "rolling out"
+   b he sends a letter saying he is doing well
+ n another foriegener
+   a arrogant, but also pretty nice
+   b completely wrong in his decisions
+   c managed to get a high up position in the priesthood but his suggestions are questionable
+   d has one major project and it absolutely bombs.  But before it is implemented he gets a medal
+ o the leader
+   a occasionally will send out celebratory news
+   b at one point says "celebration canceled" and one of the coworkers said he got pissy when someone complained about the cost
+   c the person from the capital has the occasional story
+   d like how he would celebrate some sale with a neighboring nation by throwing bells
+   e talk about how one of the nobility had someone exiled because they started dating someone she usued to like
+   
+1 the local warrior/priest/king
+  a is distant
+    
+  b to start the story 
+  c the starting cast includes a leader who is from another distant land
+  d   
+  e the other characters have various interactions that have a random chance of occurring
+  f they are given direction by the capital
+  g there is a large amount of managing going on and a rotating crew of people in charge
+  h a new manager comes from elsewhere that is in line with the capital
+  i has a bit of an anger management problem
+  j a few are exiled (hints with the anger before that)
+  k the price of tin is rising and various events are happening
+  l it ends with the capital being sacked (from victories with hints of defeats)
+1 story
+  a familiar haggling characters
+  b bronze age complexity issues
+    1 tin is far away
+    2 the local king is a warrior/priest
+  c woman who comes from a small temple dedicated to women hunters
+    1 she sells quail meat and squirrel meat
+    2 she marries a local man and sets up a hunting temple if accepted
+      she then produces gdp when she hunts animals
+  d man who comes from a brewery (temple of diogenes)
+    1 he initially comes around selling wine
+    b he and his two children come there in order to have a stable environment
+    c he sets up a brewery temple
+  e dynamic storyline events that take these characters and lets them grow
+    a another character from their past knows them and asks for money (you say if they should or not)
+    b a visiting friend comes by and gives some news
+    c
+  f giving them a personality
+    a events that alter people based on their personality 
+    b war might cause patriots to give their money or leave
+    c ones with a fear of disease stop moving around when a disease is spreading
+    d weak ones stop working when an animal or wild man is on the loose
+    e strong ones might try to help with animals and such
+    f they might occasionally offer trades based on things they have made
+    g quarreling ones might fight when stressed
+    h a local gossip that tells stories
+        
+1 make font sizes bigger in general
+
+1 sickness
+  a complex heals everyone over time
+  b sickness throws in random actions as well as damaging over time.
+  c the random actions can search nearby and spread disease
+
+1 random events 
+  a wild man (countered by guards/ converted to GDP at temple)
+  b higher pop increases % of certain random events and decreases others
+    also might only appear after certain choices
+  c wild animal (converted to gdp by guard)  
+  d sickness (lessened by doctor/ has a certain duration and resistance after catching)
+  e unhappiness (countered by temple)
+  f mafioso (countered by guard)
+  g std plague (temple causes disease, only countered by doctor)
+  h cornering the market (increased by bankers and pop)
+    gdp falls unless you choose to break it up.  If you do break it up each of your
+    bankers has a % chance of leaving
+  i increases in these types
+  j dissidents. (different types countered by different buildings) comes in groups
+  k zombie plague    
+2 2 make the temple pop up on the prostitute yes choice and have the prostitite
+  visit 2 people
+  
+6 the buildings  
+#7 remove the symbolic map
+
+#1 make the second choice work
+#2 make the baker gather items and add 1 to gdp
+@3 fix the fact that you can't place bulidings in a phone
+4 add more buildings
+  a temple
+  b on temple add if prostitution choice no then do a man
+    otherwise add a woman.  The woman visits 2 - 3 people and
+    generates gdp
+  c blacksmith
+  d the blacksmith  
+  e make the gather items pop up the little dialog and move back to the bakery
+  f banker
+  g the banker 
+  
+  
+1 dont use random number generator (too random)  do something like maybe running through all tiles with a % chance of firing
+2 don't actually worry about people at all right now.  just do some animation(like a person head appearing) and add 1 to the gdp
+2 fix the choices
+
+4 add choice that introduces blacksmith ( its a gdp of 100)
+
+5 more choices
+
+6 temple
+
+7 then the addition of specific specific
+  a avatars and a title when you click on a specific person
+  
+8 social ills
+  a try to represent through specific actions or people 
+  b (like a beggar child instead of a happy child)
+  c a mafioso going around and extorting if you don't have enough military
+  d a plague outbreak if too many people (with temple and later doctor providing some countering effect)
+  e general common sickness
+  f lack of economic activity (person stops moving)
+  g wild men (early on, countered by prostitution at the temple.  turns into guard)
+  h animals in general ( countered by smith, which produces guards )  
+ 
+9 specific personalities from competing nations
+  a the angry threatener (from a nearby competing nation, this person wants war)
+  b the priest (from a religious nation)
+  c the concilitator ( from a peacful nation)
+  d the authoritarian (from a very authoritarian society)
+  e the scientist (from a society with advanced ideas)
+  f the capitalist
+  
+10 http://ikaisays.com/2010/06/10/using-the-bulkloader-with-java-app-engine/
+  
+1 graphics 64/64 farm
+  a avatar heads
+  b lawyer avatar head
+  c economic avatar head
+  d religious avatar head
+  e kingly avatar head
+
+
+1 add back in move person
+  a make it so that you can move a person in order to change thing
+  b if you move the itemshop person (the main character) you will get different benefits based on which building they are near
+  c  
+  
+#1 make complex add a bakery and a smithy to the choice list
+#2 on placement the people get added
+3 the breadmaker creates surrounding farms one at a time over time
+  #a find nearest no gate
+  #b move to spot
+  #c create building with no need
+4 every so often a person moves from a farm to the bakery
+  a create person in farming clothing (and maybe one or two different things)
+  b this causes the GDP to rise
+6 the smithy builds and occasionally moves to the itemshop
+  a move to itemshop
+  b move back
+7 that movement causes the gdp to rise
+8 the more farms the higher % chance of social ills appearing instead of normal farmers
+9 choices bring the temple which has a priestess that goes and has a % chance of banishing social ills
+10 good trade choices makes the gdp higher on every movement of the city
+11 make it so that you can move the people and help them out a little maybe (for example move the priestess to
+ a social ill outside of her range)
+
+
+1 add message that pops up once (message is in game, and htmlout controls the popup
+2 As the GDP grows you get buildings which you can place
+  a farms and stuff grow around the buildings
+  b the building choices depend on the choices you make and are depleted after you select them
+    and select the location to be built
+  c you can build a small hamlet or a large city
+  d you can even sell the item shop to have creatures stop coming your way.
+  e complex city generator takes your city and decides on gdp growth
+  f a bakery or butcher increases your max amount of people (and adds farms / sheperds
+    farily close at first, but also at a distance later)
+  g smith increases your gdp to a certain amount over time and military
+  h the temple allows prostitution (which increases GDP if you chose it) and reduces the chance of certain events
+    like infighting due to a lack of identity, or issues with homeless children and such
+    so around it you are less likely to see a beggar child or two different characters quarreling
+  i social ills are represented and increased or decreased based on the choices you make  
+3 make up a list of social ills and decide how to represent them
+  a try to represent through specific actions or people 
+  b (like a beggar child instead of a happy child)
+  c a mafioso going around and extorting if you don't have enough military
+  d a plague outbreak if too many people (with temple and later doctor providing some countering effect)
+  e general common sickness
+  f lack of economic activity (person stops moving)
+  g wild men (early on, countered by prostitution at the temple.  turns into guard)
+  h animals in general ( countered by smith, which produces guards )
+4 your goal is to make choices in order to get the city that you want
+  a you might want a crime dominated town (you even get the chance to place a crime manor if you push this way)
+  b a town with a high gdp will only be achieved with a good balance
+  c too many plagues and you get a zombie outbreak
+  d you might cause a civil war by allowing a second religon to start and having two temples with competing influences (like two of the different summerian gods)
+  e the ultimate technolgy stage is the monarchy
+  f as your city gets bigger temples no longer house prostitutes as the spread of disease occurs
+  g your choices could push wealth inequality to have a few rich and many poor or to have a middle class
+  h you can advance or not.
+  i   
+    
+1 put a simple title up that shows when you click on someone
+  
+1 consequences of choices
+  a if you allow slavery then you get slavery based events (based on hammurabis code)
+  b same for prostitution
+  c also for allowing substitution in war (ie paid mercenaries in place of a draft)
+  d
+
+2 focus on turning each choice with an individual story and characters
+  
+3 do complex city generator  
+
+4 quickly occuring stories (ie you make a choice and it immediately leads to another choice
+  done several times and showing a quick story
+  
+ 3 military - less attacks, cheaper trade.   Money - more complex items allowing for greater gdp.  Science - specific wonders available 
+   a each one opens up options based on %   
+ 4 complex city generator 
+   a building uses the build overlay and the active wait + move back (which is an ooblist action called activewait)
+   b add to score (haggle adds this)
+   c complex takes the score and adds to gdp
+   d complex adds to a list of scores based on that addition and the current business cycle
+   e it takes the prev scores and the new ones and adds or removes things based on the changes   
+   f like unemployment or financial, and possibly some boolean values
+ 4.5
+   a take the scores for associated buildings and build in that ratio
+   b add people and jobs at the same time
+   c use the same gdp limit as the simpler one
+   d make gdp follow a business cycle of up and down
+   e add in unemployment
+   f make stability control the business cycle's sharpness
+   g producivity controls the amount of gdp you get per successful trade
+   h complexity adds accountants
+ 5 individuals from other countries
+   a leaders
+   b scholars
+   c merchants
+   d questions based on that for ex a scholar talked bad about your country.  Do you  want to bar entry to them in the future?   
+1 add simple story eventsa
+  a onto haggle add a % chance of doing a story event
+  b make the story event be a small description with a button for a larger one (with sound)
+  c test
+  d (event) "Now that we have developed the telescope we can wonder why aliens have not contacted us yes
+    have we not proven our intelligence?  I suggest that aliens will contact us when we can fully modify ourselves
+    and are no longer bound by the evolutionary struggles that have bound us for the previous years of our existance
+2 an option to pay off bandits or to recruit an army (recruiting an army puts down an actual army)
+  a % chance on haggle
+  b the description says pay me X% amount or I will attack
+  c you can either pay to do that, or pay to build an army.  Paying reduces GDP.  Paying for an army gives you several more options
+   which have an oregon trail like chance of reducing gdp
+3 
+
+2 reoccurring characters with lines
+
+
+1 for all preloaded items push them into the database based on a local directory
+2 don't refresh that part on a rebuild
+
+#1 use phrases in message imed to elizabeth
+2 get elizabeth to say a few phrases
+3 more items 
+   a say baby shoes, 
+   b and random event items
+     1 a list of items with an associated description that tells the event
+     2 X's sword, Y's journal
+     3 stories about individuals (like a famous person)
+       a romanian poet who goes on to be a journalist ( makes news slightly more expensive)
+         1 Rage is the only quality which has kept me, or anybody I have ever studied, writing columns for newspapers. 
+       b a carpenter that completes a great work ( makes port more efficient, better grapes)
+        Anu granted him the totality of knowledge of all.
+		He saw the Secret, discovered the Hidden,
+		he brought information of (the time) before the Flood.
+		He went on a distant journey, pushing himself to exhaustion,
+		but then was brought to peace.
+		He carved on a stone stela all of his toils,
+		and built the wall of Uruk-Haven,
+       c an astrologer who correctly predicts this year's rains (bread lower)
+         Not from the stars do I my judgement pluck;
+		And yet methinks I have Astronomy,
+		But not to tell of good or evil luck,
+		Of plagues, of dearths, or seasons' quality;
+		Nor can I fortune to brief minutes tell,
+		Pointing to each his thunder, rain and wind,
+		Or say with princes if it shall go well
+		By oft predict that I in heaven find:
+		But from thine eyes my knowledge I derive,
+		And, constant stars, in them I read such art
+		As truth and beauty shall together thrive,
+		If from thyself, to store thou wouldst convert;
+		   Or else of thee this I prognosticate:
+		   Thy end is truth's and beauty's doom and date.
+       d a queen who is loved, but dying (that empire makes leather so leather higher)
+         http://www.poemhunter.com/poem/the-dying-queen/
+       f a psychic who specializes in LGBT issues (an addition of fancy robes and tiaras)
+       g a musician who composes a grand opera (used to tour
+         and now composes grand symphonies ) ( creates the item of opera tickets)
+       h a chancelor who is known for his ability to charm completes a trade agreement
+         between two nations for tin.  (bronze prices go down, copper goes up)
+       i a local fever hurts fishing villages ( molly malone poetry) fish goes up, boat prices go down    
+     4 stories about cultural events (like learning mathmatics in civ)
+4 sim elements
+  a create simmanager
+  b make sim manager review needs 
+    1 foods
+    2 basic resources
+    3 speciality resources
+  c make sim manager review needs currently met
+    1 go through map and tally buildings  
+  d make sim manager create new people buildings and jobs
+    1 buildings are associated with a certain amount of needs met
+    2 create a new building if not enough, and add people and jobs
+    3 people and jobs are symbolic and not representative
+  e make sim manager check the types of items being traded for and how much they are compared to average
+    1 if good prices have been gotten for some and not for others then sim manager will fill the gap
+    2 it will do that by making more of that type of building and less of others  
+  g simple sim manager
+    1 GDP is based on how succesful trades are
+    2 sim manager has a list of things to build
+    3 it builds them by getting the nearest spot that has not buildings in a radius of 2 
+    4 it adds people as well
+1 commit
+2 sim elements
+
+#1 sound for not declining, accepting, declining
+2 money in a bigger font
+#3 acceptance lines
+  a show after accept and decline.  put an ok button
+4 for the random a predicate that also includes time for the lines
+5 play
+6 simulation elements to draw attention
+
+1 ranges with associated lines
+  a for the 0 to 1 double value the lines also point to say 0 to .2
+  b lines follow the format of type -> list ((range,list))
+2 more lines
+3 lines for success failure
+
+
+#1 make formula part of the final value
+2 add item icon and item label
+3 add diversity
+4 add hints to make interesting
+5 do simulation elements
+
+1 formula class
+2 haggle applies formulas based on game turn.
+3 the prices you sell things for alters the composition of the town
+  a selling is exactly like buying except the price goes up or gets declined.
+4 a runturn class that picks people and directs the economy based on the currently sold
+  and bought prices for things
+  a a build action when there is a certain overly missed resource
+  b normally just setting templates to the specific jobs (build\needed jobs)
+  c 
+
+1 act 1 gameplay
+  a each item type is associated with a formula that will determine its general trajectory in price
+    1 up and down formula
+      a has a scale
+      b has a sharpness (ie sudden changes or gradual)
+      c has a randomness element (IE occasionally temporarily changes the sharpness randomly)
+      d has an x scale and a y scale
+      e stickyness (ie when things are going up it either goes up or flat, when things are going down it either
+        goes down or flat  
+  b multiple formulas can be applied to a single item, multiple types can be applied to a single item
+  c selling is not implemented.  You put down goods and they add to your money, which you use to buy with
+    1 people either go to each other or sell to the market
+    2 as the market you have a general price, and specific types of goods prices
+    3 the prices of your things will determine the composition of the city.
+  d the money is based on the general market prices (not recorded, but occasionally shown)
+    1
+  e the trade route has interruptions, but starts off with a pretty sizable amount of sellers coming
+  f buyers come by and buy automatically, all you can do is buy and sell houses that the villagers use to build with
+    and add to the market place.
+  g events not implemented yet  
+
+Story
+1 act 1
+  a peaceful
+  b growing in exotic goods
+    1 many different types come in and sell many exotic goods
+    2 in the story you are encouraged to start reaching for more money at the cost of local food supplies
+      (ie you start to import large quantities of food as its cheaper to do that
+       
+  c issues with rich vs poor
+    1 in general the growth should be all in rich goods.  Middle class goods should stay the same price or fall
+  d ends with an "invincible army" being defeated and suddenly finding out that a city was being razed
+    1 a courier comes and offers some information for a relatively small fee
+    2 if you refuse he cuts down the fee and says you should really hear it
+    3 its basically a note with a prince talking about how his nearby city was razed (get from wikipedia)
+  e a gradual increase in the price of tin during this time.
+    1 tin cannot be made locally
+    2 but you can make bronze with it
+  )
+2 act 2
+  a turbulent
+    1 plagues
+    2 crop failures
+    3 trade route failures    
+  b a new group of warriors wanting trade (and tribute)
+  c ends with making merchant deals with the individual warriors to form a mercenary band to clear up issues
+3 act 3  
+  a iron starts becoming available
+  b civilizations start forming around it
+  c happy ending?
+  
+1 Set of familiar characters haggling
+2 couriers offer locals knowledge in exchange for money
+3 evil enemy
+     
+
+
+1 run and make sure the types translate to items
+2 look in wikipedia to decide on a list of events
+
+2 talk with elizabeth about a story and story events
+
+1 culture has a list of types
+2 these types have percentages
+3 they also have values
+4 those are used to calculate the individual value/cost of an item per race
+
+1 list of countries
+2 list of items (general) and per country
+3 events that cause tags
+4 more explanations in addition to more tags
+
+
+
+1 notes add random bmattles as a thing.
+2 the characters are randomb, placement is random, and the battles are random
+3 you can control one character in them who will probably die
+
+
+1 a country section
+2 a tagreq that goes through each country and randomly picks a type to upgrade or downgrade
+  a types (food, leather, metal, sweet foods, savory foods)
+  b "this type is in high demand"
+  c it checks the country and the item type to determine applicability
+2.5 tag gene	rator has a haggle check that if passed (and if the current percent is low) will cause it it use one of the other tags
+    with the percentage being the same 
+3 test
+4 a "wave" set of tags that emulate the business cycle
+5 test
+6 story stuff
+7 keep the tag tree with the generic label
+
+1 figure out doing the tag for a specific country (probably just specific logic in storylist)
+2 for tagtree add all of the tags and their percentages
+  a make tagtree replace the counts with percentages
+  b make tagtree add in the generic tags
+  c make tagtree add the tag generic
+3 do the comments in tag generator
+4 plug it all into haggle
+5 test
+
+
+
+1 taggenreqs
+  a a list of events that happens (it gives the current events that have happened that are in the area associated with
+    the trader
+  b   
+
+1 things that determine tags
+2 a structure that determines the excuses and the prices based on the tags and the assoc percent chance
+3 list of tags and percent chance (added from every view of tag)
+4 run through and get a tag based on the chance and then determine the new price
+  and the associated response.
+5 seperate excuses based on tags
+
+1 most events happen in all circumstances, but some are more common and some are specific to certain economic conditions
+2 a list of pbases with certain tags.  The tags determine randomness chance
+3 tags
+  a low metal supplies = lowmetal = % chance
+  b high haggle = highhaggle = % chance
+  c high technical = hightech = % chance
+  d flooding = flooding = % chance
+4 the item generates a set of tags as well and multiple high percentages add together (ie take all
+  the tags, and combine their percent chances together
+5 percent chance also determines chance of leaving for elsewhere if declined
+  
+    
+
+1 events (story)
+  a leader gets into power (explanation of leader)
+  b leader gets deposed
+  c specific institutions get founded
+  d they have effects
+  e individuals have effects
+  f effects are economic
+  g also personal effects (like say more freedom adds extra things)
+
+1 convert excuses to heirarchies in culture
+2 give certain cultures personality traits (and the excuses correspond to those traits
+3 add in storyline specific excuses
+  a give the leaders names
+  b use them in excuses
+4 events that drive the story along
+  a the story will be a series of events
+  b the excuses will dynamically change to match
+1 haggle story
+  a certain cultures have certain personalities
+  b the excuses must occasionally have merit (eventually)
+  c real events causing specific statements
+
+1 give a score
+  a make haggle trade items
+  b give a treasury score and put haggle items in treasury
+2 extend the story
+  a make a really specific story, not even slightly generic
+  b story uses my life experiences and ideas to drive haggling and general story
+  c programmer ideas
+    1 I had to redesign the current leather straps due to the metal shortage
+    2 I had to
+  d transgender ideas
+    1 intuition vs perception
+    2 the glbt community 
+    3
+    
+  e relationship ideas
+    1 the $spouse is demanding that I sell the entire load for xxx dollars, I can't budge
+    2 I need this money 
+  f parent ideas
+    1 
+  g family ideas
+    1 need to help out brother\cousin\aunt\etc with baby\dowry\etc
+    2 I need this money for my sick kid
+  h work ideas
+    1 flattery
+      a I respect how your economy is growing, but I must ask XXX price
+    2 ego
+      a I am the best and I demand this price
+      b my competition sucks, so I can ask this price
+    3 suffering
+      a I worked 80 hours a week to get this to you
+  i political ideas
+    1 the local ruler has changed tax rates
+    2 The local dictator has been deposed and there is a current lack of stability
+  j economy ideas    
+    1 shortages and so on
+      
+3 structure the rewards
+  a events should determine and show difficulty
+  b so if a bad event happens then haggling is more difficult
+  c if a good event happens it is easier
+  d and try to make them harder or easier in certain ways
+4 increase the button sizes and text
+  a add a bing for success
+  b a bong for failure
+4.1 first video
+5 events
+  a look at generic things
+6 tie in with quests
+4.2 second video
+
+
+1 do haggle
+2 go back and pull out all the different gameplay examples that I have done
+3 post videos
+
+1 culture
+  #a types of items and level of quality
+  #b a list of items with their associated quality min and max level
+  #c to start with cheese, leather armor
+2 trade routs
+  a a trade route is defined by a culture, a beginning position, and an end position
+  b the culture has an associated race that gets created .
+  c the haggle trade calls move at the end (the trade route puts the position on the person)
+3 haggle
+  a decides on an initial selling price that is fairly high generally (but might be low on a race with a low haggle)
+    (haggle is determined by race + random per person)
+  b Shows the good being traded, the amount, the time period and lets you accept or decline.  If you decline
+    then based on the haggle value, the item value, and any current changes to item prices (like local demand).
+  c if they decide to continue then they make up some story (with maybe some real elements and some fake elements too)
+  
+4 event generator
+  a has a list of events
+  b randomly applies them 
+  c also some happen based on a schedule    
+   
+
+1 haggling stories (this is an heirloom)
+2 I had issue X, Y, and Z along the way and need this amount to meet expenses
+3 this item clearly has X, Y, and Z issues wrong with it, I can't accept it
+4 the people over in this other town are offering to pay this amount
+5 Pay this price and I'll throw in an X
+6 pay this and I will keep on coming back to you
+7 a shortage has caused the price to rise
++ a crop failure caused the price to rise
+
+1 requirements subquest
+2 calls the requirements for the first one on the list and removes at the end 
+3 first a quest of a question between the shiftless kolbolds and the slick elves
+3.5 Then they offer a trade that you can accept or deny
+4 both bring their shipments, but the kolbolds have a randomness to when they come
+5 after a while an event happens to where the kolbolds apologize for being more late than normal and the elves
+  screw you over
+
+1 the militant fundamentalist turned atheist
+2 you have the choice of recommending two different books to read to an impressionable youngster
+3 the first one is st agustus treatise on religious thought
+4 the second is called "the superman"
+5 depending on which way you choose they start writing books about how horrible athiests are
+  or they start writing books about how terrible fundamentalists are (like cause of moral decay
+  vs cause of wars and stuff)
+6 the books are sold to travelers and the town gets some random event
+
+1 play through first two quests and add better text
+2 make a map with a list of surrounding cultures.  This one is tiny and in the center
+3 give each culture a list of items and value associated with them
+4 make a subquest that ties the cultures to the current gdp of of the town
+5 measure the GDP by summing up the daily trades and current trade agreements
+6 make the market quest start handing out trades
+7 haggling
+  a make the traders haggle based on their culture (high haggling value means more bluster)
+  b haggling is where the trader tells a story and you decide to believe it or not
+  c haggling is firm (you have to say something is your final offer or decide to lower the price)
+  d haggling replaces the trade window.  You both start with a high price/low price and you can decide to
+    lower it or stay the same
+8 the next step is to decide on the story generator    
+
+more storyline quests
+1 a quest where someone has to choose between something that is inflexible and hard to start
+  vs something that is flexible and easy to start.
+2 two different relationships.  relationships with the kobolds and the elves.  The elves are slick and charming
+  the kobolds are awkward and and to the point
+3 the elves work out well for the most part, but they occasionally try to knife you when you are down or trusting
+4 the kobolds have issues, but are solid and dependable
+5 you have a rival who gets whoever you don't choose.  Either way you get the occasional news about them complaining
+ about either the kobolds or the elves (complaints about the kobolds are like "why aren't they punctual", complaints
+ about the elves are like " they steered a large number of bandits our way")    
+
+
+1 goals
+  a successful game
+  b a game fun to make
+    1 after breadmaking then banking
+      
+  c a game fun to play
+    1 item progression
+      a each culture has a certain strength of item.  At low gdp you can only afford the crappy exports
+
+
+1 interesting ideals
+  a small actions by your town has large effects on history
+  b so for example you might help a random stranger who leaves  and makes their fortune
+  they might send you letters detailing their exploits and you might see books or newspapers about them
+  c the trading then is more about trying to influence certain events to happen to you
+    and then to hopefully make those events change the world.  Or not
+2 subquest events
+
+
+1 list of items.  A list of gdp amounts associated with those items
+
+
+
+
+
+
+4 sub quest trade route altering
+  a events
+    1 items with a certain tag have become more scarce
+    2 items with a certain tag are more in demand
+    3 bandit attack (a certain shipment is attacked by bandits)
+      the items become immediately cheaper and more expensive for a while
+    4 items with a certain tag are more plentiful
+    5 items with a certain tag are less in demand   
+  b gradual progression based on GDP
+    1 more items
+    2 larger amounts of the cheaper items
+  c other tied in actions (like clearing out bandits
+    1 bandit attack
+
+
+
+5 day and afternoon
+  a during the day it is busy trading, building, and maintaining
+  b during the night social things happen
+  
+6  
+  a a every so often  a random person checks around for a suitable mate and increments a counter
+  b if the counter does enough then a heart appears and they get together
+  c occasionally the couples come to you to resolve disputes
+  
+7 additional subquests
+8 property disputes
+9 local banditry
+  a guardhouse is the building after whatever economic building is an option
+  b each guardhouse generates favor based on patrols
+  c one subquest would be "how much to 'tax' the locals"
+  d another would be "do we want to raid local bandits"?
+  e additionally it would have a chance of offering to patrol trade routes
+  f if too many guards are on the trade routes then a quest can happen
+    where a local bandit appears and demands stuff from the market
+  g additionally that can happen if there aren't any guard houses  
+  
+
+2 a quest generator based on market values
+  a it is in the main quest generator
+  b it analyzes market conditions and based on a semi random factor generates "we should build" quests
+  c it puts storyline elements into each one
+  d if a traderandom is unsuccessful it puts that into the economy on game
+  e the market quest generator analyzes that and generates a quest
+3 addtomarket looks at the item in the bakery, clones it and then moves it to the market
+4 another sub quest generator for altering trade routes
+  a trade routes give some generic details and handles the creation of the specific creatures
+  b the sub quest generator basically develops the markets that the trade route is based on
+  c it looks at guard houses and determines bandit attack chance
+  d it looks at internal random variables and determines the primary items demanded and supplied
+  e there is a set of items with their base demand
+  f and a set amount of items with the base supply
+  g they have levels and levels correspond to GDP and the economy
+  h (ie lots of successful trades and few failures would bump up the level desired for a certain item)
+  i so you might go from iron smithing to silver to gold
+  j each would be a set of items on a list and lots of successes with the previous list would generate demand
+    for the next set.  That demand would cause
+  h the economy is actually just the quest generator and it just routes messages.  So the market quest generator
+   implements an interface that informs it of all failures and successes and based on those failures it
+   generates quests to build stuff
+     
+
+2 economic questions
+  a.  "Should we build an XXX?"
+  b possible choices are like a blacksmithy and so on
+  c they occassionally deliver items to the market
+  d if you say yes your button for dropping buildings turns into that
+  e traders will demand goods like that and leave if you don't have them
+  f banks.  The banks will create a currency that has a value based on the demand of your goods 
+  g blacksmith - creates various weaponry
+  h tannery - creates leather items
+  i random events happen that alter choices (like at the beginning more rocks might appear which blacksmiths need to be better)
+    or demand for a certain good might rise based on the news
+  
+3 romantic formations
+  a romances happen naturally
+  b a every so often  a random person checks around for a suitable mate and increments a counter
+  c if the counter does enough then a heart appears and they get together
+  d occasionally the couples come to you to resolve disputes
+
+4 war questions,
+  a build guardhouses to have guards
+  b build enough and negative raids don't happen (in a raid the people hide in buildings and the guards fight the bandits)
+  c have extra and options to send the guards out on nearby raids will open up (this will make the traderoute safer and more likely to bring
+    happier people (raided caravans will come less often, and lightly guarded (and thus cheaper ones will come)
+  
+1 have a series of unique "big images" with one showing up on clicking a person
+
+
+
+
+
+
+1 images
+  a hair
+  b market
+
+
+
+3 make the trader quest create a kobold to trade with
+  a it sets the position of the kobold and calls randompersoncreation with just the one person 
+4 make the trade be important (ie can't be ignored)
+  b at first just have it set the current fmd to the trading area
+5 the kobold should have some leather armors to trade for the market bread
+  c should either be a part of randompersoncreation or a kobold template
+6 the kobold just has the trader job
+7 success/failure is defined by having some leather armor in the market 10 turns after the start of the quest
+  a create a CheckMarket object
+1 bakery quest
+  #a expand the words and explanation
+  #b make the bagmap refresh on add building
+  #c make the words and explanation tie into a story (ie a grizzled old man talking about how he wants to open a bakery)
+2 trading
+  a all buildings add to the market or take from the market
+  b trading trades off of the market or personal (starts with market)
+  c a kobold comes in talking about how she wants to trade some leather armors for bread
+  d the bread and leather armors are already swapped
+  e all you do is choose the price you want to offer  
+3 an attack (another quest)
+  a a story about how some weak looking goblins are looking to raid the market
+  b the quest adds some goblins
+  c the jobs all turn to defend which shoots the goblins
+  d the goblins move to take stuff from the treasu
+
+
+1 ordered quests
+  a quests chain through keys
+  b each quest has a name 
+  c a set of quests
+2 q
+ a place bakery quest
+   1 done already, need to test
+ b trade wheat quest 
+   1 a kobold comes and wants to trade money for wheat
+   2 the market has all extra wheat
+   3 after this occasionally small and large things get traded 

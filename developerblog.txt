@@ -1,0 +1,20 @@
+(About me section)
+About me - I have 4 years professional experience in software development.  I am creating this game to express my ideas on AI, to make sure I stay skilled at programming,
+and to hopefully make some extra spending money.  (My first goal is to get a computer that can run my game at a reasonable speed in GWT development mode)
+
+My goal with this game is to make it easy to create simple games (along with creating my own games of course).  For example you could take the current archer
+template and make it unable to move.  You could take the general template and have it create enemies that don't have any attacks (who only gave the goal of carrying
+off trophies, and then create a loss condition where you lose when all your trophies are off the map.
+
+Then you could take the existing game I created.  Add some basic stuff to it and have a tower defense game.  You probably still couldn't do it if you are just an artist.
+But you probably could ask a programmer to take 10 hours or so to do the basics and then do the rest from there.
+
+That is the goal behind the game.
+
+
+Blog entry 1
+
+My daughter put something in my wii.  Now the cd part of it no longer works.  I bought shiren the wanderer and let her stuff it in there only to find out that
+it is pretty much broken.  My cd has a few scratches on it, but it is probably still playable.
+No warranty on the wii though.  I am debating sending it back to nintendo to get it repaired.  If it does then how will I watch netflix?  I really don't want to
+buy xbox gold or use my computer (watching hulu through the hdmi cable is annoying enough)

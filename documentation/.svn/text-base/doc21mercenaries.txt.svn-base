@@ -1,0 +1,15 @@
+1 remove the add shell logic
+
+2 create a way to add a fmd to htmlout that has no parent
+3 make map area run a list of these just like it would with things on the map
+
+4 do the initial thing like special haggle except they are selling their services (you still haggle)
+5 if accepted then they walk off the map, a fmd gets created, they fight, and once there are no enemies it ends
+  and you get the appropriate item amounts
+  
+6 initial trade is clearing out snakes and rats
+
+7 there is a list of buildmaps (with components on them that create the random enemies)
+  that have associated text and quest rewards attached  
+  
+8 for a possibly eventual thing readd item equip and let you equip the mercs (or possibly just your own guards)  

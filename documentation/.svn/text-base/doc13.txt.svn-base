@@ -1,0 +1,100 @@
+1 the gods are based on historical gods
+#2 monsterentrance->traderoute
+#3 traderoute creates kobolds with leather
+#4 traderoute creates humans with food  
+5 make traderoute gradually increase the amounts traded
+
+h add 200 items
+  1 make the buttons do percentages
+  2 add race specific items
+    a kobolds are good at making darts, blowguns, daggers, and leather armor (historical allegory, china)
+      1 kobolds propaganda is all about puffing themselves up
+      2 stories of great heroes, smart historical kobolds (based on real chinese heroes)
+      3 why the kobold nation is rising in importance (simplistic economic reasons)
+      4 they sell rice
+      5 confucianism (ie no gods, belief in the state)
+    b elves have a great fondness for books and elvish equipment (historical allegory europe)
+      1 book on history of elves, history of dwarves, humans, etc
+      2 books on recent events (like why the elves were right to take that one city, or why
+       the dwarves are greedy for taking this other city)
+      3 really ancient books about really great elves way back when (greek heroes)
+      4 their gods mirror greek gods
+      5 they specialize in wine
+    c dwarves make great armor and dwarf specific gear
+      1 they also sell books that are pretty much just lists of their names in order
+      2 meat
+    d humans are great with food.  (IE speciality spices, cheeses, wines, and food in general) (allegory america)
+      1 human propaganda is all about why we should open up free trade
+      2 it also promotes their gods as inclusive gods (christantiy,judaeism, muslim)
+      3 all of the different items have regions associated with them and a one liner description
+      
+    e demigods have speciality religious items
+      1 a few specific demigod books that are very self involved and about a few specific demigod stories
+    f the fey (historical allegory irish)
+      1 magical rings
+      2 magical amulets
+      3 magical items (of any kind really)
+      5 no gods, but big on nature 
+      6 potatoes
+    g the naga (historical allegory india)
+      1 tons of different religious books (buddhism, hinduism,janism, sikhism)
+      2 all sorts of religious icons.  
+      3 religious stories
+      4 they sell curry, and lots of cheese
+    h merfolk  (historical allegory japan)
+      1 the classic trident
+      2 they sell fish both rare and normal
+      3 different shinto stories
+  3 item descriptions
+  4 items need to mean something
+    a foods
+    b books (spellbooks are fine)
+    c equipment
+    d cultural items (like say the orc amulet of X god, costs a huge amount)
+  5 make the sounds pretty solid here if possible
+a the more you trade the bigger items you can trade and the more you attract bigger items (and you have more to sell
+as well) 
+  1 town GDP (all the money on people in the town, all of their item values, updated every so often)  
+
+
+  
+#i make the people come in waves (like they only come at certain hours)
+
+g add an equipment box to show current equipment for a trade
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 make original people have the same base and just have specialized clothing
+  a wizards hat
+  b staff
+  c robe
+  a dress
+  b wand
+  a scimitar
+  b yellow hair
+  c armor
+  a robe
+  b staff
+  z then make sure that they keep the same class, just with the clothing to actually make the image
+3 make trading make sense
+  f put a village GDP that is for now just the last value of whoever is trading
+
+  j make a "general" random item thing and a race specific item thing
+4 put a cap on the total number of friendly people (if the entire SM has more than 6 * houses then don't do friendly)
+5 do the specialized professions
+6 add preloading of images in a generic way (like for example monster entrance could return what it needs

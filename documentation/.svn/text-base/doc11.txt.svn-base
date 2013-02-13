@@ -1,0 +1,67 @@
+1 create a visual indicator to show that there is more to see (ideas)
+  #a draw right arrows 1 past the end
+  #b figure out how to add into the process so that the arrows don't disappear (draw whenever the cache isn't set rather than on the variable)
+2 really valuable items that have an interesting history
+
+4 monsterpersoncreation then starts creating the moving monsters
+  a first just create additional generic people who help and stay if there is enough room
+    1 make sure there are enough templates that are continually useful
+      or to make some general ones that get taken when there is no use
+    2 add a template that basically amounts to "leave" that gets taken if 
+      there is a continual lack of use
+    3   
+      
+    10 the template does the same basic actions as recruitable, but for sleep if there isn't an 
+      available permanent bed ( if no bed then fall asleep and leave the next day)
+  $b then just create monsters that ignore the town and exit
+  c then create monsters that attack the town (they can pillage)
+  d add in trade with a timed gui interface that allows you to make
+    the choice on how much
+  a readd back in hunger
+
+
+1 make the create monsters set the attack template
+
+2 make the symbolic map cycle through the people and the image for the symbolic map
+
+3 upload game to website, make video (including placing down an additional gateway and having them build)
+
+
+
+5 add a job that moves to the center (start it with -1 priority )
+
+6 readd back in traits and stories so you have very individualized units
+
+
+
+
+
+2 make the monster entrance pull in various creatures (recruitable/attacking/trading/moving through) give names
+
+
+  g need a guard 
+  d the different trading/enemies need to come through  
+  h need to balance things so that the enemies coming through can be defeated
+    have a guard shout item (place it and the guard goes to it, shouts and gathers all the adults to him/her
+    defeating the enemy is mainly a matter of pulling back hurt people and having better equipment
+    enemies leave items
+
+  a thirst still doesn't yield back to something else
+
+
+  b singing and dancing should be preceded by moving to a central area
+    singing should have a singing icon
+    dancing should move back and forth and have a dancing icon
+  c building is probably too slow
+  
+
+
+  f need a jeweler/potter/tanner/etc (should be able to place items on houses and have them be built)
+    tanner = leather
+    jeweler = rings
+    potter = pots (storing food and water, so don't have to move away as often)
+    baker = bread (storing food, using wheat)
+
+  
+2
+ e building needs to reward with items    

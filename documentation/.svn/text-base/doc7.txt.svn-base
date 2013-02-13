@@ -1,0 +1,30 @@
+#1 finish up consume.  
+#2 add need algo to economy.  Priority rules everything around me
+#3 trade
+   a make trade use money and reject favor in the case of outsiders
+   b check consume, check trade, make sure trade's move is working
+4 guard protection money ( guard creates 200 turns of protection values that it trades because its value of those things
+is zero.  But each family only trades for one)
+   a make guard visit each gate with a portal on it, in order preferrably (ie make a list per map and only reset once that maps list is
+     done
+5 merchant trade
+  a merchant goes out and offers favors or money for food and other created items
+    1 trade (food,unique)
+  b merchant displays in store
+  c monsters come by to trade (they have personal economies that have food needs/clothing needs/travel needs and they
+  also have a need to get back on the road)
+  d some might have a brigand need
+6 expanded trade items
+  a incoming monsters have lots of different items from around the world
+  b locals have unique items.  Like unique herbs, cultural items, weapons, texts, etc
+  c and the two get traded with an option to set the different amounts to trade for (like a graph
+  where you can say I want more weapons or books so give more money for these)
+7 meaningful goals
+  a occasional attacks.  You organize to defend in various ways
+  b occasional droughts.  You keep food stores high.
+  c occasional diseases.  You keep clean and don't put the diseased out in front trading (or you get lower trade from 
+  the outside cause they think of you as a diseased place)
+  d you can do things to promote yourself as a trading town (merchants looking for unique goods come)
+  e you can promote yourself as a farming town (merchants looking for sizable amounts of food come more often)
+  d you can promote yourself as a military outpost (you can establish higher taxes if you are keeping the merchants safe)
+  e you can create tourist attractions (all sorts of neat things)

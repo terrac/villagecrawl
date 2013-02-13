@@ -1,0 +1,109 @@
+1 graphics
+2 work on items and stories
+3 tutorial
+4 extra trade gameplay
+5 tower defense
+
+1 to get things started
+  a graphics
+    1 create a method that shoots out several of an image based on the relative amount of money compared
+      to the total money the person has
+    2 make each one shoot out a random distance
+    3 add in a cha ching sound
+    4 then make them all converge on the score and move it up appropriately (each image represents a percent of the total
+  b tutorial
+    1 initial trade window with initial tutorial (explaining the basic goals of trading)
+    2 add a note that you can only place houses in the main area (and only display appropriate items for appropriate maps)
+    X as trading expands add more here
+  c interesting items
+    #1 create generic type images if none is provided (check none by creating prefetch)
+    2 give all generic items a bacstory that fits with the area of the game (ie no robe, robe of province XXXX)
+    X (more later on)          
+  d tower defense
+
+2 trade gameplay
+  a add several up and down % buttons (very high, high, medium, low, rock bottom)
+  b can buy and sell from the market (market has a list of items)
+  c people will come through with specific desires (ie cooking implement, book, food, armor, etc)
+  d the specific desires will cause them to pay more and the towns reputation goes up or down based on availablity
+  e holding onto interesting items in the market will cause the fame of the town to go up 
+  f fame brings in more valuable items and possibly more and different kinds of people
+  e different levels of fame will bring in different levels of items (and different ones)
+  g fame is general and there are also specific faction fame (like kobolds and humans)
+  h the faction fame can be altered by say offering a book counter to a specific factions propaganda
+  i or offering them an item insulting to their religion
+  g (this would be covered by specific types associated with the items
+
+
+5 tower defense element 
+  a on attack an alarm gets sounded
+  b monsters try to steal the trading market  
+  c each person tries to go into a trade building and each building has a different attack (maybe not trade buildings)
+  d equipment helps somehow, maybe?  Like they add bonuses to the person and so does the building.
+  e trade buildings subtract from the trading market
+  
+6 phone usability
+  a trade random builds a list of things to trade
+    1 inventory for kobold
+    2 inventory for person
+    3 inventory for market
+  b trade random sets a trade item on one side
+  c then you can set an additional item to barter or leave for money
+  d you can also set a price from really high to really low (depending on how much you want it vs how much they want it
+
+
+
+
+
+
+
+1 graphics 
+  a expand the trade window significantly
+    #1 big image of person (see if melinda can make up some images)
+    #2 text showing this person's money and the market money
+    #3 image of other person (big)
+  #b create a canvas
+  #c draw the image with appropriate scaling
+  d if special big exists then call it
+  e otherwise just call the generic type big 
+  #f call draw text on the lower right corner for the money (a % goes to the market).
+  d create a method that shoots out several of an image based on the relative amount of money compared
+    to the total money the person has
+  e make each one shoot out a random distance
+  f add in a cha ching sound
+  g then make them all converge on the score and move it up appropriately (each image represents a percent of the total
+
+
+3 make the specific equipment distinguishing the initial people work
+
+4 tutorial
+  a extra explanation panels and a "turn off tutorial button on them
+  
+
+  
+    
+1 prefetch items and people before they appear
+2 try adding a cancel to all propagation to stop the canvas from flashing in mobile 
+  a print out touches, upload and test
+3 music for each place
+4 sound effects (clicking on trade, opening up a trade, etc)
+  #a levelup fixed (play sound twice)
+  b add in a mediocre trade
+  c add in a trade failure
+5 graphics
+6 sound effect on placing a house or clicking on a person
+
+2 see why not everything is instantly loading at the start
+3 add in a few more items (some cheeses and wines from trader joes, and some more armors and a dagger)
+4 replace the 1st 4 people's images with the default image and at least one piece of clothing
+  #1 hat (wizard)
+  #2 sword (fighter)
+  #3 mace ( healer)
+  #4 scimitar
+5 work more with the placing of thing like pottery and so on (do at least a couple)
+7 do a tutorial
+8 once the tutorial is done.  Show off
+9 add black gloves in as an image
+10 tower defense piece
+11 make the image not flicker on a phone
+   a try catching all touch events and canceling them

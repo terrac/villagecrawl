@@ -1,0 +1,38 @@
+1 economy as heirarchy
+2 base impulses are registered by an outside "body" component
+3 needs/actions/modifiers
+4 initially needs will be determined by base impulses and the "society" economy
+5 various events register their needs in the society economy
+6 placing an unbuilt gateway puts up the need to build it
+7 once the building gets built (or before and the modifers simply aren't ready) then the modifers will see that the base impulse actions like sleeping/eating can be satisfied
+and they will start being called
+8 additionally there will be a need to farm based on the number of people available (and other food sources)
+9 there will be a need to trade based on how many creatures walk by 
+10 there will be a need to guard that is fixed
+11 over time there might be a training trait that the modifiers take into account
+
+goals for programming
+1 click a gateway to make unbuilt farm
+2 people comes in and finish the house and then live there.  Each house registers a need for a husband/wife/and up to 3 children
+3 a need for a farming is registered
+4 if children are there then a need for supervision is registered
+
+
+(additionally the basic instinct needs should be fufilled)
+
+5 click on a gateway to make an unbuilt guard's house
+6 a guard and family live there  
+7 a need for guarding and a need for protection money is registered
+
+(make it so that a steady stream of monsters are coming through)
+
+8 click on a gateway to make an unbuilt traders house
+9 a trader comes in and sets up shop (if the trader is poor they can trade the promise of selling for goods)
+10
+
+
+
+
+1 add needs
+2 map needs to templates
+3 make maps that do the basics to show an initial family farming

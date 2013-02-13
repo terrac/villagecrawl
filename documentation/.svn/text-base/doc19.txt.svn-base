@@ -1,0 +1,72 @@
+1 fillneed goes to random with the amount controlling the random
+2 fillneed tries to push towards the values society/team/personal
+3 the less social the more personal
+
+1 choice 
+       a set to jerk and builder
+       b set to builder and jerk
+       c on both add both things
+2 then the after stuff
+       a on one of the stats
+       b do a hiring action that hires similar things
+       
+1 initial choices, sets the team to be either builder/jerk
+2 then those offer more similar choices to further specialize
+3 and they have direct control over that line
+
+1 work directly through the issues
+  a for each one do some specific testing first as you go through
+2  
+
+
+
+
+1 you get both, but the choice chooses the side they are on
+  a you also get differences based on that
+2 minor complaints - uses the complaints
+3 engineer - farms naturally atrophy, engineers go around and prevent that
+4 jerk - talks bad about others behind their back and to their face, can ask to get rid of them in certain cases
+5 arrogant - 
+6 anti social - very few common social actions (ie making a friend 
+7 interferes with others - goes around and actually increases the atrophy of farms
+8 highly social - more than average (tries to get people together, haggles with random people)
+9 funny stories - (begin a story in chat, up nearby happiness
+10 woo - occasionally yells out WOOO, 
+11 leader - 
+12 incompetent - 1 less radius
+
+1 (jerk, salesman)
+2 optional builder (nice,engineer)
+3 jerk choice
+  a tannery (foriegener, minor complaints, seperated) (daniel sullivan)
+  b papermaker (arrogant, anti social, hard worker, interferes with others) (dr rozz)
+4 builder choice
+  a temple (malapropisms, highly social, inappropriate behavior) (anju)
+  b goldsmith (arrogant, highly competent, antisocial) (terra)
+5 jerk choice
+  a bakery (arrogant, incompentent, foriegener, country with a history of racism
+  b barn (funny stories,leader,woo)(corbin)
+
+
+
+
+
+
+
+
+
+
+
+story game (radius starts at 4) (inherits from culture and uses methods from it)
+1 initially you are given a breadmaker
+2 then bob the beermaker comes in through trading
+3 then a choice between a tannery or a bookmaker (someone wants to choose one or the other)
+5 then a guardhouse comes 
+4 then a bookmaker/tannery quest (bookmaker wants to print something risque/the guard wants to go off and fight some bandits) 
+  if the guard wins you get a few extra trades due to safer trade routes and the occasional comment by merchants
+6 an animal attacks
+7 then a doctors house comes
+8 sickness strikes someone
+9 more choices about buildings (and at this point the happiness/other stats start being visibly affected by the placement and choices you have made)
+10 some quest associated with the amount of the buildings you choose
+
