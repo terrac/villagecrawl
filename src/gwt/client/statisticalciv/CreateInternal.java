@@ -19,6 +19,7 @@ import gwt.client.statisticalciv.generator.nomadic.FishingGenerator;
 import gwt.client.statisticalciv.generator.nomadic.PopulationGenerator;
 import gwt.client.statisticalciv.generator.nomadic.TribalClothingGenerator;
 import gwt.client.statisticalciv.generator.nomadic.TribalConflictGenerator;
+import gwt.shared.StatisticalCivMap;
 import gwt.shared.datamodel.VParams;
 
 public class CreateInternal extends VParams {
@@ -30,17 +31,31 @@ public class CreateInternal extends VParams {
 	{
 		genMap.put("tribal", Arrays.asList(new VParams[]{ new PopulationGenerator(),new FishingGenerator(),new TribalClothingGenerator(),new TribalConflictGenerator()}));
 	}
+	FullMapData overallfmd;
 	@Override
 	public void execute(Map<String, Object> map) {
 		HashMapData hmdMain = (HashMapData) map.get(VConstants.main);
 		HashMapData h = (HashMapData) map.get(AttachUtil.OBJECT);
 		
+		map.put(VConstants.main, h);
+		
+		if(overallfmd != null){
+			return;
+		}
 		//the initial fmd is hidden and the rules pause
 		//or slow down
 		FullMapData fmd;
-		OutputDirector.getHtmlOut().currentFMD=fmd = EntryPoint.game.getMapArea().getMap().getData(0, 1);
+		overallfmd = EntryPoint.game.getHtmlOut().currentFMD;
+		EntryPoint.game.getMapArea().getMap().putiMD(0, 0, new FullMapData());
+		EntryPoint.game.getHtmlOut().clearFMDs();
+		EntryPoint.game.getHtmlOut().currentFMD=fmd = EntryPoint.game.getMapArea().getMap().getData(0, 0);
 		RunRules.pause = true;
 		
+		StatisticalCivMap.getMap2().execute(AttachUtil.createMap(fmd, this));
+		map.put(VConstants.fullmapdata, fmd);
+		for(VParams vp :genMap.get("tribal")){
+			vp.execute(map);
+		}
 		//create the previous trade stuff on the city
 		// the trades of goods appear
 		// technology choices

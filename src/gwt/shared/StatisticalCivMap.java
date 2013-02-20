@@ -53,4 +53,46 @@ public class StatisticalCivMap {
 
 		return bm1;
 	}
+
+
+	public static BuildMap getMap2(){
+		PBase charmap = new PBase();
+
+		charmap.put("O", new SimpleMD(VConstants.gate, "orcentrance",
+				"/images/grass.png"));
+
+		charmap.put("m", new SimpleMD(VConstants.obstacle, "mountain"));
+		charmap.put("r", new SimpleMD(VConstants.gate, "rock"));
+		charmap.put("t", new SimpleMD(VConstants.gate, "tree"));
+		charmap.put("d", new SimpleMD(VConstants.under, "desert"));
+		charmap.put("w", new SimpleMD(VConstants.obstacle, "water"));
+		
+		
+		BuildMap bm1 = new BuildMap(charmap, 
+				  "wwwwwwwwwwwwwwww\n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "                \n"
+				+ "wwwwwwwwwwwwwwww", "mainarea");
+		PBase resource = new PBase();
+		
+		bm1.put(VConstants.resource, resource);
+
+
+		resource.put(VConstants.defaultimage, "/images/grass.png");
+
+		resource.getType(VConstants.resource).put(VConstants.image,
+				"/images/itemshop.png");
+		resource.getType(VConstants.resource).put(VConstants.sound,
+				"tradingmusic");
+
+		return bm1;
+	}
 }

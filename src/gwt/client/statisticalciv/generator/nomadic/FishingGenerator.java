@@ -33,6 +33,9 @@ public class FishingGenerator extends VParams {
 		FullMapData fmd = (FullMapData) map.get(VConstants.fullmapdata);
 		
 		HashMapData water=hmdMain.getParent().getNearKeyValue(VConstants.obstacle, VConstants.water, hmdMain, 2);
+		if(water == null){
+			return;
+		}
 		Direction d=Direction.getDirection(water, hmdMain);
 		//probably should do this for each water tile
 		
@@ -41,9 +44,12 @@ public class FishingGenerator extends VParams {
 		Point middle = Point.middle(fmd.getXsize(), fmd.getYsize());
 		int length = Point.distance(middle, new Point(0,0))/2;
 		Point newMiddle = new Point(d.getX() * fmd.getXsize(),d.getY() * fmd.getYsize());
-		fmd.getParent().getNearby(newMiddle, new GetForNearby<FullMapData>(fmd) {
+		fmd.getNearby(newMiddle, new GetForNearby<HashMapData>(fmd) {
 			@Override
-			public FullMapData get(FullMapData hashmapdata) {
+			public HashMapData get(HashMapData hashmapdata) {
+				if(hashmapdata == null){
+					return null;
+				}
 				hashmapdata.put(new SimpleMD(VConstants.gate, VConstants.water));
 				return super.get(hashmapdata);
 			}

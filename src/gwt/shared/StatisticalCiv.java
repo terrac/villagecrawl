@@ -47,6 +47,7 @@ import gwt.client.game.vparams.random.RandomItemCreation;
 import gwt.client.game.vparams.rules.CreateItem;
 import gwt.client.game.vparams.rules.GluttonyRule;
 import gwt.client.game.vparams.rules.LaborRule;
+import gwt.client.game.vparams.rules.NeedRule;
 import gwt.client.game.vparams.rules.ScarcityRule;
 import gwt.client.game.vparams.rules.TradeValueRule;
 import gwt.client.game.vparams.rules.TypeRule;
@@ -65,6 +66,7 @@ import gwt.client.main.MoveClosestDifferent;
 import gwt.client.main.MoveRandomFullMapData;
 import gwt.client.main.MoveRandomHashMapData;
 import gwt.client.main.PTemplate;
+import gwt.client.main.Person;
 import gwt.client.main.PickUp;
 import gwt.client.main.Point;
 import gwt.client.main.VConstants;
@@ -108,7 +110,8 @@ public class StatisticalCiv extends ClientBuild2 {
 		game.getMapArea().put(VConstants.turnbased, false);
 		AttachUtil.attach(AttachUtil.runpersonbefore, VConstants.runturn, game
 				.getMapArea());
-		
+
+
 		
 		//add a growth rule
 		//test watching the people grow across africa

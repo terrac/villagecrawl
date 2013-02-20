@@ -34,9 +34,15 @@ public class ConflictRule extends VParams {
 		// (includes cultural and physical growth in total sustaining ability)
 		int growth = hmdMain.getInt("growth");
 
-		int growthIteration = 9 * growth + 200;
-		if(!hmdMain.containsKey("nearcity")){
-			growthIteration =growthIteration/9;
+//		int growthIteration = 9 * growth + 200;
+//		if(!hmdMain.containsKey("nearcity")){
+//			growthIteration =growthIteration/9;
+//		}
+//		hmdMain.put("totalsize", growthIteration);
+
+		Integer growthIteration = (Integer) get("totalsize");
+		if(growthIteration == null){
+			growthIteration = 20;
 		}
 		List<PBase> population = hmdMain.getList(VConstants.population);
 		if (population == null) {
@@ -97,7 +103,7 @@ public class ConflictRule extends VParams {
 		// if total size is below an amount merge together
 	}
 
-	public int getTPop(List<PBase> population) {
+	public static int getTPop(List<PBase> population) {
 		int tPop = 0;
 		for (PBase p : population) {
 			int size = p.getInt(VConstants.size);

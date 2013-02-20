@@ -347,6 +347,8 @@ public class VConstants {
 	public static final String calculatedvalue = "calculatedvalue";
 	public static final String population = "population";
 	public static final String imagelist = "imagelist";
+	public static final String next = "next";
+	public static final String growth = "growth";
 	
 	
 	public static String string = "string";

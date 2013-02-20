@@ -91,7 +91,7 @@ public class BuildFeatures extends HttpServlet {
 		//addResources(person);
 		AttachUtil.shouldRun = false;
 
-		Key<ServerGame> firstGame = addFeature(person,"Statciv",StatisticalCiv.doBasicMap(),StatisticalCiv.doStatMap());
+		Key<ServerGame> firstGame = addFeature(person,"Statciv",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doStatMap());
 		person.add(firstGame);
 //		
 //		Key<ServerGame> firstGame = addFeature(person,"Haggle",ClientBuildDungeon.doBasicDungeon(),ClientBuild2.doPeople(),ClientBuildDungeon.doInitialAdventurers());

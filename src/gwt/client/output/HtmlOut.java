@@ -912,6 +912,10 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		canvasPanel.add(shell);
 		extraMaps.put(fmd, shell);
 	}
+	
+	public void clearFMDs(){
+		canvasPanel.clear();
+	}
 	public void runExtra(MapArea ma){
 		for(Entry<FullMapData,GCanvas> extra : extraMaps.entrySet()){
 			ma.runFmd(extra.getKey());
