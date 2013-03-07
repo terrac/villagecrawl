@@ -36,6 +36,11 @@ public class Item extends MapData implements Serializable {
 		setAmount(amount);
 		setItemValue(value);
 	}
+	public Item(String name) {
+		setName(name);
+		setAmount(1);
+		setItemValue(1);
+	}
 
 	public void setName(String name) {
 		put(VConstants.name, name);

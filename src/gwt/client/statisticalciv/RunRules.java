@@ -54,6 +54,10 @@ public class RunRules extends VParams {
 	@Override
 	public void execute(final Map<String, Object> map) {
 		runSetup();
+		List<VParams> list = (List<VParams>) getList(VConstants.vparams);
+		for (VParams v : list) {
+			v.init();
+		}
 		for (FullMapData fmd : EntryPoint.game.getMapArea().getMap()) {
 			for (final HashMapData hmd : fmd) {
 				fmd.getNearby(hmd, new GetForNearby<HashMapData>(fmd) {

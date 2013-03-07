@@ -1,6 +1,7 @@
 package gwt.shared;
 
 import gwt.client.EntryPoint;
+import gwt.client.game.ApplyDamage;
 import gwt.client.game.AttachUtil;
 import gwt.client.game.AttackEnemyMeta;
 import gwt.client.game.MoveClosestNot;
@@ -82,6 +83,7 @@ import gwt.client.statisticalciv.ConflictRule;
 import gwt.client.statisticalciv.CreateInternal;
 import gwt.client.statisticalciv.GrowthRule;
 import gwt.client.statisticalciv.RunRules;
+import gwt.client.statisticalciv.TechnologyRule;
 import gwt.shared.datamodel.VExecute;
 import gwt.shared.datamodel.VParams;
 
@@ -103,6 +105,7 @@ public class StatisticalCiv extends ClientBuild2 {
 		//game.put(VConstants.symbolicmap, true);
 		game.setMapArea(new MapArea());
 		game.getMapArea().setMap(new SymbolicMap());
+		game.put(VConstants.applydamage, new ApplyDamage());
 		
 		game.getMapArea().getMap().put(VConstants.xfull, 17);
 		game.getMapArea().getMap().put(VConstants.yfull, 15);
@@ -118,7 +121,7 @@ public class StatisticalCiv extends ClientBuild2 {
 		//lower growth in desert
 		//formation of cities
 		
-		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new GrowthRule(),new ConflictRule()), game
+		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new GrowthRule(),new ConflictRule(),new TechnologyRule()), game
 				.getMapArea());
 		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(), game.getMapArea());
 		//AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(), game.getMapArea().getMap().getData(0, 0));

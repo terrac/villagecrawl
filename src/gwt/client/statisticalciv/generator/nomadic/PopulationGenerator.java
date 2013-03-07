@@ -10,6 +10,7 @@ import gwt.client.main.Point;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.LivingBeing;
 import gwt.client.main.base.PBase;
+import gwt.client.map.Direction;
 import gwt.client.map.FullMapData;
 import gwt.client.map.HashMapData;
 import gwt.client.statisticalciv.ConflictRule;
@@ -36,15 +37,32 @@ public class PopulationGenerator extends VParams {
 		List<PBase> population = hmdMain.getList(VConstants.population);
 		
 		int tPop = ConflictRule.getTPop(population);
-		int totalsize = hmdMain.getInt("totalsize");
+		int totalCount = 20;
+		int count = 0;
+		
 		for(PBase p : population){
-			double d = ((double)p.getInt(VConstants.size) /totalsize);
-			int numberPop = (int) (d * 20); 
+			int totalsize = p.getInt("totalsize");
+			if(totalsize == 0){
+				totalsize = 20;
+			}
+			int size = p.getInt(VConstants.size);
+			double d = ((double)size /totalsize);
+			int numberPop = (int) (d * 5)+1; 
 			while(numberPop > 0){
 				LivingBeing lb=RandomPersonCreation.createPerson("human female");
 				numberPop--;
-				fmd.getNearestEmpty(new Point(5,5)).putAppropriate(lb);
+				Direction dir=Direction.getRandom();
 				
+				HashMapData nearestEmpty = fmd.getNearestEmpty(new Point(fmd.getXsize() *dir.getX(),fmd.getYsize()* dir.getY()));
+				if(nearestEmpty != null){
+					nearestEmpty.putAppropriate(lb);
+						
+				}
+				count++;
+				totalCount--;
+				if(totalCount < 0){
+					break;
+				}
 			}
 		}
 		//take the total population for this tile

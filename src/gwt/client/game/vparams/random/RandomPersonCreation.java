@@ -339,7 +339,7 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 		setIfContains(pb, st, VConstants.maxhealth);
 	}
 
-	private static void setIfContains(PBase pb, PBase st, String defaultattack) {
+	public static void setIfContains(PBase pb, PBase st, String defaultattack) {
 		if (pb.containsKey(defaultattack)) {
 			st.put(defaultattack, pb.get(defaultattack));
 		}

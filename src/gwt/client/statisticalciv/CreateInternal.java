@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
+
 import gwt.client.EntryPoint;
 import gwt.client.game.AttachUtil;
 import gwt.client.item.SimpleMD;
@@ -36,7 +38,9 @@ public class CreateInternal extends VParams {
 	public void execute(Map<String, Object> map) {
 		HashMapData hmdMain = (HashMapData) map.get(VConstants.main);
 		HashMapData h = (HashMapData) map.get(AttachUtil.OBJECT);
-		
+		if(!Window.confirm(h.toString())){
+			return;
+		}
 		map.put(VConstants.main, h);
 		
 		if(overallfmd != null){
@@ -56,6 +60,7 @@ public class CreateInternal extends VParams {
 		for(VParams vp :genMap.get("tribal")){
 			vp.execute(map);
 		}
+		EntryPoint.game.pause = false;
 		//create the previous trade stuff on the city
 		// the trades of goods appear
 		// technology choices

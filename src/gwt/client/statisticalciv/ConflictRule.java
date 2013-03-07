@@ -40,16 +40,16 @@ public class ConflictRule extends VParams {
 //		}
 //		hmdMain.put("totalsize", growthIteration);
 
-		Integer growthIteration = (Integer) get("totalsize");
-		if(growthIteration == null){
-			growthIteration = 20;
-		}
+		
 		List<PBase> population = hmdMain.getList(VConstants.population);
 		if (population == null) {
 			return;
 		}
 		for (PBase p : population) {
 			int size = p.getInt(VConstants.size);
+			PBase techStats = p.getType(VConstants.technology);
+			int growthIteration = techStats.getInt(VConstants.growth)+ 20;
+			p.put("totalsize", growthIteration);
 
 			if (size > growthIteration) {
 				PBase p2 = p.clone();
@@ -73,30 +73,37 @@ public class ConflictRule extends VParams {
 		// move
 		// for each if above x amounts (total pop + size) then move one
 
-		int totalPopArea = growthIteration;
-		int tPop = getTPop(population);
-		if (totalPopArea < tPop && population.size() > 1) {
+		//int tPop = getTPop(population);
+		if (population.size() > 1) {
 			HashMapData toMove = findNewMD(hmdMain.getParent(), hmdMain);
-			if (VConstants.getRandom().nextDouble() > .3) {
+			PBase p = population.get(0);
+			PBase p2 = population.get(1);
+			
+			int conflictAdded = p.getInt(VConstants.conflict);
+			conflictAdded += p2.getInt(VConstants.conflict);
+			
+			if (VConstants.getRandom().nextDouble() > .3+.1 * conflictAdded ) {
 				// fighting
-				PBase p = population.get(0);
-				PBase p2 = population.get(1);
 				int amount=(int) (p.getInt(VConstants.size) * Math.min(.9,(VConstants.getRandom().nextDouble()+.3)));
-				p.put(VConstants.size, p.getInt(VConstants.size) - amount);
-				p2.put(VConstants.size, p2.getInt(VConstants.size) - amount);
-				if(p.getInt(VConstants.size) < 0){
+				p.put(VConstants.size, p.getInt(VConstants.size) - amount -p2.getInt(VConstants.strength));
+				p2.put(VConstants.size, p2.getInt(VConstants.size) - amount- p.getInt(VConstants.strength));
+				TechnologyRule.transferTechnology(p,p2);
+				if(p.getInt(VConstants.size) <= 0){
 					population.remove(p);
 				}
-				if(p2.getInt(VConstants.size) < 0){
+				if(p2.getInt(VConstants.size) <= 0){
 					population.remove(p2);
 				}
 				hmdMain.put(new VisualDamage("sword"));
 			}
-			cityRule.execute(map);
-			PBase p = VConstants.getRandomFromList(population);
-			if (p != null&&toMove != null && !toMove.containsKey(VConstants.obstacle)) {
-				population.remove(p);
-				toMove.getListCreate(VConstants.population).add(p);
+			//cityRule.execute(map);
+			PBase ptm = VConstants.getRandomFromList(population);
+			if (ptm != null&&toMove != null && !toMove.containsKey(VConstants.obstacle)) {
+				population.remove(ptm);
+				PBase technology=ptm.getType("currenttech");
+				String tech=VConstants.getRandomFromList(Arrays.asList(technology.getObjMap().keySet().toArray(new String[0])));
+				technology.remove(tech);
+				toMove.getListCreate(VConstants.population).add(ptm);
 			}
 		}
 		// reform

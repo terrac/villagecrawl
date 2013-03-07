@@ -349,6 +349,9 @@ public class VConstants {
 	public static final String imagelist = "imagelist";
 	public static final String next = "next";
 	public static final String growth = "growth";
+	public static final String cost = "cost";
+	public static final String conflict = "conflict";
+	public static final String technology = "technology";
 	
 	
 	public static String string = "string";

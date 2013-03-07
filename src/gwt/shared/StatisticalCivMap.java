@@ -69,7 +69,7 @@ public class StatisticalCivMap {
 		
 		
 		BuildMap bm1 = new BuildMap(charmap, 
-				  "wwwwwwwwwwwwwwww\n"
+				  "                \n"
 				+ "                \n"
 				+ "                \n"
 				+ "                \n"
@@ -80,7 +80,7 @@ public class StatisticalCivMap {
 				+ "                \n"
 				+ "                \n"
 				+ "                \n"
-				+ "wwwwwwwwwwwwwwww", "mainarea");
+				+ "                ", "mainarea");
 		PBase resource = new PBase();
 		
 		bm1.put(VConstants.resource, resource);

@@ -1,0 +1,241 @@
+1 story, progression towards cities
+  a beer technology leads to a tiny village at 30 growth
+     1 which leads to bread technology (growth)
+     2 and prostitution (the ability to convert some wild people when they pass nearby)
+     3 and bigger cities near rivers (river based techs)
+        
+  b herding technology allows mobile populations to grow
+     1 but it can be transferred to cities
+     2 herding leads to disease technologies
+         a which depending on disease resistance and culture can wipe out populations
+           1 and that leads to disease resistance being increased
+           2 and an additional chance of disease resistant techs being adopted
+               a fundamentalism (basically techs are rarely given up)
+                  1 downside is that not all good techs will be adopted
+                  2 upside is that disease resisntant techs have a greater chance
+                    (cleanlieness,not eating certain foods, xenophobia, banning prostitution, banning gay sex)
+  b fishing technology allows populations to grow extra near mouths of rivers             
+  c liberalism ( technologies are frequently given up to make more room)
+    1         
+
+  d populations transfer people and start to gain identites
+    1 one city might have a lot of growth-conflict populations (grow, seek conflict)
+    2 there are a few populations that simply avoid all others (low growth technologies, no city tech)
+    3 some cities might have a lot of growth-expand and a few conflict
+  e city techs start becoming based off of specific acquired resources
+  
+1 self reinforcing behavior 
+  a techs that control behavior
+    1 seek out conflict (look one tile ahead and go towards)
+    2 seek out growth (ie stay on good tiles)
+      a additionally activate growth technologies
+    3 avoid others (look one tile ahead and go the other way)
+    4 (these can combine so that you might have one that seeks out conflict, then seeks out growth
+    
+  b techs that can be tied to other technologies
+    1 a tech has a chance of creating a third technology that contains
+      two techs (and is appropriately named tech1-tech2)
+
+
+3 slow things down a little to watch
+
+#1 on splitting split one tech off to only one group
+2 on conflict a tech has a small chance of being transferred
+3 put in more shinto techs and make sure that that makes the assortment more random
+4 visual representation of technologies
+agriculture
+5 liberalism promotes freedom type techs
+6 fundamentalism promotes rule type techs
+7 city based techs vastly increase wealth and so on, but are more dependent and can fall apart
+8 the progression to higher cities should be randomly adding techs that sometimes work together and sometimes don't
+  with many failed cities along the way ( including events that disrupt things) so for example you have
+  a dozen populations in a mutually benificial relationship, one of them gets disrupted in its tech
+  and then they all fall apart
+
+
+#Culture have 5 main technology slots
+The technology slots then influence behavior (fishing for example tend to move along the water)
+                                             (strong technologies encourgage fighting)
+                                             (growth technologies encourage growth)
+                                            (there might be a favor desert tech for example)
+                                             
+#the number of each technology then gets constantly reported on the side
+#  a add code to clear out the tech every iteration
+#  b 
+Choices on clicking allow you to influence those technology slots
+Each cultural technology gets represented differently when going into an area
+                                             
+Technologies are explained from the perspective of the tribal people in words and voices when clicked on
+They are also reactive random technologies get added or changed over time and become more useful
+for example disease gets more potent with liberalism and population, fundamentalism then has a protective
+effect.  The best way to describe it is that guns germs and steel describe why the west won.  This
+describes the ebb and flow.  The creation of cities, the creation of complex technologies and the
+backwards slide when disease hits or things change.  Liberalism's weakness is its lack of rules leads
+to negative technologies having an uncontrolled effect.  Fundamentalism's is that it keeps on adding
+rules until the negative rules destroy the society.  (you have other things like machiveli's the pursuit of power)
+
+1 start representing different cultural technologies
+2 add in some choices
+
+if population more than 1 add in a question "should we fight?" and they fight and then the results are
+reported
+
+1 pick one trait and make them all similar for each population
+
+1 different clothing, different populations
+2 initial hunt/gather templates (and then move off)
+3 village 
+
+do this while working on stuff
+
+1 randomly add a technology every 100 turns to a population
+
+1 put technologies into the different rule parts
+  a total pop
+  b growth
+  c conflict
+  d every x turns it build up statistics for that pop-
+    each one gets called off of the population to do the appropriate actions
+    
+  
+ 
+2 replace the different spots with technology
+3 do the random generated builder
+
+
+The different parts of building a 2d game in GWT. Loading images, writing to the canvas, adding in small visual cues, and other general issues with building a game in Java.
+
+Current story
+  a starts out one hunter gatherer
+  b population grows, populations split at about 20 people
+    a default technology of shaman that bands together 
+    b technology grabs each % technology of population and then updates the growth amount (this happens every 10 turns)
+    
+  c each good technology adds a little to the total amount and slightly alters behavior
+    1 add 10 positive technologies and 5 negative ones(they already exist and will increase or decrease in percent and have the resulting effects)
+    2 add fundamentalism vs liberalism technologies
+    3 add in a question that speaks to fundamentalism or liberalism
+    
+    
+  d dramatic increase in population on advent of agriculture
+  e cities and towns and the associated specialization.
+
+
+Impermanent technology
+  a all technologies are a double.
+  b a certain amount either go up or down based on the current trajectory of the population
+  c events can cause major shifts
+  d major technologies guide the trajectory (fundamentalism increases things like aversion to homosexuality
+    and give those technologies some of their power)
+
+Conflict
+  a add more negative technologies
+  b make technologies mostly impermanent and on a percentage base.
+  c 
+  the conflict comes from which technology you have to prioritize.  When you click on a population
+  it will give you a choice to respond to a series of events.  If you choose to then that population
+  will prioritize those technologies and will compete against the other populations, but also merge
+  with them.  When you watch them they should grow and alter according to the culture you have
+  given them.  
+  The second idea for conflict is that the first one is too rewarding.  The second one will be all about
+  properly managing people.  You will have crises that test your social reaction and those will
+  simply hurt the populace if you do badly on them.  For example your child acts out, you discipline 
+  them or you don't depending on the situation.  You are given a leadership role and you decide how
+  controlling you want to be.  You act in an unfair way giving your family an advantage
+  basically negative technologies can be developed, can be gained after a disaster, or just over time.
+  By going in and handling those situations you maintain the populations and provide for a more helping
+  hand.
+  
+
+1 technology
+  a technology changes increase the total growth ability for 
+
+1 make population set a marker for different pops (name + counter on pop which gets set to all lbs
+2 make the clothing one set different clothing
+  a randomly assign some pieces of clothing to a specific population (eventually tie with images)
+
+2 and assign basic hunter gatherer roles
+  a if fishing tech is researched the fishing template is added
+  b put some animals down
+  c put some fruits down
+  d look for the gathering action, assign it to some
+  e look for hunting action
+  
+  
+
+5 add in code that gives a random chance of a scenario occurring
+1 movement,growth, etc are all based on the tech tree
+
+
+#1 use a method that clears out the htmlout to display the new stuff
+#2 test and iterate
+
+
+
+
+
+
+
+1 test some more and identify errors
+2 
+
+
+
+1 add in code to make population add people
+2 and assign basic hunter gatherer roles
+3 add in code to set the clothing
+4 make sure fishing works correctly
+5 
+
+
+
+
+1 goal is hundreds of random scenarios of unusual situations
+2 based on nonstandard myths and dungeon crawl images
+3 (initially random with maybe a few choices and chances, can do a tech tree later)
+
+
+1 on click create a fmd at 0,1
+  a take what is in the hmd and create the FMD
+  b it is created through the selection thing (with maybe additional changes depending on the gate)
+  c clicking on the town
+  d make it so that both the town and the person are written
+
+2 technology introduces more complicated interactions
+
+1 lower the initial growth rate and max pop to encourage dividing
+
+1 tall symbolic map of africa
+2 growth/conflict/etc work off of it
+3 on clicking a tile create the fmd and only run the currently clicked one (if already exists remove the map part and recreate)
+
+
+1 conflict has a small chance of creating a city given the circumstances
+  a conflict holds a create city rule (to start with it is just internal)
+  b if the population is at max run
+  c if the amount created is max then create no more and go on
+  d if next to water then 10% chance (and can't be too near another city)
+  e on creation add a city capacity under the total pop key to nearby tiles
+  
+2 add extra movement when not near a city, essentially making those pops nomadic  
+  
+  
+3 Alter growth rule
+  a basically some changes to growth based on randomness and events
+  b if population in tile then small chance of reducing growth
+  c if below normal growth and no population small chance of increasing growth (and this could be changed by tech)
+    
+
+1 cities have a high total pop limit
+2 everywhere else doesn't
+3 low amounts of pop outside of cities and frequent moving
+
+1 when a conflict occurs show it, if it is clicked on create
+  a scene of the two sides fighting
+2 clicking on the city will show the city and have options appear
+  (trades, and choices, doing well will speed growth, poorly will slow growth)
+  
+3 otherwise clicking on a tile with a small population will show a couple
+ farms
+ (though you could specialized the pops and have other scenes appear  
+    

@@ -654,7 +654,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		LogDisplay ld = new LogDisplay();
 		displayData.add(hmdDisplay.getWidgetAndInit());
 
-		//displayData.add(ld.getWidgetAndInit());
+		displayData.add(ld.getWidgetAndInit());
 
 		EntryPoint.game.put(VConstants.log, ld);
 		flextable.setWidget(0, 1,displayData);
