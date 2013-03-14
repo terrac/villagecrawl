@@ -4,6 +4,7 @@ import gwt.client.EntryPoint;
 import gwt.client.game.ApplyDamage;
 import gwt.client.game.AttachUtil;
 import gwt.client.game.AttackEnemyMeta;
+import gwt.client.game.CreateRandom;
 import gwt.client.game.MoveClosestNot;
 import gwt.client.game.RandomTypeCreation;
 import gwt.client.game.SellOne;
@@ -115,6 +116,16 @@ public class StatisticalCiv extends ClientBuild2 {
 				.getMapArea());
 
 
+		{
+		PTemplate pt = addTemplate(game, "person");
+
+		String exp = addG("use", game, new CreateRandom("snake", "rat"));
+		addAction(pt, exp);
+		}
+		PTemplate pt = addTemplate(game, "technology");
+
+		String action = addG("technology", game, new TechnologyAction());
+		addAction(pt, exp);		
 		
 		//add a growth rule
 		//test watching the people grow across africa

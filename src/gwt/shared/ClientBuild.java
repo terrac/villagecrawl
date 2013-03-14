@@ -1170,7 +1170,7 @@ public class ClientBuild {
 		mchild.setMetaoobj(fchild.getMetaoobj());
 	}
 
-	protected static String addG(String string, PBase game, Object o) {
+	public static String addG(String string, PBase game, Object o) {
 		// if (o instanceof UIList) {
 		// ((PBase) game.get("uilist")).put(string, o);
 		// return string;
@@ -1248,7 +1248,7 @@ public class ClientBuild {
 		return item;
 	}
 
-	protected static PTemplate addTemplate(PBase pBase, String name) {
+	public static PTemplate addTemplate(PBase pBase, String name) {
 
 		PTemplate pTemplate = new PTemplate(name);
 		// if(root != null){
@@ -1259,7 +1259,7 @@ public class ClientBuild {
 		return pTemplate;
 	}
 
-	protected static void addAction(PTemplate al, String action) {
+	public static void addAction(PTemplate al, String action) {
 		ActionHolder a = new ActionHolder(action);
 		al.getActionList().add(a);
 
