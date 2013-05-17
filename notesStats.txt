@@ -1,3 +1,432 @@
+1 start off with initial techs.
+2 rules that allow techs to increase over time, and for the necessity of
+  interaction to increase different techs
+  a techs start at one and by default follow the formula of large early gains and less later
+    (use efficency formula created)
+  b techs increment over time to +1 for every era assuming the right state
+    (first is fishing vs hunting, second is trading vs conflict, third is agriculture vs hunting)
+  c cross polination increases states
+    (on conflict or trade when available do cross poliniation)
+3 up till agriculture and then bronze age
+  those start to show subtle differences and colorful people
+
+#1 remove sucess hunting and make fishing limited (with gathering on failure)
+2 put currently researched tech (at least the type) in an overlay on the person
+3 on successfull researched do the popup
+4 expand out the states so that it is difficult for a single population to do all the techs
+   a hunting states
+   b fishing states
+5 add on trade and conflict the chance to transfer some research if there is a large lack on
+  one side
+  
+  
+
+1 create a tech under hunting called follow the herd which requires a minimum amount of hunting
+  and then can be researched.
+  It says "if a successful hunt, then next fishing chance is ignored
+  
+
+1 in genera preferences have a thing for how fast the techs research (by default fast)
+2 techs give a chance of different preferences with some having a high variablity like hunting or fishing.
+3 combat can destroy a group
+
+1 tech maxes and mins are defined with a random component
+  a on increment when creating a new tech do a + or minus 3 random
+  
+2
+
+1 increment random tech and display a popup on a successful tech
+2 make the techs each increase a stat or change something
+  a barter creates trade spots which people occasionally visit
+  b jewelry,pigments,etc put down places where items can be mined/created
+  c other things create lists of items that can be traded and alter statistics
+  d on a trade/combat the crappier culture gets a tech boost.
+3 make sure huntingvs fishing and etc work
+4 
+
+1 make the growth function quickly at the beginning and then have great difficulty 
+ #approaching the split point
+  #pop/maxpop = inefficency
+  #growth=growth -inefficency * growth 
+  
+2 make sure that fishing can only hit fish and hunting cannot 
+3 see exactly why combat isn't happening 
+
+4 add second era (with appropriate fanfaire
+5 remove the ok box for clicking on a unit and make sure that clicks can follow people
+  (eventually a small box will appear graphically showing what is going on with those people, periodically refreshed)
+  
+
+#1 single tech with right properties will go up or down
+#  (this never stops and is associated with the state)
+#2 other techs will randomly increment
+  (create an explanation bar that follows the person and shows you their techs
+3 techs add items
+4 adding fish to show good fishing spots
+
+1 initially the key techs are picked and reinforced (or not, if they fail)
+2 other techs move up by a gradual progression (one is picked and it gradually goes up, and these go up faster by tech transfers)
+
+The people go through the different eras with bonuses based on the techs and a richer world than currently (disease, more animals, etc)
+for example on preserved meat hunting/fishing produces lasting food that gets eaten and boosts the pop
+all of those techs simply increase over time and are reinforcing 
+a new era happens when all the previous techs are fully researched
+
+1 a few key techs that can alternate and have wide ranging effects (so you might have 30 hunting and 10 fishing or 39 fishing and 1 hunting
+  a hunting
+  b fishing ( add fish in and have their populations deplete/increase, otherwise fishing yields are low like gathering)
+                         (on the invention of agriculture hunting can become sheperding and fishing can become farming)
+  a combat (chance of fighting when close)
+  b trade ( when close it shows two gold icons instead of swords and item amounts change hands
+  
+  
+  a liberalization (removed restrictions
+  b fundamentalism (added restrictions that stop disease and have slight negatives on productivity)
+  
+2 general technologies that simply grow over time
+
+
+
+1 freeze 3 techs
+2 run 180 turns.  If split or higher pop then keep frozen and freeze 3 more (if none available then just pick some)
+3 if the time for an era to come has passed then move to the next era on the freeze choice 
+
+1 add religious techs	
+
+1 basically techs allow for long term changes to individuals
+  a long term hunting/gathering for the initial era
+  b second era has the beginnings of trade (including seeking out areas to resource gather and trade
+  c then more items to trade
+  d domesticated dog (and each era is gradually entered into, and represented by clicking)
+2 agriculture
+  a eventually the agricultural society forms in fertile areas
+  b it spreads as tech improves
+  c fundamentalism vs liberalism become big things and the initial tribal religon changes
+3 copper
+4 bronze age
+5 iron age
+6 ancient history    
+
+
+4 test the incrementing of technologies
+  a break structure into era and state (the techs all go into a map, but there is a structure with the names)
+  a break out incrementing further (hunting is its own state, in addition to general)
+  b create a mapped relation that allows the correct randomness
+5 the era logic for enabling new techs for people (transferring is seperate)
+
+
+1 share latest
+  a add the ability to rename and add a description for the shared
+  b put the shared at the bottom of the gamelist
+  
+2 push current big map up
+3 put the pincrement for hunting into a tech and push it up, test different amounts
+  and an additional option of avoiding completely killing a population 
+  
+6  
+  
+2 add two societal tech trees
+  a fundamentalism
+  b tribalism
+  fundamentalism has a list of techs from the bible
+  tribalism has a list of techs from the shinto religion (look at old tech rule)
+  
+  use the big world map to add the different areas (some which have different animals
+  diseases and so on)  fundamental techs all promote disease resistance.  tribal techs
+  promote a general cross section of techs (combat fighting and avoiding it, organized society,
+  planning ahead, etc).  The fundamental techs do too, but just to a lesser extent with
+  disease resistance becoming a huge factor.
+    a swampy area in the middle (patches of swamp and grass)
+    b grassy at the bottom
+    c desert at the top (with isolated grassy in the northwest and a river in the northeast)
+    snakes,alligators are in the swampy area (they respawn low health if killed off and 
+    gain health in the swampy area, but also alligators can hunt sheep if nearby, snakes
+    just kill anything that comes close)
+    sheep roam all over
+    elephants and lions roam too.  (elephants are basically too tough to be hurt and aren't 
+    hunted by anything, lions hunt the sheep and fight with the humans
+    
+    humans eventually learn how to domesticate sheep.  this gives them a random chance
+    of getting various diseases and makes hunting less necessary.
+    When a human is diseased it puts itself into a disease state and starts
+    losing people and incrementing (or researching new) disease techs
+    on interactions between people (combat and otherwise) disease gets spread and
+    sticks with a population.
+    
+    tribalism is bad about combat and grudges, forgiveness is a tech that can replace
+    tribalisms combat ideals and it allows further growth
+    
+    eras are goverend by their own properties (like the amount of time it takes before an
+    era can be researched, and maybe other requrirements
+
+Develop a simulation that shows how people define their society in reaction to their environment.
+
+1 inital approach for testing
+  a take code in google drive and run it 
+  b replace new code till you see issue
+
+
+#1 write some code that puts techs on each person
+#2 make conflict tech
+#3 add in only currently used techs
+#add increment tech logic
+5 ma
+4 test
+
+each population has a list of techs which have a chance of increasing when related
+actions occur (or just in general there is a random tech that has a small chance of
+being created and added, or upgraded)
+
+if a tech is enabled that means that the person starts with it
+
+On the addition of barter and pigments start creating visually unique looks for each
+person (start with it added by default to test)
+
+1 goals
+  a cultural affectations associated with techs that demonstrate spreading techs
+    1 handaxe,spear,dress 
+  b a variety of foods, gathering that picks them, and animals that go after one food
+  
+
+2 wire the techs up to affect the game in various ways 
+  (not all have to be realistic, some aren't really techs, 
+  but might be natural disasters or afflictions  
+
+
+#1 add list of techs in a seperate json data that has the technology key
+#  a then test that by running them 
+  
+
+1 gui actually only allows changes in technologies (enable,disable,change value)
+  techs then run constantly
+  a technologies are in a pbase with their name
+  b run through all the techs and turn them into a list
+  c tapping on the list will pop up something that takes the tech
+    values and allows you to edit them
+  
+2 add some variation in the relative amount of the wheat produced on grass tiles
+  so that only some grass tiles will get it  
+
+3 create all the techs, make them individually gained over time and shared,
+  try out all the possible combinations
+#1 huge version
+
+
+1 basic actions are there.  Technology only changes the chance of them
+ occurring
+
+#1 fishing,gathering,hunting, put overlays on them
+2 add random fruits as a part of gathering
+
+#1 add in a property that will make the human not go after the sheep on a certain
+#  percentage basis and pick a different one if the health is low
+#2 just sheep  (just add a number for sheep and people)
+#3 gathering tech
+#4 fishing tech
+  #a move near water
+  #b increase food
+  
+5 pretty edit is a link
+  a add a json data that is a list of buttons/textboxes/etc with name of the variable
+    the code recursively searches and finds the variable  and displays it
+    on edit you take that list, edit them with the new values and then export
+  b there is a buildprettyedit that holds the list of objects that correspond
+  c   
+
+1 add in gathering tech (seperate so we can see both)
+2 add in fishing tech
+3 
+
+
+1 add in the first tier of techs
+  a for each step share a game
+  b think about descriptions and names for the game
+
+
+#1 add a link that posts to leaderboard to share 
+
+#1 create leaderboard and assoc tech
+2
+
+1 play with statistics and choices until I have a solid beginning
+  a choice between several maps (of differing sizes)
+  b
+
+
+#1 install tortoise svn and continue updating unfuddle (look at old laptop if necessary)
+
+
+4 offer a link to play the game (and have a share link)
+
+1 use phonegap to deliver first android app
+  a take initial stats and allow people to change them and watch the resulting simulation
+  b create web frontend with a dozen stats
+  c post those stats to the website
+  d on start run that game
+  e offer a way to share the game on facebook (to start just have a link)
+1 try making the space a lot bigger
+
+make the base oobject pick from a list of techs given a random amount for each one
+starting techs (eventually add the ability to gain new ones)
+1 stick technology (hold stick in hands,greater combat ability)
+2 fishing 1 (empty hands, stay near water)
+3 hunting (follow cows)
+4 gathering (gather food with edible by human trait,move towards that food)
+5 fiber (skirts)
+
+
+#2 slow growth down a lot (like to 1000)
+3 wolves that hunt cows and will fight humans if they get too close
+4 snakes
+
+
+
+
+1 when technology is developed or transferred create an associated cultural item
+2 on split keep the cultural item
+3 on potential combat vs trade higher when more culture
+
+
+1 tech tree
+  a based on initial config
+  b choices occur inside and are probably just superficial
+  c
+2 huge base
+  a create africa symbolic map
+  b each
+
+
+1 adding back in conflict
+  a check to see alignment of culture/tech tree
+  b if different and if next to another then
+  c do the sword and reduce both populations
+
+
+1 create action that is breaking nuts
+  a move to tree
+  b flash the trading image on the person
+  
+2 hunt animal action
+  a on create internal have it randomly create some animals that randomly move around
+  b add hunt animal action onto a template
+
+3 action that prepares leather (gathers animal hides, turns it into leather
+  a hunt animal
+  b change clothing to leather
+  
+4 action that carves spear
+  a go to tree
+  b flash trading image
+  c add a spear
+  
+5 fiber
+  a go to grass
+  b flash trading image
+  c extra clothes  
+
+
+6 fishing 
+  a extra food near water
+  b use code that makes some water on coastal things (fishing generator)
+  c equip spear, move next to water, flash trading image
+  
+7 huts
+  a move to spot
+  b flash trading image
+  c set down a hut
+  
+8 cooking
+    (after hunt or gather)
+  a call fire action
+  b next to fire flash a meat action    
+
+9 preserved meats
+   a cooking takes longer
+   b leftover meat rots slower
+10 ritual burial
+   a add in small chance of death
+   b put a ritual around it (the dancing)
+11 modern language
+   a add in required techs for other techs
+12 barter
+   a trade routes start to occur on overmap
+   b random chance of person coming in and trading with the designated merchant
+   c people can make choices about that barter
+  
+13 pigments
+   a new resource is revealed on map
+   b code to make sure new resources are chased after
+   c each new resource is tied to a color, clothing colors are tied to that
+   d making action for dying clotihng
+14 jewelry
+   a new resources are revealed on map (next to ocean)
+   b new resource + fiber offers jewelry
+   c jewelry gets traded (lightweight and high value)
+15 music
+   a every so often a flute gets created
+   b when signing or dancing occurs (random chance) flute music is added
+16 slavery
+   a increased chance of battle
+   b battles are less deadly
+   c slaves are traded like any other resource
+                 
+                 
+                 
+1 fundamentalism vs liberalism
+  a fundamentalism is a technology
+    1 fundamentalism increases in response to negative events
+    2 it adds a lot of secondary technologies that can be negative or positive
+      depending on the situation (disease,conflict, losing in general)
+    3 so fundamentalism will end up in outlying areas where the losers of battles go   
+  b so is liberalism
+    1 liberalism increases over time
+    2 it removes fundamentalist rules
+    3 so the cities where the winners of the conflict are will be full of liberalism
+  c both will wax and wain constantly in response to conflict, disease, and other events            
+                 
+                  
+#1 foodrule
+2 a peoplerule that creates the group of people with the right technologies
+  to start with
+  a it sets all of the templates and actions
+  b neither group has any technologies to start with
+  c the starting technology also governs the gathering of future techs
+    1 there are incremental future techs (ie spear to spear + 10)
+      they are gotten over time
+    2 there are techs that require the right place, or the right techs
+    3 the techs tell the early story of technology growth  
+3   
+
+3 one group of people chase after herds and develop technology for doing so, 
+  a create some LBs that move next to the cow and then reduce its population
+  b they also devote some % of time to gathering
+4 the other group of people stay and develop technology near a river for farming.
+ Growth is directly goverened by food and if there isn't enough then 
+ conflict occurs, the losers split off and try to take over one of the
+  smaller in between population groups 
+  (they directly fight those and the two merge together and share culture.
+   Then these hybrid cultures eventually take over due to advantages in 
+   culture and so on and so forth. technology growth occurs mainly in the 
+   high population focused areas
+
+
+
+basic ideas: 
+1 landrule that fills the land with food 
+  a every square gets some food (dependent on tile+ little random)
+  b if food is above X amount then an image is shown for it
+2(also creates migrating herds), 
+  a randomly pick spots to place cows
+  b those cows search 1 extra tile for food and pick the most 90% of the time
+  c
+
+1 start, people with nothing
+  a growth+fiber adds some clothing growth+farming adds sickle
+  b conflict+ spear adds spear , conflict + armor adds armor
+  c initially start out expansionary
+  d an initial technology controls 
+  
+
 1 story, progression towards cities
   a beer technology leads to a tiny village at 30 growth
      1 which leads to bread technology (growth)
