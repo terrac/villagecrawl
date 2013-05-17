@@ -62,7 +62,7 @@ public class DisplayAndOk extends VParams {
 
 		db = new PopupPanel();
 		//addOKCancel(map, vp);
-		if(getB(VConstants.closeonclick)){
+//		if(getB(VConstants.closeonclick)){
 			FocusPanel fp = new FocusPanel(vp);
 			fp.addClickHandler(new ClickHandler() {
 				
@@ -73,9 +73,9 @@ public class DisplayAndOk extends VParams {
 			});
 			db.setWidget(fp);
 			
-		} else {
-			db.setWidget(vp);			
-		}
+//		} else {
+//			db.setWidget(vp);			
+//		}
 		db.show();
 		showing = true;
 		EntryPoint.game.getHtmlOut().refreshFmds();

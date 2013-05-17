@@ -70,7 +70,11 @@ public class Move extends OObject implements WhatSound{
 		
 		
 	}
-	
+	public Move(HashMapData to,String description,String overlay) {
+		this(to,description);
+		put(VConstants.overlay,overlay);
+	}
+		
 	private void setDescr(String description) {
 		put(VConstants.description,description);
 		

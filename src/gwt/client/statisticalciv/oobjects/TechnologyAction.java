@@ -1,15 +1,21 @@
 package gwt.client.statisticalciv.oobjects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
+import gwt.client.EntryPoint;
+import gwt.client.game.CreateRandom;
 import gwt.client.main.Returnable;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.LivingBeing;
 import gwt.client.main.base.OObject;
 import gwt.client.main.base.PBase;
 import gwt.client.map.FullMapData;
+import gwt.shared.StatisticalCiv;
 
 public class TechnologyAction extends OObject {
 	static PBase nextTech;
@@ -17,21 +23,26 @@ public class TechnologyAction extends OObject {
 	
 	static List<String> levels = new ArrayList();
 	static PBase tech;
-	static {
+	static boolean setup = false;
+	public static void init(){
+		if(setup) return;
+		setup=true;
 		tech = new PBase();
 		tech.getType(VConstants.action).put("base", "gathering");
 		PBase stoneTools = new PBase();
 		// image for tool
 		// description
 		// actions: breaking nuts
-
+		String gathering=StatisticalCiv.addG("gathering", EntryPoint.game, new GatheringTech());
 		PBase simpleLanguage = new PBase();
 		// actions: explain that a hunted animal needs to be carved up
 		// after hunting move to other lbs and tell them an animal was killed
 		PBase hunting = new PBase();
 		// actions: hunt animal
 		// behavioral change: follow animals
-
+		String hunt=StatisticalCiv.addG("hunting", EntryPoint.game, new HuntingTech());
+		
+		
 		PBase flake = new PBase();
 		// crude knives
 		PBase handaxe = new PBase();
@@ -39,7 +50,9 @@ public class TechnologyAction extends OObject {
 		// flake or handaxe developes
 		// dependent on stone tools
 		// actions: preparing leather, basic carving of simple spears
-
+		String build=StatisticalCiv.addG("building", EntryPoint.game, new BuildingTech());
+		
+		
 		PBase leather = new PBase();
 		// dependent on flake or axe
 		PBase fiber = new PBase();
@@ -125,48 +138,57 @@ public class TechnologyAction extends OObject {
 		PBase beer = new PBase();
 		PBase bread = new PBase();
 		PBase tools = new PBase();
+		
+		//disease,
 		addLevel("Neolithic", villages, agriculture, animalDomestication,
 				tools, beer, bread, prostitution, astrology);
 
 	}
 
+	
 	@Override
 	public Returnable execute(FullMapData fullMapData, LivingBeing person) {
+		init();
 		// if techs are not set then set tech gathering
 		// add the template gathering at the same time
 		if (!person.containsKey(VConstants.technology)) {
-			PBase tech = person.getType(VConstants.technology);
 			addTech(tech, person);
 			return null;
 		}
+
 		PBase tech = person.getType(VConstants.technology);
+		nextTech.add("inctech", 1);
+		if(nextTech.getInt("inctech") > 100){
+			addTech(tech, person);
+			nextTech =getNextTech(person);
+		}
 
-		// one tech at a time is incremented
-		//if the next tech is empty then there is a random chance
-		//that the current lb will become the next person
-		//this chance is greater if they are near something associated
-		//with the tech
-
-		//the next tech is randomly picked from the current level
-		//if all of the techs for that level are picked then up the level
-		//the livingbeing has a tech level on their tech stuff
-		
 		//technology spreads upon interaction (conflict,trade, or just moving next to another lb)
 		
-		//when a tech is newly researched, that is logged, a sound plays and
-		//a popup on the population appears explaining the tech
-		
-		//The growth rule converts to running through living beings
-		//it takes the food and increases population sizes
-		//the conflict rule also converts to lbs
-		//it checks whether or not two people are next to each other
-		//and determines how they interact
-		//it also determines when a population splits
 		
 		return null;
 	}
 
+	private PBase getNextTech(LivingBeing lb) {
+		for(String l : levels){
+			for(PBase tech : lMap.get(l)){
+				if(!containsTech(lb)){
+					return tech;
+				}
+			}
+		}
+		return null;
+	}
+	private boolean containsTech(LivingBeing lb) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	static Map<String,List<PBase>> lMap = new HashMap();
 	private static void addLevel(String string, PBase... techs) {
+		if(!levels.contains(string)){
+			levels.add(string);
+		}
+		lMap.put(string, Arrays.asList(techs));
 	}
 
 	private void incrementTech(PBase p, LivingBeing person) {

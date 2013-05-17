@@ -183,9 +183,12 @@ import gwt.client.rpc.IExecute;
 import gwt.client.state.State;
 import gwt.client.statisticalciv.ConflictRule;
 import gwt.client.statisticalciv.CreateInternal;
+import gwt.client.statisticalciv.FoodRule;
 import gwt.client.statisticalciv.GrowthRule;
+import gwt.client.statisticalciv.PeopleRule;
 import gwt.client.statisticalciv.RunRules;
 import gwt.client.statisticalciv.TechnologyRule;
+import gwt.client.statisticalciv.oobjects.TechnologyAction;
 import gwt.shared.buildjson;
 
 import gwt.shared.datamodel.VExecute;
@@ -407,6 +410,9 @@ public class buildgame {
 		addO(new GrowthRule());
 		addO(new TechnologyRule());
 		addO(new CreateInternal());
+		addO(new TechnologyAction());
+		addO(new PeopleRule());
+		addO(new FoodRule());
 		JSONObject jo;
 		try {
 			jo = (JSONObject) JSONParser.parseStrict(json);
@@ -488,7 +494,10 @@ public class buildgame {
 		map.put(moveClosest.getClass().getName(), moveClosest);
 	}
 
-	private static Object addjson(Object o, JSONValue jv) {
+	public static Object addjson(Object o, JSONValue jv) {
+		return addjson(o, jv, true);
+	}
+	public static Object addjson(Object o, JSONValue jv,boolean checkExisting) {
 		Object obj = null;
 		if (jv == null || jv.isNull() != null) {
 			return null;
@@ -502,7 +511,10 @@ public class buildgame {
 					.stringValue();
 
 			PBase pBase = map.get(stringValue);
-			if (pBase == null) {
+			if(!checkExisting){
+				pBase = new PBase();
+			}
+			else if (pBase == null) {
 				Window.alert(stringValue + " missing");
 				return null;
 			}
@@ -527,7 +539,7 @@ public class buildgame {
 							pb2.put(str, addjson);
 						}
 					} else {
-						addjson = addjson(null, j);
+						addjson = addjson(null, j,checkExisting);
 						pb2.put(str, addjson);
 					}
 
@@ -545,7 +557,7 @@ public class buildgame {
 		}
 		if (jv.isNumber() != null) {
 			double db = jv.isNumber().doubleValue();
-
+			
 			if (!(db > 0 && db < 1)) {
 				obj = (int) db;
 			}else {
@@ -585,7 +597,7 @@ public class buildgame {
 						old.set(a, addjson);
 					}
 				} else {
-					addjson = addjson(null, j);
+					addjson = addjson(null, j,checkExisting);
 					l.add(addjson);
 				}
 

@@ -23,6 +23,7 @@ import gwt.server.IGet;
 import gwt.server.LoginService;
 import gwt.server.PersonLoginInfo;
 import gwt.server.SDao;
+import gwt.server.datamodel.GameList;
 import gwt.server.datamodel.ServerGame;
 import gwt.shared.buildjson;
 import gwt.shared.datamodel.CString;
@@ -52,8 +53,8 @@ public class GetGame implements IGet {
 				jdl.add(new String(j.getData().getBytes()));
 			}
 		}
-		
-		
+		GameList gl=GameList.getGameList();
+		gl.incrementPopularity(sg);
 		return new JsonDataList(jdl);
 
 	}

@@ -2,6 +2,7 @@ package gwt.client;
 
 import gwt.client.game.buildgame;
 import gwt.client.game.util.FlowControlException;
+import gwt.client.gui.PrettyEdit;
 import gwt.client.main.Game;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.PBase;
@@ -59,7 +60,7 @@ public class EntryPoint extends SideBar implements com.google.gwt.core.client.En
 					return;
 				}
 				
-				Window.alert(e.getMessage());
+				Window.alert(e.getMessage()+e.getStackTrace());
 			}
 		});
 		
@@ -76,7 +77,7 @@ public class EntryPoint extends SideBar implements com.google.gwt.core.client.En
 		
 		//Log.shouldDisplay = false;
 		
-		
+		PrettyEdit.doPage();
 	}
 	VerticalPanel panel = new VerticalPanel();
 	boolean pressed = false;
@@ -174,8 +175,8 @@ public class EntryPoint extends SideBar implements com.google.gwt.core.client.En
 			
 		} 
 		else {
-			RootPanel rootPanel = RootPanel.get("mainpage");
-			rootPanel.add(new Anchor("latest game","/?gamekey=1"));
+			//RootPanel rootPanel = RootPanel.get("mainpage");
+			//rootPanel.add(new Anchor("latest game","/?gamekey=1"));
 		}
 		
 			
@@ -229,21 +230,6 @@ public class EntryPoint extends SideBar implements com.google.gwt.core.client.En
 		
 		
 		
-		
-//		// TODO Auto-generated method stub
-//		OutputDirector.mpane= new HtmlOut();
-//		
-//		Game g = (Game) result.get("game");
-//		
-//		OutputDirector.timer = new GWTTimer(g);
-//		//System.out.println(result);
-//		try {
-//			g.execute("");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		//serverside
 
 	}
 	public static Game game;

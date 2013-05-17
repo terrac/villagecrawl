@@ -5,6 +5,7 @@ import gwt.client.map.HashMapData;
 
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -13,7 +14,7 @@ public class HMDDisplay extends UIVParams {
 	VerticalPanel dhmd;
 
 	public HMDDisplay() {
-
+	
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class DisplayJsonGame extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		PersonLoginInfo info =LoginService.login(request.getRequestURI(),response.getWriter());
+		PersonLoginInfo info =LoginService.login(request.getRequestURI(),response.getWriter(),request);
 		
 		if(!info.loginInfo.isLoggedIn()){
 			response.getWriter().write("You must login to use this service");
@@ -71,7 +71,7 @@ public class DisplayJsonGame extends HttpServlet {
 			response.getWriter().write("<br><br><a href=\"/editjson?jsonkey="+jd.getKey().getId()+"\">"+jd.getName()+ "</a></br>");
 			//add a delete
 		}
-		response.getWriter().write("<br><br><br><a href=/editjson?new=true&gkey="+sg.getKey().getId()+">Start a new json</a></br>");
+		//response.getWriter().write("<br><br><br><a href=/editjson?new=true&gkey="+sg.getKey().getId()+">Start a new json</a></br>");
 		
 		
 		response.getWriter().write("<br><br><br><a href=/?gamekey="+sg.getKey().getId()+"><h1 style=\"font-size:200%\">Play "+sg.getName()+"</h1></a></br>");

@@ -5,11 +5,13 @@ import gwt.server.IStore;
 import gwt.server.SDao;
 import gwt.server.datamodel.SaveGame;
 import gwt.server.rpc.stores.SaveBag;
+import gwt.server.rpc.stores.SaveJsonData;
 import gwt.server.rpc.stores.StoreSaveGame;
 
 import gwt.server.rpc.stores.SaveJsonNames;
 import gwt.shared.datamodel.ClientSaveGame;
 import gwt.shared.datamodel.IClientObject;
+import gwt.shared.datamodel.JsonData;
 import gwt.shared.datamodel.JsonDataList;
 
 import java.util.HashMap;
@@ -29,7 +31,10 @@ public class SendObjectImpl extends RemoteServiceServlet implements SendObject {
 	static {
 		defaultMap.put(JsonDataList.class.getName(),
 				new SaveJsonNames());
-		
+
+		defaultMap.put(JsonData.class.getName(),
+				new SaveJsonData());
+
 //		defaultMap.put("gwt.client.map.FullMapData",
 //				new SaveBag());
 		defaultMap.put(ClientSaveGame.class.getName(), new StoreSaveGame());

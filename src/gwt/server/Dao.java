@@ -10,6 +10,7 @@ import gwt.client.map.SymbolicMap;
 import gwt.server.datamodel.FileResource;
 import gwt.server.datamodel.FResourceManager;
 import gwt.server.datamodel.GUser;
+import gwt.server.datamodel.GameList;
 import gwt.server.datamodel.SaveGame;
 import gwt.server.datamodel.ServerBag;
 import gwt.server.datamodel.ServerCreation;
@@ -58,6 +59,7 @@ public class Dao<T> extends DAOBase
 		ObjectifyService.register(FileResource.class);
 		ObjectifyService.register(FResourceManager.class);
 		ObjectifyService.register(SaveGame.class);
+		ObjectifyService.register(GameList.class);
 //		ObjectifyService.register(Game.class);
 //		ObjectifyService.register(SymbolicMap.class);
 //		ObjectifyService.register(FullMapData.class);

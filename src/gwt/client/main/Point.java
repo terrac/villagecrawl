@@ -1,7 +1,9 @@
 package gwt.client.main;
 
 import gwt.client.game.util.PointBase;
+import gwt.client.main.base.LivingBeing;
 import gwt.client.main.base.PBase;
+import gwt.client.map.HashMapData;
 import gwt.client.map.IPhysical;
 import gwt.client.map.MapData;
 
@@ -162,5 +164,8 @@ public class Point implements Serializable, IPhysical{
 	}
 	public static PBase getPBase(Point p) {
 		return getPBase(p.x, p.y);
+	}
+	public static boolean nextTo(IPhysical p1, IPhysical p2) {
+		return distance(p1, p2) < 2;
 	}
 }

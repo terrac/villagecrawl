@@ -50,7 +50,7 @@ public class DisplayPersonGames extends HttpServlet {
 			
 			response.getWriter().write("<br><a href=\"/displayjsongame?gkey="+game.getKey().getId()+"\">"+game.getName()+ "</a></br>");	
 		}
-		response.getWriter().write("<br><br><br><a href=/gameedit?new=true>Start a new game</a></br>");
+		//response.getWriter().write("<br><br><br><a href=/gameedit?new=true>Start a new game</a></br>");
 		
 		
 		

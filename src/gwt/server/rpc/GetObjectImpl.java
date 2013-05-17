@@ -3,6 +3,7 @@ package gwt.server.rpc;
 import gwt.client.rpc.GetObject;
 import gwt.server.IGet;
 import gwt.server.rpc.gets.GetGame;
+import gwt.server.rpc.gets.GetJsonData;
 import gwt.server.rpc.gets.GetLogin;
 import gwt.server.rpc.gets.GetSaveGame;
 import gwt.shared.datamodel.IClientObject;
@@ -28,6 +29,7 @@ public class GetObjectImpl extends RemoteServiceServlet implements
 		defaultMap.put("game",  new GetGame());
 		defaultMap.put("savegame",  new GetSaveGame());
 		defaultMap.put("login",  new GetLogin());
+		defaultMap.put("jsondata",  new GetJsonData());
 		
 	}
 	@Override

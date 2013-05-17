@@ -50,6 +50,8 @@ public class ClientBuildAvU {
 			person.put(VConstants.team, "1");
 			person.put(VConstants.image, "/images/terra.png");
 			person.put(VConstants.intelligence, "defensive");
+			person.put(VConstants.dontdrawequipment, true);
+
 		}
 		
 		//all traits should be able to be described this way

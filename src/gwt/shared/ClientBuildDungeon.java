@@ -602,7 +602,7 @@ public class ClientBuildDungeon extends ClientBuild2 {
 
 		game.put(VConstants.market, treas);
 		
-		game.getHtmlOut().put(VConstants.score, new ItemsDisplay("Gilgamesh"));
+		game.getType(VConstants.htmlout).put(VConstants.score, new ItemsDisplay("Gilgamesh"));
 		return game;
 	}
 

@@ -52,22 +52,22 @@ public class HashMapData extends HMapData implements IPhysical {
 
 	}
 
-	public List<String> getImageList(){
-		MapData visualEffect = getMapData(VConstants.visualdamage);
-		if(visualEffect != null){
-			remove(VConstants.visualdamage);
-			return Arrays.asList(new String[]{visualEffect.getImage()});
-		}
-		List<PBase> pblist = (List<PBase>)getList(VConstants.population);
-		if(pblist == null){
-			return null;
-		}
-		PBase pb=VConstants.getRandomFromList(pblist);
-		if(pb == null){
-			return null;
-		}
-		return pb.getList(VConstants.imagelist);
-	}
+//	public List<String> getImageList(){
+//		MapData visualEffect = getMapData(VConstants.visualdamage);
+//		if(visualEffect != null){
+//			remove(VConstants.visualdamage);
+//			return Arrays.asList(new String[]{visualEffect.getImage()});
+//		}
+//		List<PBase> pblist = (List<PBase>)getList(VConstants.population);
+//		if(pblist == null){
+//			return null;
+//		}
+//		PBase pb=VConstants.getRandomFromList(pblist);
+//		if(pb == null){
+//			return null;
+//		}
+//		return pb.getList(VConstants.imagelist);
+//	}
 	public String getImage() {
 		
 		

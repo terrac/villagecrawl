@@ -399,8 +399,9 @@ public class LivingBeing extends AgeMapData implements Mover, IAge, IPhysical {
 	public String toString() {
 
 		return getTemplate().getRationalMap().getObjMap() + "\n\n"
-				+"current"+ getTemplate().getCurrent() + "\n\n"
-				+"currentTemplate"+ getTemplate().getTemplateName() + "\n\n"
+				+"current:"+ getTemplate().getCurrent() + "\n\n"
+				+"pop:"+ getType(VConstants.population) + "\n\n"
+				//+"currentTemplate"+ getTemplate().getTemplateName() + "\n\n"
 				//+ PUtil.pToString(VConstants.attributes, getAttributes())
 				//+ "\n\n" + getStats() 
 				//+"alter:"+getAlterHolder()
@@ -462,6 +463,11 @@ public class LivingBeing extends AgeMapData implements Mover, IAge, IPhysical {
 
 	public void setTemplate(String value) {
 		getTemplate().getRationalMap().put(VConstants.main,value);
+	}
+
+	public PBase getPopulation() {
+		// TODO Auto-generated method stub
+		return getPBase(VConstants.population);
 	}
 	
 }

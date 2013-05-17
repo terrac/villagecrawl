@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Returnable implements Serializable{
 	boolean shouldcontinue = false;
-	int timesegment = 0;
+	int timesegment = 1;
 	boolean breakchain = false;
 	public Returnable(){
 			

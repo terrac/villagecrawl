@@ -4,38 +4,29 @@ import gwt.client.game.AttachUtil;
 import gwt.client.main.Game;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.PBase;
-import gwt.client.main.mapobjects.AddAnimals;
-import gwt.client.main.mapobjects.AddPack;
 import gwt.server.LoginService;
 import gwt.server.PersonLoginInfo;
 import gwt.server.SDao;
 import gwt.server.datamodel.FResourceManager;
 import gwt.server.datamodel.FileResource;
 import gwt.server.datamodel.GUser;
+import gwt.server.datamodel.GameList;
 import gwt.server.datamodel.SaveGame;
 import gwt.server.datamodel.ServerGame;
 import gwt.shared.ClientBuild;
 import gwt.shared.ClientBuild2;
 import gwt.shared.ClientBuildAvU;
 import gwt.shared.ClientBuildAvZ;
-import gwt.shared.ClientBuildCultures;
 import gwt.shared.ClientBuildDungeon;
 import gwt.shared.PrefetchImageList;
 import gwt.shared.StatisticalCiv;
 import gwt.shared.datamodel.JsonData;
 import gwt.shared.datamodel.ServerTree;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -59,6 +50,9 @@ public class BuildFeatures extends HttpServlet {
 			return;
 		}
 		for(ServerGame sg :info.person.getGamesByCreator()){
+			if(GameList.containsShared(sg.getKey().getId())){
+				continue;
+			}
 			for(JsonData jd:SDao.getJsonDataDao().getQByProperty("gamekey", sg.id)){
 				SDao.getJsonDataDao().delete(jd);
 			}
@@ -72,7 +66,7 @@ public class BuildFeatures extends HttpServlet {
 		build(info.person);
 		SDao.getGUserDao().put(info.person);
 		for(ServerGame sg :info.person.getGamesByCreator()){
-			resp.getWriter().write("<br><br><a href=http://127.0.0.1:8888/Villagedc.html?gwt.codesvr=127.0.0.1:9997&gamekey="+sg.getKey().getId()+">game</a></br>");	
+			resp.getWriter().write("<br><br><a href=http://127.0.0.1:8888/Villagedc.html?gwt.codesvr=127.0.0.1:9997&gamekey="+sg.getKey().getId()+">"+sg.getName()+"</a></br>");	
 		}
 		
 //		Game doAnimalBabies = ClientBuild.doAnimalBabies();
@@ -91,20 +85,23 @@ public class BuildFeatures extends HttpServlet {
 		//addResources(person);
 		AttachUtil.shouldRun = false;
 
-		Key<ServerGame> firstGame = addFeature(person,"Statciv",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doStatMap());
+		Key<ServerGame> firstGame = addFeature(person,"StatcivSmall",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActions(),StatisticalCiv.doTechnology());
 		person.add(firstGame);
 //		
-//		Key<ServerGame> firstGame = addFeature(person,"Haggle",ClientBuildDungeon.doBasicDungeon(),ClientBuild2.doPeople(),ClientBuildDungeon.doInitialAdventurers());
-//		person.add(firstGame);
+		Key<ServerGame> secondGame = addFeature(person,"Statciv",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActionsBigMap(),StatisticalCiv.doTechnology());
+		person.add(secondGame);
 //		
-//		person.add(addFeature(person,"Adventurer vs Undead",ClientBuild.doDC1(),ClientBuildAvU.doInitialAdventurers(),ClientBuild2.doPeople(),ClientBuildAvU.doPeople(),ClientBuildAvU.doFirstBattle()));
-//
-//		
-//		
-//		
-//		
-//		
-//		person.add(addFeature(person,"Adventurers vs Monsters",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(false),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(false),ClientBuildAvZ.doFireNecromancer(),ClientBuildAvZ.doIllusionGnome()));
+		Key<ServerGame> sGame = addFeature(person,"Haggle",ClientBuildDungeon.doBasicDungeon(),ClientBuild2.doPeople(),ClientBuildDungeon.doInitialAdventurers());
+		person.add(sGame);
+		
+		person.add(addFeature(person,"Adventurer vs Undead",ClientBuild.doDC1(),ClientBuildAvU.doInitialAdventurers(),ClientBuild2.doPeople(),ClientBuildAvU.doPeople(),ClientBuildAvU.doFirstBattle()));
+
+		
+		
+		
+		
+		
+		person.add(addFeature(person,"Adventurers vs Monsters",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(false),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(false),ClientBuildAvZ.doFireNecromancer(),ClientBuildAvZ.doIllusionGnome()));
 
 		
 		

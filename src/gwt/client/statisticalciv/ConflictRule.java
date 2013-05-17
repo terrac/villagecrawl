@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import gwt.client.EntryPoint;
 import gwt.client.game.AttachUtil;
 import gwt.client.game.VisualDamage;
 import gwt.client.main.VConstants;
@@ -24,90 +25,83 @@ public class ConflictRule extends VParams {
 		// images.add(new ArrayList<String>(Arrays.asList(new String[]
 		// {"full-red"})));
 	}
+	
+	public ConflictRule(int growthIteration) {
+		//put("growthIteration",growthIteration);
+	}
 
 	@Override
 	public void execute(Map<String, Object> map) {
-		HashMapData hmdMain = (HashMapData) map.get(VConstants.main);
-		HashMapData h = (HashMapData) map.get(AttachUtil.OBJECT);
+		for (LivingBeing person : getFMD(map).people.toArray(new LivingBeing[0])) {
 
-		// If the growth is larger than the area can sustain then split
-		// (includes cultural and physical growth in total sustaining ability)
-		int growth = hmdMain.getInt("growth");
+			HashMapData parent = person.getParent();
+//			int growth = parent.getInt("growth");
 
-//		int growthIteration = 9 * growth + 200;
-//		if(!hmdMain.containsKey("nearcity")){
-//			growthIteration =growthIteration/9;
-//		}
-//		hmdMain.put("totalsize", growthIteration);
+			PBase p = person.getPBase(VConstants.population);
+			if (p == null) {
+				return;
+			}
+			double size = PBase.getDouble(p,VConstants.size);
 
-		
-		List<PBase> population = hmdMain.getList(VConstants.population);
-		if (population == null) {
-			return;
-		}
-		for (PBase p : population) {
-			int size = p.getInt(VConstants.size);
-			PBase techStats = p.getType(VConstants.technology);
-			int growthIteration = techStats.getInt(VConstants.growth)+ 20;
+			if (size <= 0) {
+				person.death();
+				return;
+			}
+			//PBase techStats = p.getType(VConstants.technology);
+			int growthIteration = TechnologyRule.getDefaultInt(VConstants.person,person.getType(),VConstants.maxsize, 1000);
 			p.put("totalsize", growthIteration);
-
 			if (size > growthIteration) {
-				PBase p2 = p.clone();
-				int hsize = size / 2;
-				randomize(p2);
-				p2.put(VConstants.size, hsize);
-				p.put(VConstants.size, hsize);
-				population.add(p2);
-				break;
+				p.put(VConstants.size, growthIteration);
+				size = growthIteration;
 			}
-		}
-		//
-		// The split gives some random small differences between the two
-		// populations
+			// debug code really
+			person.getStats().put(VConstants.health,(int) size);
+			person.getStats().put(VConstants.maxhealth, growthIteration);
 
-		// take the difference in culture, amount of conflict, and determine a
-		// conflict (fight or flight for both sides)
-
-		// additionally conflict can move and reform populations
-
-		// move
-		// for each if above x amounts (total pop + size) then move one
-
-		//int tPop = getTPop(population);
-		if (population.size() > 1) {
-			HashMapData toMove = findNewMD(hmdMain.getParent(), hmdMain);
-			PBase p = population.get(0);
-			PBase p2 = population.get(1);
-			
-			int conflictAdded = p.getInt(VConstants.conflict);
-			conflictAdded += p2.getInt(VConstants.conflict);
-			
-			if (VConstants.getRandom().nextDouble() > .3+.1 * conflictAdded ) {
-				// fighting
-				int amount=(int) (p.getInt(VConstants.size) * Math.min(.9,(VConstants.getRandom().nextDouble()+.3)));
-				p.put(VConstants.size, p.getInt(VConstants.size) - amount -p2.getInt(VConstants.strength));
-				p2.put(VConstants.size, p2.getInt(VConstants.size) - amount- p.getInt(VConstants.strength));
-				TechnologyRule.transferTechnology(p,p2);
-				if(p.getInt(VConstants.size) <= 0){
-					population.remove(p);
+			if (PeopleRule.isHuman(person)) {
+				if (size == growthIteration) {
+					PBase p2 = p.clone();
+					double hsize = size / 2;
+					randomize(p2);
+					p2.put(VConstants.size, hsize);
+					p.put(VConstants.size, hsize);
+					HashMapData hmd = parent.getParent()
+							.getNearestEmpty(person);
+					if (hmd != null) {
+						hmd.putAppropriate(addPerson(p2));
+					}
 				}
-				if(p2.getInt(VConstants.size) <= 0){
-					population.remove(p2);
+			} else {
+				if (size == growthIteration) {
+
+					PBase p2 = p.clone();
+					double hsize = size / 2;
+					p2.put(VConstants.size, hsize);
+					p.put(VConstants.size, hsize);
+					HashMapData hmd = parent.getParent()
+							.getNearestEmpty(person);
+					if (hmd != null) {
+						hmd.putAppropriate(addAnimal(p2));
+					}
 				}
-				hmdMain.put(new VisualDamage("sword"));
 			}
-			//cityRule.execute(map);
-			PBase ptm = VConstants.getRandomFromList(population);
-			if (ptm != null&&toMove != null && !toMove.containsKey(VConstants.obstacle)) {
-				population.remove(ptm);
-				PBase technology=ptm.getType("currenttech");
-				String tech=VConstants.getRandomFromList(Arrays.asList(technology.getObjMap().keySet().toArray(new String[0])));
-				technology.remove(tech);
-				toMove.getListCreate(VConstants.population).add(ptm);
-			}
+
+			// it checks whether or not two people are next to each other
+			// and determines how they interact
+			// it also determines when a population splits
 		}
-		// reform
-		// if total size is below an amount merge together
+	}
+
+	private MapData addPerson(PBase p2) {
+		LivingBeing lb = PeopleRule.addPerson();
+		lb.put(VConstants.population, p2);
+		return lb;
+	}
+
+	private MapData addAnimal(PBase p2) {
+		LivingBeing lb = FoodRule.addCow();
+		lb.put(VConstants.population, p2);
+		return lb;
 	}
 
 	public static int getTPop(List<PBase> population) {
@@ -176,5 +170,11 @@ public class ConflictRule extends VParams {
 	@Override
 	public PBase clone() {
 		return new ConflictRule().copyProperties(this);
+	}
+
+	public static void checkDeath(LivingBeing person) {
+		if(PBase.getDouble(person.getPopulation(),VConstants.size) <= 0){
+			person.death();
+		}
 	}
 }

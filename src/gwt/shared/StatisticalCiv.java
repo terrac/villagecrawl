@@ -1,100 +1,34 @@
 package gwt.shared;
 
-import gwt.client.EntryPoint;
 import gwt.client.game.ApplyDamage;
 import gwt.client.game.AttachUtil;
-import gwt.client.game.AttackEnemyMeta;
 import gwt.client.game.CreateRandom;
-import gwt.client.game.MoveClosestNot;
-import gwt.client.game.RandomTypeCreation;
-import gwt.client.game.SellOne;
-import gwt.client.game.display.ItemsDisplay;
-import gwt.client.game.oobjects.BackgroundTrade;
-import gwt.client.game.oobjects.Build;
-import gwt.client.game.oobjects.BuildUnbuilt;
-import gwt.client.game.oobjects.CheckStat;
-import gwt.client.game.oobjects.Destroy;
-import gwt.client.game.oobjects.FillNeed;
-import gwt.client.game.oobjects.Haggle;
-import gwt.client.game.oobjects.Healing;
-import gwt.client.game.oobjects.HuntAnimal;
-import gwt.client.game.oobjects.MoveStore;
-import gwt.client.game.oobjects.MoveRandomGate;
-import gwt.client.game.oobjects.ResetStat;
-import gwt.client.game.oobjects.ResourceGather;
-import gwt.client.game.oobjects.SpecialHaggle;
-import gwt.client.game.oobjects.TradeItem;
-import gwt.client.game.util.PointBase;
-import gwt.client.game.vparams.AddNeed;
-import gwt.client.game.vparams.BuildMap;
-import gwt.client.game.vparams.ChooseFMD;
-import gwt.client.game.vparams.CopySelection;
-import gwt.client.game.vparams.Count;
-import gwt.client.game.vparams.CreateAndDecay;
-import gwt.client.game.vparams.Mercernaries;
-import gwt.client.game.vparams.MovePerson;
-import gwt.client.game.vparams.PersonTypeEffects;
-import gwt.client.game.vparams.QuestGenerator;
-import gwt.client.game.vparams.RandomEffects;
 import gwt.client.game.vparams.RunTurn;
-import gwt.client.game.vparams.SelectAndApply;
-import gwt.client.game.vparams.SetTemplate;
-import gwt.client.game.vparams.TradeCultureRoute;
-import gwt.client.game.vparams.adding.AddGDP;
-import gwt.client.game.vparams.adding.AddToMarket;
-import gwt.client.game.vparams.oneoff.Caught;
-import gwt.client.game.vparams.oneoff.Jerk;
-import gwt.client.game.vparams.quest.ComplexCityGenerator;
-import gwt.client.game.vparams.random.RandomItemCreation;
-import gwt.client.game.vparams.rules.CreateItem;
-import gwt.client.game.vparams.rules.GluttonyRule;
-import gwt.client.game.vparams.rules.LaborRule;
-import gwt.client.game.vparams.rules.NeedRule;
-import gwt.client.game.vparams.rules.ScarcityRule;
-import gwt.client.game.vparams.rules.TradeValueRule;
-import gwt.client.game.vparams.rules.TypeRule;
-import gwt.client.game.vparams.turnbased.Taxation;
-import gwt.client.item.Item;
-import gwt.client.item.SimpleMD;
-import gwt.client.main.ChildsPlay;
-import gwt.client.main.Consume;
-import gwt.client.main.Economy;
 import gwt.client.main.Game;
-import gwt.client.main.MakeItem;
 import gwt.client.main.MapArea;
-import gwt.client.main.Move;
-import gwt.client.main.MoveClosest;
-import gwt.client.main.MoveClosestDifferent;
-import gwt.client.main.MoveRandomFullMapData;
-import gwt.client.main.MoveRandomHashMapData;
 import gwt.client.main.PTemplate;
-import gwt.client.main.Person;
-import gwt.client.main.PickUp;
-import gwt.client.main.Point;
 import gwt.client.main.VConstants;
-import gwt.client.main.Wait;
-import gwt.client.main.WaitMove;
-import gwt.client.main.base.OobList;
 import gwt.client.main.base.PBase;
-import gwt.client.map.FullMapData;
-import gwt.client.map.Items;
-import gwt.client.map.MapData;
 import gwt.client.map.SymbolicMap;
 import gwt.client.statisticalciv.ConflictRule;
 import gwt.client.statisticalciv.CreateInternal;
-import gwt.client.statisticalciv.GrowthRule;
+import gwt.client.statisticalciv.FoodRule;
+import gwt.client.statisticalciv.PeopleRule;
 import gwt.client.statisticalciv.RunRules;
+import gwt.client.statisticalciv.SConstants;
 import gwt.client.statisticalciv.TechnologyRule;
-import gwt.shared.datamodel.VExecute;
-import gwt.shared.datamodel.VParams;
-
-import java.util.List;
+import gwt.client.statisticalciv.oobjects.TechnologyAction;
 
 public class StatisticalCiv extends ClientBuild2 {
+	private static final String cowAmount = "Cow amount";
+	public static final String personAmount = "Person amount";
+	public static final String growthIteration = "Growth Iteration";
+
 	/**
-	 * create a new package that has statciv rules in it
-	 * create a map of a beginning civ (rough outline of africa
-	 * add in a process that runs once a turn on each tile
+	 * create a new package that has statciv rules in it create a map of a
+	 * beginning civ (rough outline of africa add in a process that runs once a
+	 * turn on each tile
+	 * 
 	 * @return
 	 */
 	public static Game doBasicMap() {
@@ -103,42 +37,39 @@ public class StatisticalCiv extends ClientBuild2 {
 		// game.getMapInitList().add(new ExitTile(0,0,10,0));
 		game.put(VConstants.main, true);
 		game.put(VConstants.name, "Basic");
-		//game.put(VConstants.symbolicmap, true);
+		// game.put(VConstants.symbolicmap, true);
 		game.setMapArea(new MapArea());
 		game.getMapArea().setMap(new SymbolicMap());
 		game.put(VConstants.applydamage, new ApplyDamage());
-		
+
 		game.getMapArea().getMap().put(VConstants.xfull, 17);
 		game.getMapArea().getMap().put(VConstants.yfull, 15);
 		addG(VConstants.runturn, game, new RunTurn());
 		game.getMapArea().put(VConstants.turnbased, false);
-		AttachUtil.attach(AttachUtil.runpersonbefore, VConstants.runturn, game
-				.getMapArea());
-
+		AttachUtil.attach(AttachUtil.runpersonbefore, VConstants.runturn,
+				game.getMapArea());
 
 		{
-		PTemplate pt = addTemplate(game, "person");
+			PTemplate pt = addTemplate(game, "person");
 
-		String exp = addG("use", game, new CreateRandom("snake", "rat"));
-		addAction(pt, exp);
+			String exp = addG("use", game, new CreateRandom("snake", "rat"));
+			addAction(pt, exp);
 		}
 		PTemplate pt = addTemplate(game, "technology");
 
 		String action = addG("technology", game, new TechnologyAction());
-		addAction(pt, exp);		
-		
-		//add a growth rule
-		//test watching the people grow across africa
-		//lower growth in desert
-		//formation of cities
-		
-		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new GrowthRule(),new ConflictRule(),new TechnologyRule()), game
-				.getMapArea());
-		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(), game.getMapArea());
-		//AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(), game.getMapArea().getMap().getData(0, 0));
-		AttachUtil.attach(AttachUtil.clickfmd, new CreateInternal(), game.getMapArea().getMap());
-		
-		
+		addAction(pt, action);
+
+		// add a growth rule
+		// test watching the people grow across africa
+		// lower growth in desert
+		// formation of cities
+
+		// AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(),
+		// game.getMapArea().getMap().getData(0, 0));
+		AttachUtil.attach(AttachUtil.clickfmd, new CreateInternal(), game
+				.getMapArea().getMap());
+
 		return game;
 	}
 
@@ -146,4 +77,150 @@ public class StatisticalCiv extends ClientBuild2 {
 		return new PBase();
 	}
 
+	public static PBase doActions() {
+		PBase pb = new PBase();
+		pb.put(VConstants.name, "actions");
+		pb.put(VConstants.classname, Game.class.getName());
+
+		PBase mapArea = new PBase();
+		pb.put(VConstants.maparea, mapArea);
+		mapArea.put(VConstants.classname, MapArea.class.getName());
+
+		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new PeopleRule(
+				VConstants.person, true, SConstants.fishing, .15),
+				new FoodRule(), new ConflictRule(1000), new TechnologyRule()),
+				mapArea);
+
+		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(),
+				mapArea);
+
+		return pb;
+	}
+
+	public static PBase doActionsBigMap() {
+		PBase pb = new PBase();
+		pb.put(VConstants.name, "actions");
+		pb.put(VConstants.classname, Game.class.getName());
+
+		PBase mapArea = new PBase();
+		pb.put(VConstants.maparea, mapArea);
+		mapArea.put(VConstants.classname, MapArea.class.getName());
+
+		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new PeopleRule(
+				VConstants.person, true, SConstants.fishing, .15),
+				new FoodRule(), new ConflictRule(1000), new TechnologyRule()),
+				mapArea);
+
+		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap3(),
+				mapArea);
+
+		return pb;
+	}
+
+	public static PBase doTechnology() {
+		PBase pb = new PBase();
+		pb.put(VConstants.name, VConstants.technology);
+		pb.put(VConstants.classname, Game.class.getName());
+		pb.put(VConstants.main, true);
+
+		PBase tech = new PBase();
+		pb.put(VConstants.technology, tech);
+
+		addTechPRoot(tech,VConstants.person,VConstants.human+" female", VConstants.maxsize, 50);
+		addTechPRoot(tech,VConstants.person,"sheep", VConstants.maxsize, 400);
+		addTechPRoot(tech,VConstants.person,"sheep", VConstants.growth, 40);
+		
+		
+		addTechRoot(tech, SConstants.growthIteration, growthIteration, 400, -1);
+		addTechRoot(tech, SConstants.people, personAmount, 1, -1);
+		addTechRoot(tech, SConstants.cows, cowAmount, 5, -1);
+		addTechRoot(tech, SConstants.fishingEffectiveness,
+				SConstants.fishingEffectiveness, .5, -1);
+		addTechRoot(tech, "maxwheat", "maxwheat", 35, -1);
+
+		// increases overall effectiveness a little
+		addTech(tech, "Simple Language", 10, 0);
+		// chance of hunting
+		addTech(tech, "hunting", SConstants.hunting, 10, 0,20);
+		// chance of gathering
+		addTech(tech, "Gathering", VConstants.general, 10, 0);
+		// tradable decoration, more from meat
+		addTech(tech, "Handaxe", SConstants.fishing, 10, 0);
+		// plus to hunting/fighting
+		addTech(tech, "spear", SConstants.hunting, 10, 0);
+
+		// basic animal skin, higher means more complicated armor and hats and
+		// gloves and capes
+		addTech(tech, "Leather", SConstants.hunting, 10, 0);
+		// add white skirt
+		addTech(tech, "Fiber", SConstants.fishing, 10, 0);
+		// greater chance of moving to water, and also of gaining food from
+		// fishing
+		addTech(tech, SConstants.fishing, SConstants.fishing, 30, 0,20);
+		// increased health, places down hut
+		addTech(tech, "Huts", 10, 0);
+		// chance of picking a fight with other humans, small boost to combat
+		// effectiveness
+		addTech(tech, VConstants.conflict, 20, 0);
+
+		addTech(tech, "Cooking", 10, 1);
+		addTech(tech, "Preserved Meat", 10, 1);
+		addTech(tech, "Ritual Burial", 10, 1);
+		addTech(tech, "Modern Language", 10, 1);
+
+		addTech(tech, "barter", 10, 1);
+		addTech(tech, "Pigment", 10, 1);
+		addTech(tech, "Jewelry", 10, 1);
+		addTech(tech, "Flutes", 10, 1);
+		addTech(tech, "Slavery", 10, 1);
+
+		addTech(tech, "liberalism", 10, 2);
+		addTech(tech, "fundamentalism", 10, 2);
+		addTech(tech, "", 10, 1);
+
+		
+		addChoice(tech, new String[]{"hunting","fishing",VConstants.conflict,"barter","liberalism","fundamentalism"},"fishing","hunting","barter",VConstants.conflict,"liberalism","fundamentalism");
+		return pb;
+	}
+
+	public static void addTech(PBase tech, String name, double amount, int level) {
+		addTech(tech, name, VConstants.general, amount, level);
+	}
+
+
+	public static void addTech(PBase tech, String name, String state,
+			double amount, int level) {
+		addTech(tech, name, state, amount, level,3);
+	}
+	
+	public static void addTech(PBase tech, String name, String state,
+			double amount, int level,int variability) {
+			PBase t = new PBase(VConstants.name, name, VConstants.size,amount,
+				SConstants.state, state, VConstants.enabled, true,SConstants.variability,variability);;
+		tech.getType(VConstants.map).put(name, t);
+		tech.getType(SConstants.tree).getType("" + level).getListCreate(state)
+		.add(name);
+		
+	}
+
+	public static void addTechRoot(PBase tech, String iName, String name,
+			Object amount, int level) {
+		PBase t = new PBase(VConstants.name, name, VConstants.size, amount);
+		tech.getType(VConstants.map).put(iName, t);
+	}
+	
+	public static void addTechPRoot(PBase tech,String maintype,String type, String name,
+			Object amount) {
+		tech.getType(maintype).getType(type).put(name, amount);
+	}
+
+	public static void addChoice(PBase tech, String[] nameA,String... opposite) {
+		int count = 0;
+		for (String a : nameA) {
+			PBase t=tech.getType(VConstants.map).getPBase(a);
+			t.put(SConstants.available, a);
+			t.put(SConstants.opposite, opposite[count]);
+			count++;
+		}
+	}
 }

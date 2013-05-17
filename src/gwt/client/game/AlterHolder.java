@@ -92,4 +92,8 @@ public class AlterHolder extends MapData{
 	public String toString() {
 		return PUtil.pToString(getKey(), this);
 	}
+	@Override
+	public MapData clone() {
+		return new AlterHolder().copyDeepProperties(this);
+	}
 }

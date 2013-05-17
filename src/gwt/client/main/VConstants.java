@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import com.google.gwt.user.client.Command;
+
 public class VConstants {
 	//public static final String person = "person";
 	public static final String obstacle = "obstacle";
@@ -352,6 +354,8 @@ public class VConstants {
 	public static final String cost = "cost";
 	public static final String conflict = "conflict";
 	public static final String technology = "technology";
+	public static final String enabled = "enabled";
+	public static final String general = "general";
 	
 	
 	public static String string = "string";
@@ -434,4 +438,23 @@ public class VConstants {
 		
 		return null;
 	}
+//	public static PBase getRandomFromList(List<PBase> list,PBExecute pb){
+//		int start = VConstants.getRandom().nextInt(list.size());
+//		int end = start-1;
+//		while(start != end){
+//			if(start <= list.size()){
+//				start =0;
+//			}
+//			PBase p = pb.execute(list.get(start));
+//			if(p != null){
+//				return p;
+//			}
+//			start++;
+//		}
+//		return null;
+//		
+//	}
+//	public static abstract class PBExecute{
+//		public abstract PBase execute(PBase p);
+//	}
 }

@@ -67,6 +67,8 @@ public class ClientBuildAvZ {
 			person.put(VConstants.team, "1");
 			person.put(VConstants.image, "/images/terra.png");
 			person.put(VConstants.intelligence, "greedy");
+			person.put(VConstants.dontdrawequipment, true);
+			
 		}
 		{
 			PBase person = new PBase();
@@ -76,6 +78,8 @@ public class ClientBuildAvZ {
 			person.put(VConstants.name, "Todd");
 			person.put(VConstants.team, "1");
 			person.put(VConstants.intelligence, "defensive");
+			person.put(VConstants.dontdrawequipment, true);
+			
 		}
 		{
 			PBase person = new PBase();
@@ -86,6 +90,8 @@ public class ClientBuildAvZ {
 			person.put(VConstants.image, "/images/elizabeth.png");
 			person.put(VConstants.team, "1");
 			person.put(VConstants.intelligence, "aggressive");
+			person.put(VConstants.dontdrawequipment, true);
+			
 		}
 		{
 			PBase person = new PBase();
@@ -95,6 +101,8 @@ public class ClientBuildAvZ {
 			person.put(VConstants.name, "Connie");
 			person.put(VConstants.team, "1");
 			person.put(VConstants.intelligence, "defensive");
+			person.put(VConstants.dontdrawequipment, true);
+			
 		}
 		
 		{
@@ -107,6 +115,8 @@ public class ClientBuildAvZ {
 			PBase templatemap = new PBase();
 			templatemap.put(VConstants.main, "enemygeneral");
 			person.put(VConstants.templatemap, templatemap);
+			person.put(VConstants.dontdrawequipment, true);
+			
 		}
 		
 		if(debug){

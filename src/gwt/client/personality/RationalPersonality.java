@@ -106,9 +106,9 @@ public class RationalPersonality implements Serializable {
 				throw new IllegalArgumentException(ah.getAction()
 						+ " is missing");
 			}
-
+			action = action.clone();
 			action.setParent(defaultChild);
-			person.getTemplate().stack.push(action.clone());
+			person.getTemplate().stack.push(action);
 
 			// }
 
@@ -116,7 +116,7 @@ public class RationalPersonality implements Serializable {
 	}
 
 	public int runSegment(LivingBeing person) {
-		int returnable = 0;
+		int returnable = 1;
 		OObject oo = person.getTemplate().stack.peek();
 
 		// could create a similar stacked method to be able to see things as if
@@ -125,7 +125,6 @@ public class RationalPersonality implements Serializable {
 		if (person.getTemplate().getCurrent() != null) {
 			FullMapData fullMapData = person.getParent().getParent();
 			OObject currentoob = person.getTemplate().getCurrent();
-			// System.out.println(currentoob);
 			PTemplate cptemplate = person.getTemplate().getCurrent()
 					.getTParent();
 			MetaOObject metaoobj = null;

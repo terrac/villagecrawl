@@ -151,6 +151,17 @@ public abstract class OObject extends PBase implements Serializable,ActionObject
 		
 		return iPhysical;
 	}
+
+	public static void setCurrent(LivingBeing person, OObject oObject) {
+		if(oObject == null){
+			throw new IllegalArgumentException();
+		}
+		person.getTemplate().stack.push(oObject);
+	}
+
+//	public static String getOverlay(String water) {
+//		return MapData.getImage("overlay/"+water);
+//	}
 	
 
 //	Map<String,Object> objMap = new HashMap<String, Object>();

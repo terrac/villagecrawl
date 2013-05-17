@@ -47,9 +47,11 @@ public class LogDisplay extends UIVParams {
 		return lb;
 	}
 
+	boolean showLog;
 	@Override
 	public void init() {
 		lb = new ListBox(true);
 		lb.setSize("30em", "40em");
+		lb.setVisible(showLog);
 	}
 }

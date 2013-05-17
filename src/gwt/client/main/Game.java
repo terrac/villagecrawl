@@ -540,5 +540,10 @@ public class Game extends PBase implements IClientObject, Serializable {
 	public int getTimeOfDay() {
 		return getInt(VConstants.timeofday);
 	}
+
+
+	public PBase getTechnology() {
+		return getPBase(VConstants.technology);
+	}
 	
 }

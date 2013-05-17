@@ -55,7 +55,7 @@ public class RandomTypeCreation extends VParams {
 			VParams type = (VParams) get(VConstants.type);
 			Object o;
 			List list = type.getList(VConstants.list);
-			if (list.size() == 0) {
+			if (list == null||list.size() == 0) {
 				break;
 			}
 			if (VConstants.random.equals(type.getS(VConstants.type))) {

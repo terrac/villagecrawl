@@ -25,6 +25,10 @@ import com.googlecode.objectify.Key;
 @RemoteServiceRelativePath("displaypersongames")
 public class EditJson extends HttpServlet {
 
+	static String html = "<link type=text/css rel=stylesheet href=Villagedc.css>"+
+						 "<script type=text/javascript language=javascript src=villagedc/villagedc.nocache.js></script>" +
+						 "<div id=prettyEdit></div>";
+ 
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -38,8 +42,8 @@ public class EditJson extends HttpServlet {
 		}
 		long id;
 		JsonData jd;
-
-
+		
+		response.getWriter().write(html);
 		if (request.getParameter("new") != null) {
 
 			
@@ -99,7 +103,7 @@ public class EditJson extends HttpServlet {
 		
 		String form="<form name=f1 onsubmit=\"return validateForm();\" METHOD=POST action=/editjson> <input type=hidden name=jsonkey value="+jd.id+">" +
 				"name: <input type=text name=jsonname value=\""+jd.getName()+"\" /><br />" +
-				"<textarea name=j1 rows=60 cols=200  ></textarea><br><input type=submit value=Submit></form>"+
+				"<textarea name=j1 id=j1 rows=43 cols=130  ></textarea><br><input type=submit value=Submit></form>"+
 				"";
 		
 		//on submit make sure to do a stringify and then a document submit 
@@ -127,6 +131,7 @@ public class EditJson extends HttpServlet {
 //						+ new String(jd.getData().getBytes()) + " </textarea>");
 //		response.getWriter().write("<br><input type=submit value=Submit></form>");
 
+		
 	}
 
 	

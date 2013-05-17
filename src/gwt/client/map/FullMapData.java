@@ -3,6 +3,7 @@ package gwt.client.map;
 import gwt.client.EntryPoint;
 import gwt.client.astar.world.Mover;
 import gwt.client.game.AttachUtil;
+import gwt.client.item.Item;
 import gwt.client.main.Person;
 import gwt.client.main.Point;
 import gwt.client.main.VConstants;
@@ -572,5 +573,11 @@ public class FullMapData extends AreaMap<HashMapData, SymbolicMap> implements
 		if(!l.contains(value)){
 			l.add(value);
 		}
+	}
+
+	public static void addRandomSpot(FullMapData fmd,MapData item) {
+		int xSize = VConstants.getRandom().nextInt(fmd.getXsize());
+		int ySize = VConstants.getRandom().nextInt(fmd.getYsize());
+		fmd.getNearestEmpty(new Point(xSize, ySize)).putAppropriate(item);
 	}
 }

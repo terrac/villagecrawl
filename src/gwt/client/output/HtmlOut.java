@@ -141,6 +141,9 @@ public class HtmlOut extends MainPanel<GCanvas> {
 	public void init() {
 
 		RootPanel rootPanel = RootPanel.get("mainpage");
+		if(rootPanel == null){
+			return;
+		}
 		// panel = new FlexTable();
 		// editPage = new HtmlEditPage();
 		// editPage.init(panel);
@@ -311,10 +314,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 				if (data instanceof HashMapData) {
 
 					HashMapData hashMapData = (HashMapData) data;
-					List<String> imageList = hashMapData.getImageList();
-					if(imageList != null){
-						value = imageList.toString();
-					}
+
 					String underValue = hashMapData.getUnderValue();
 
 					if (cache && imgCache.isCached(x, y)
@@ -335,14 +335,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 
 					if (lb == null){
 						
-						if(imageList != null){
-							
-							for(String a : imageList){
-								drawImage(symbolicShell2, y, x, a, imagesize);
-							}
-							imgCache.setCache(x, y, null);
-						}
-						else if(drawImage(symbolicShell2, y, x, value, imagesize)) {
+						if(drawImage(symbolicShell2, y, x, value, imagesize)) {
 							imgCache.setCache(x, y, value);
 						}
 					
@@ -389,13 +382,13 @@ public class HtmlOut extends MainPanel<GCanvas> {
 						Integer inter = (Integer) lb.getStats().get(
 								VConstants.health);
 
-						c2d.setStrokeStyle(red);
-						c2d.beginPath();
-						c2d.moveTo(x * imagesize + 5, y * imagesize + 5);
-						c2d.lineTo(x * imagesize + imagesize - 5, y * imagesize
-								+ 5);
-						c2d.closePath();
-						c2d.stroke();
+//						c2d.setStrokeStyle(red);
+//						c2d.beginPath();
+//						c2d.moveTo(x * imagesize + 5, y * imagesize + 5);
+//						c2d.lineTo(x * imagesize + imagesize - 5, y * imagesize
+//								+ 5);
+//						c2d.closePath();
+//						c2d.stroke();
 
 						double d = 1;
 						if (inter != null
@@ -408,17 +401,23 @@ public class HtmlOut extends MainPanel<GCanvas> {
 
 						c2d.setStrokeStyle(green);
 						c2d.beginPath();
-						c2d.moveTo(x * imagesize + 5, y * imagesize + 5);
+						int beginX= x * imagesize + 5;
+						c2d.moveTo(beginX, y * imagesize + 5);
 
-						c2d.lineTo(x * imagesize + 5 + (imagesize * d - 10), y
+						c2d.lineTo(Math.max(x * imagesize + 5 + (imagesize * d - 10),beginX), y
 								* imagesize + 5);
 						c2d.closePath();
 						c2d.stroke();
 
 						OObject current = lb.getTemplate().getCurrent();
 						if (current != null) {
-							String overlayname = current.getTopOParent().getS(
+							String overlayname = current.getS(
 									VConstants.overlay);
+							if (overlayname == null) {
+								overlayname = current.getTopOParent().getS(
+										VConstants.overlay);
+							}
+							
 							if (overlayname != null) {
 								drawImage(symbolicShell2, y, x,
 										"/images/overlay/" + overlayname
@@ -450,13 +449,11 @@ public class HtmlOut extends MainPanel<GCanvas> {
 			List<String> l = new ArrayList();
 			for (String a : missingImages) {
 				if (a.contains(".")) {
-					// System.out.println(a);
 					l.add(a);
 					continue;
 				}
 
 				String imgpath = "/images/" + a.replace(' ', '-') + ".png";
-				// System.out.println(imgpath);
 				l.add(imgpath);
 			}
 			loadImages(l.toArray(new String[0]), uiv);
@@ -519,7 +516,6 @@ public class HtmlOut extends MainPanel<GCanvas> {
 				drawImage(canvas, 0, 0, lb.getImage("doll/hair/" + hair));
 			}
 			String id = lb.getEquipmentImage();
-			System.out.println(id);
 			imap.put(id, canvas.getCanvasElement());
 			lb.put(VConstants.imagecache, id);
 
@@ -580,7 +576,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		boolean flag = true;
 		if (imap.get(text) == null) {
 			if (text != null) {
-				System.out.println(text);
+				System.out.println("img:"+text);
 				if (!imap.containsKey(text) && !text.startsWith("local")) {
 					missingImages.add(text);
 				}
@@ -611,7 +607,6 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		public void onError(ErrorEvent event) {
 
 			Image img = (Image) event.getSource();
-			System.out.println(img.getTitle());
 
 		}
 	};
@@ -793,7 +788,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 	}
 	
 	public void refreshFmds(boolean undoImageCache) {
-		if(undoImageCache){
+		if(undoImageCache&&currentFMD.imgCache != null){
 			currentFMD.imgCache.clear();
 			for(FullMapData fmd : extraMaps.keySet()){
 				fmd.imgCache.clear();

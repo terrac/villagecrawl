@@ -1,17 +1,14 @@
 package gwt.client.main.base;
 import gwt.client.game.generator.MarkerInterface;
 import gwt.client.game.util.PUtil;
+import gwt.client.main.VConstants;
 import gwt.client.map.MapData;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsonUtils;
 
 public class PBase implements MarkerInterface {
 
@@ -171,7 +168,6 @@ public class PBase implements MarkerInterface {
 		if (value == null) {
 			ret.append("null");
 		} else if (value instanceof PBase) {
-
 			((PBase) value).export(ret);
 
 		} else if (value instanceof HashMap) {
@@ -201,12 +197,7 @@ public class PBase implements MarkerInterface {
 		} else {
 
 			
-			if(GWT.isClient()){				
-		    	  ret.append(JsonUtils.escapeValue((String) value));
-			} else {
-				//The server side usage is cleaner and does not need to be escaped.
-				ret.append("\"" + value + "\"");
-			}
+			ret.append("\"" + value + "\"");
 
 		}
 
@@ -314,6 +305,59 @@ public class PBase implements MarkerInterface {
 		Integer base=type.getInt(ts);
 		type.put(ts, base+value);
 	}
+	public static void increment(PBase type,String ts, Double value) {
+		Double base=(Double) type.get(ts);
+		type.put(ts, base+value);
+	}
+	public static int getDefaultInt(PBase pb, String name,
+			int i) {
+		Integer n = (Integer) pb.get(name);
+		if(n == null){
+			return i;
+		}
+		
+		return n;
+	}
+	public static PBase getDefaultPBase(PBase obj, String string,
+			PBase pb) {
+		PBase t = obj.getPBase(string);
+		if(t != null){
+			return t;
+		}
+		return pb;
+	}
+	public static Double getDefaultDouble(PBase obj, String string,
+			double d) {
+		Double t = (Double) obj.get(string);
+		if(t != null){
+			return t;
+		}
+		return d;
+	}
+	public static boolean getDefaultBoolean(PBase obj, String string,boolean def) {
+		Boolean t = (Boolean) obj.get(string);
+		if(t != null){
+			return t;
+		}
+		
+		return def;
+	}
+	public static void decrement(PBase type,String ts, Integer value) {
+		Integer base=type.getInt(ts);
+		type.put(ts, base-value);
+	}
+	public static double getDouble(PBase pop, String size) {
+		Object object = pop.get(size);
+		if(object instanceof Integer){
+			object = new Double((Integer)object);
+		}
+		Double doub = (Double) object;
+		if(doub == null){
+			return 0;
+		}
+		return doub;
+	}
+	
 
 //	@Override
 //	public boolean equals(Object obj) {

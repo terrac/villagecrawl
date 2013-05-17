@@ -40,6 +40,8 @@ public class ServerGame {
 	public List<Key<JsonData>> mainJsonData;
 	public List<Key<JsonData>> otherJsonData;
 	public Key<JsonData> startJson;
+	public String prettyEdit;
+	public long totalViews;
 
 	public List<JsonData> getMainJsonDatasByGame() {
 		if (mainJsonData == null) {
@@ -92,5 +94,7 @@ public class ServerGame {
 
 		return SDao.getJsonDataDao().getRN(startJson);
 	}
+
+	
 
 }

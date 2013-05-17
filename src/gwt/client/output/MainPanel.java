@@ -83,7 +83,6 @@ public abstract class MainPanel <Canvas> extends PBase{
 			symbolicMap = map;
 		}
 		clear(symbolicShell);
-		//System.out.println(map);
 		//drawAreaMap(map, symbolicShell);
 		for(int x = 0; x < map.getWidth();x++){		
 		   for(int y = 0; y < map.getHeight();y++){

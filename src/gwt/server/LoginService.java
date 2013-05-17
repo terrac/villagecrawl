@@ -19,8 +19,12 @@ public class LoginService {
 
 
 
-	public static PersonLoginInfo login(String requestUri, PrintWriter writer
+	public static PersonLoginInfo login(String requestUri,PrintWriter writer
 			) {
+		return login(requestUri, writer, null);
+	}
+		public static PersonLoginInfo login(String requestUri, PrintWriter writer
+				,HttpServletRequest req) {
 		
 		
 		GUser per = null;
@@ -32,6 +36,10 @@ public class LoginService {
 		// probably should add in a cookie later that says logged in/ not logged
 		// in
 		
+		String gkey=null;
+		if(req != null){
+			gkey=req.getParameter("gkey");
+		}
 		if (user != null) {
 			loginInfo.setLoggedIn(true);
 			loginInfo.setEmailAddress(user.getEmail());
@@ -48,7 +56,7 @@ public class LoginService {
 				SDao.getGUserDao().put(per);
 			}
 			if (writer != null) {
-				writer.println(SideBar.getServletRep("Sign Out",loginInfo.getLogoutUrl()));
+				writer.println(SideBar.getServletRep("Sign Out",loginInfo.getLogoutUrl(),gkey));
 			}
 		} else {
 			loginInfo.setLoggedIn(false);
@@ -57,7 +65,7 @@ public class LoginService {
 			}
 			
 			if (writer != null) {
-				writer.println(SideBar.getServletRep("Sign In",loginInfo.getLoginUrl()));
+				writer.println(SideBar.getServletRep("Sign In",loginInfo.getLoginUrl(),gkey));
 			}
 		}
 		return new PersonLoginInfo(per, loginInfo);

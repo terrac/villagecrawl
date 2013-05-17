@@ -22,13 +22,10 @@ import gwt.shared.datamodel.IClientObject;
 
 import java.util.Map;
 
-
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -43,6 +40,7 @@ public abstract class SideBar {
 	
 	public void sideLoad(String[] first, String[] second) {
 
+		
 		GetObjectAsync goa = GWT.create(GetObject.class);
 		
 	
@@ -58,16 +56,20 @@ public abstract class SideBar {
 						Anchor signInLink;
 						
 						if(loginInfo != null){
+							String gkey=Window.Location.getParameter("gkey");
 							if (!loginInfo.isLoggedIn()) {
-								layout.add(new HTML(getClientRep("Sign In",loginInfo.getLoginUrl())));
+								layout.add(new HTML(getClientRep("Sign In",loginInfo.getLoginUrl(),gkey)));
 								//Window.alert(loginInfo.getLoginUrl());
 							} else {
-								layout.add(new HTML(getClientRep("Sign Out",loginInfo.getLogoutUrl())));
+								layout.add(new HTML(getClientRep("Sign Out",loginInfo.getLogoutUrl(),gkey)));
 								//Window.alert(loginInfo.getLogoutUrl());
 							}
 						}
 
-						
+						RootPanel mp = RootPanel.get("mainpage");
+						if(mp == null){
+							return;
+						}
 						loadMain(result);
 					}
 
@@ -93,25 +95,31 @@ public abstract class SideBar {
 	
 	/**
 	 * Copied from viewSelectionSource
+	 * @param req 
 	 * @return
 	 */
 	
-	public static String getServletRep(String signinrep,String url){
+	public static String getServletRep(String signinrep,String url, String gkey){
+		
 		return "<html>" +
 				"<head>" +
 //				"<script type=\"text/javascript\" language=\"javascript\" src=\"villagedc/villagedc.nocache.js\"></script>" +
 //				"<link type=\"text/css\" rel=stylesheet href=villagedc.css>" +
 				"</head>" +
-				"<body>"+getClientRep(signinrep, url);
+				"<body>"+getClientRep(signinrep, url,gkey);
 	}
 	
 	public static String getRep(String signinrep,String url){
 		return 
 				"<a href=\""+url+"\" class=\"gwt-Anchor\" tabindex=\"0\">"+signinrep+"</a>";
 	}
-	public static String getClientRep(String signinrep,String url){
+	public static String getClientRep(String signinrep,String url,String gkey){
+		String share =" "+ getRep("leaderboard", "/leaderboard");
+		if(gkey!= null){
+			share=" "+ getRep("share", "/leaderboard?gkey="+gkey);
+		} 
 		return 
-		getRep(signinrep, url)+" "+getRep("gamelist", "/displaypersongames")+" "+ getRep("profile", "/profile");
+		getRep(signinrep, url) + " " + getRep("gamelist", "/displaypersongames") + " " + getRep("profile", "/profile") + share;
 	}
 
 

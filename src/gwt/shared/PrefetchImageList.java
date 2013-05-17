@@ -18,6 +18,7 @@ public static String vault =
 +"/images/doll/base/human-female.png,"
 //+"/images/goblin-male.png,"
 +"/images/rightarrow.png,"
++"/images/damagesword.png,"
 +"/images/tree.png,"
 +"/images/bread.png,"
 +"/images/doll/body/dress.png,"
