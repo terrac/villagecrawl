@@ -185,6 +185,8 @@ public static LivingBeing addCow() {
 		pb.put("swamp", 2);
 		pb.put("plant", 2);
 		pb.put("default", 4);
+		pb.put("city", 0);
+		pb.put("farm", 0);
 		pb = PBase.getDefaultPBase(this, "growthmap", pb);
 			for (final HashMapData hmd : fmd) {
 				int growth = pb.getInt("default"); // get

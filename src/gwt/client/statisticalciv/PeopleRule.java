@@ -207,7 +207,7 @@ public class PeopleRule extends VParams {
 						ConflictRule.checkDeath(person);
 						ConflictRule.checkDeath(hmd.getLivingBeing());
 						TechnologyRule.setState(person,VConstants.conflict);
-						Window.alert("Damage:"+damage +"Attacking:"+sizeAttacking+"Attacked:"+sizeAttacked);
+						//Window.alert("Damage:"+damage +"Attacking:"+sizeAttacking+"Attacked:"+sizeAttacked);
 						return new Returnable(true);
 					}
 				}

@@ -397,7 +397,7 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 		lb.setTeam(team);
 		// lb.put(VConstants.image, "/images/goblin.png");
 		// lb.getTemplate().setRationalChild("main", "recruitable");
-		addToMap(hmd, lb);
+		addToMap(hmd.getParent().getNearestEmpty(hmd), lb);
 		return lb;
 	}
 

@@ -18,5 +18,7 @@ public class SConstants {
 	public static final String variability = "variability";
 	protected static final String huntingsuccess = "huntingsuccess";
 	public static final String research = "research";
+	public static final String city = "city";
+	public static final String raid = "raid";
 	
 }

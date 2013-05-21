@@ -25,9 +25,12 @@ public class TechnologyRule extends VParams {
 	public TechnologyRule() {
 		// TODO Auto-generated constructor stub
 	}
-	int countBeforeNewEra = 5000;
+	
+	
+	int countBeforeNewEra = 1;//5000
 	int count;
 	int level = 0;
+	VillageRule vr;
 	@Override
 	public void execute(Map<String, Object> map) {
 		count++;
@@ -35,13 +38,22 @@ public class TechnologyRule extends VParams {
 			if(level < 1){
 				level++;
 			}
+			if(level == 1&& vr == null){
+				vr = new VillageRule();
+			}
 			count =0;
+		}
+		if(vr != null){
+			vr.execute(map);
 		}
 		for (LivingBeing person : getFMD(map).people.toArray(new LivingBeing[0])) {
 //			if(VConstants.getRandom().nextDouble()< .01){
 //				//take person and add random new technology
 //			}
 			if(!PeopleRule.isHuman(person)){
+				continue;
+			}
+			if(!person.containsKey(VConstants.population)){
 				continue;
 			}
 			List <PBase> techL = getTechList(person);

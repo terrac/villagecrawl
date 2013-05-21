@@ -23,6 +23,9 @@ import com.google.gwt.core.client.GWT;
 public abstract class SimpleOObject extends OObject{
 
 
+	public SimpleOObject() {
+	}
+	
 	@Override
 	public OObject clone() {
 		return this;

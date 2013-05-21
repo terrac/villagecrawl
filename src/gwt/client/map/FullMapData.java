@@ -580,4 +580,6 @@ public class FullMapData extends AreaMap<HashMapData, SymbolicMap> implements
 		int ySize = VConstants.getRandom().nextInt(fmd.getYsize());
 		fmd.getNearestEmpty(new Point(xSize, ySize)).putAppropriate(item);
 	}
+	
+	
 }
