@@ -346,6 +346,10 @@ public class PBase implements MarkerInterface {
 		Integer base=type.getInt(ts);
 		type.put(ts, base-value);
 	}
+	public static void decrement(PBase type,String ts, Double value) {
+		Double base=type.getDouble(ts);
+		type.put(ts, base-value);
+	}
 	public static double getDouble(PBase pop, String size) {
 		Object object = pop.get(size);
 		if(object instanceof Integer){
@@ -356,6 +360,9 @@ public class PBase implements MarkerInterface {
 			return 0;
 		}
 		return doub;
+	}
+	public double getDouble(String size) {
+		return PBase.getDouble(this, size);
 	}
 	
 

@@ -57,7 +57,7 @@ public class TechnologyRule extends VParams {
 				continue;
 			}
 			List <PBase> techL = getTechList(person);
-			if(techL.size() == 0){
+			if(techL == null||techL.size() == 0){
 				continue;
 			}
 			OObject o =person.getTemplate().getCurrent();
@@ -143,7 +143,9 @@ public class TechnologyRule extends VParams {
 		return new ArrayList(EntryPoint.game.getPBase(VConstants.technology).getPBase(VConstants.map).getObjMap().values());
 	}
 	public static List<PBase> getTechList(LivingBeing person) {
-		return (List<PBase>)new ArrayList(getTech(person).getPBase(VConstants.map).getObjMap().values());
+		PBase tech = getTech(person);
+		if(tech == null) return null;
+		return (List<PBase>)new ArrayList(tech.getPBase(VConstants.map).getObjMap().values());
 	}
 	public static void setState(LivingBeing person, String conflict) {
 		person.getTemplate().getCurrent().put(SConstants.state,conflict);
@@ -170,7 +172,12 @@ public class TechnologyRule extends VParams {
 	}
 
 	public static int getDefaultInt(LivingBeing person,String people, int i) {		
-		return PBase.getDefaultInt(getTech(person).getPBase(VConstants.map).getPBase(people),VConstants.size,i);
+		PBase tech = getTech(person);
+		if(tech == null){
+			return i;
+		}
+		return PBase.getDefaultInt(tech.getPBase(VConstants.map).getPBase(people),VConstants.size,i);
+		
 	}
 
 
@@ -183,9 +190,10 @@ public class TechnologyRule extends VParams {
 
 	public static double addOppositeStates(LivingBeing person, String fishing,
 			String hunting) {
-		double f1=PBase.getDouble(getTech(person).getPBase(VConstants.map).getPBase(fishing),SConstants.research);
-		double h1=PBase.getDouble(getTech(person).getPBase(VConstants.map).getPBase(hunting),SConstants.research);
-		
-		return f1 - h1;
+//		double f1=PBase.getDouble(getTech(person).getPBase(VConstants.map).getPBase(fishing),SConstants.research);
+//		double h1=PBase.getDouble(getTech(person).getPBase(VConstants.map).getPBase(hunting),SConstants.research);
+//		
+//		return f1 - h1;
+		return 0;
 	}
 }
