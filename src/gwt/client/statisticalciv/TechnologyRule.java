@@ -128,7 +128,7 @@ public class TechnologyRule extends VParams {
 		return new TechnologyRule().copyProperties(this);
 	}
 	public static PBase getTech(LivingBeing person) {
-		return person.getPBase(VConstants.population).getPBase(VConstants.technology);
+		return person.getPBase(VConstants.population).getType(VConstants.technology);
 	}
 	public static void addTechs(LivingBeing lb) {
 		for(PBase t : getTechList()){
@@ -195,5 +195,10 @@ public class TechnologyRule extends VParams {
 //		
 //		return f1 - h1;
 		return 0;
+	}
+
+
+	public static void addTech(LivingBeing lb, String s) {
+		getTech(lb).put(s, s);
 	}
 }

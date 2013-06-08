@@ -19,9 +19,16 @@ import gwt.shared.StatisticalCiv;
 
 public class RemovePerson extends OObject {
 	
+	public RemovePerson() {
+		// TODO Auto-generated constructor stub
+	}
 	
+	public RemovePerson(PBase population) {
+		put(VConstants.population,population);
+	}
 	@Override
 	public Returnable execute(FullMapData fullMapData, LivingBeing person) {
+		PBase.increment(getPBase(VConstants.population),VConstants.food,person.getPopulation().getInt(VConstants.food));
 		person.death();
 		return null;
 	}

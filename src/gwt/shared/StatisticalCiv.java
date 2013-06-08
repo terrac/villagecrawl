@@ -86,9 +86,8 @@ public class StatisticalCiv extends ClientBuild2 {
 		pb.put(VConstants.maparea, mapArea);
 		mapArea.put(VConstants.classname, MapArea.class.getName());
 
-		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new PeopleRule(
-				VConstants.person, true, SConstants.fishing, .15),
-				new FoodRule(), new ConflictRule(1000), new TechnologyRule()),
+		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new PeopleRule(),
+				new FoodRule()),
 				mapArea);
 
 		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(),
@@ -106,9 +105,8 @@ public class StatisticalCiv extends ClientBuild2 {
 		pb.put(VConstants.maparea, mapArea);
 		mapArea.put(VConstants.classname, MapArea.class.getName());
 
-		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new PeopleRule(
-				VConstants.person, true, SConstants.fishing, .15),
-				new FoodRule(), new ConflictRule(1000), new TechnologyRule()),
+		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new PeopleRule(),
+				new FoodRule()),
 				mapArea);
 
 		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap3(),
@@ -118,6 +116,42 @@ public class StatisticalCiv extends ClientBuild2 {
 	}
 
 	public static PBase doTechnology() {
+		PBase pb = new PBase();
+		pb.put(VConstants.name, VConstants.technology);
+		pb.put(VConstants.classname, Game.class.getName());
+		pb.put(VConstants.main, true);
+
+		PBase tech = new PBase();
+		pb.put(VConstants.technology, tech);
+
+		addTechPRoot(tech,VConstants.person,VConstants.human+" female", VConstants.maxsize, 50);
+		addTechPRoot(tech,VConstants.person,"sheep", VConstants.maxsize, 400);
+		addTechPRoot(tech,VConstants.person,"sheep", VConstants.growth, 40);
+		
+		
+		addTechRoot(tech, SConstants.growthIteration, growthIteration, 400, -1);
+		addTechRoot(tech, SConstants.people, personAmount, 1, -1);
+		addTechRoot(tech, SConstants.cows, cowAmount, 5, -1);
+		addTechRoot(tech, SConstants.fishingEffectiveness,
+				SConstants.fishingEffectiveness, .5, -1);
+		addTechRoot(tech, "maxwheat", "maxwheat", 35, -1);
+		
+		addBTech(tech,SConstants.hunting,0);
+		addBTech(tech,SConstants.fishing,0);
+		addBTech(tech,SConstants.territory,40);
+		//items
+		addBTech(tech,SConstants.shepherd,400);
+		addBTech(tech,SConstants.farm,800);
+		
+		
+		return pb;
+	}
+	private static void addBTech(PBase tech, String hunting, int i) {
+		// TODO Auto-generated method stub
+		tech.getListCreate(VConstants.list).add(new PBase(VConstants.name,hunting,VConstants.turn,i));
+	}
+
+	public static PBase doOldTechnology() {
 		PBase pb = new PBase();
 		pb.put(VConstants.name, VConstants.technology);
 		pb.put(VConstants.classname, Game.class.getName());

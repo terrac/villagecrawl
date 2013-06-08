@@ -54,6 +54,13 @@ public class Move extends OObject implements WhatSound{
 
 
 	private Integer movepathindex;
+	
+	public Move shouldShowMove(){
+		
+		put("show",true);
+		return this;
+	}
+	
 	public Move(HashMapData to,String description) {
 		super();
 		
@@ -89,6 +96,10 @@ public class Move extends OObject implements WhatSound{
 	
 	@Override
 	public void init(LivingBeing person) {
+		LivingBeing lb = (LivingBeing) get(VConstants.livingbeing);
+		if(lb != null){
+			setTo(lb.getParent());
+		}
 		if(containsKey(VConstants.xfull)){
 			int x =getInt(VConstants.xfull);
 			int y=getInt(VConstants.yfull);
@@ -122,7 +133,18 @@ public class Move extends OObject implements WhatSound{
 
 
 
+	public Move(LivingBeing person, String description) {
+		put(VConstants.livingbeing,person);
+		setDescr(description);
+	}
+
+
+
+
 	public OCommand command;
+
+
+
 	
 	public Returnable execute(FullMapData map, LivingBeing person) {
 		Returnable ret = null;
@@ -349,6 +371,12 @@ public class Move extends OObject implements WhatSound{
 	public String getSoundName() {
 		
 		return "walk";
+	}
+
+
+
+	public boolean showMove() {
+		return getB("show");
 	}
 	
 }

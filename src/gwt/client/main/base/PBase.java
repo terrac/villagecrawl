@@ -306,7 +306,8 @@ public class PBase implements MarkerInterface {
 		type.put(ts, base+value);
 	}
 	public static void increment(PBase type,String ts, Double value) {
-		Double base=(Double) type.get(ts);
+		Double base=type.getDouble(ts);
+		
 		type.put(ts, base+value);
 	}
 	public static int getDefaultInt(PBase pb, String name,

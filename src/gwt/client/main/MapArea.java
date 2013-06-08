@@ -102,9 +102,9 @@ public class MapArea extends MapData {
 
 		for (FullMapData fmd : getMap()) {
 			runFmd(fmd);
-			if(fmd.people.size() > 0){
-				htmlOut.displayAreaMap(fmd);
-			}
+//			if(fmd.people.size() > 0){
+//				htmlOut.displayAreaMap(fmd);
+//			}
 		}
 		htmlOut.runExtra(this);
 		

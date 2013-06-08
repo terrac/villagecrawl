@@ -10,6 +10,7 @@ import gwt.client.item.Item;
 import gwt.client.item.SimpleMD;
 import gwt.client.main.Kill;
 import gwt.client.main.Move;
+import gwt.client.main.MoveClosest;
 import gwt.client.main.PTemplate;
 import gwt.client.main.Point;
 import gwt.client.main.Returnable;
@@ -230,10 +231,10 @@ public class VillageRule extends VParams {
 						//move to city
 						PBase.decrement(pop, VConstants.food, 30);
 						PBase.increment(city.getPBase(VConstants.population), VConstants.food, 30);
-						LivingBeing lb=RandomPersonCreation.addRandomPerson(cityH, VConstants.human, VConstants.human);
+						LivingBeing lb=RandomPersonCreation.addRandomPerson(fmd.getData(home), VConstants.human, VConstants.human);
 						lb.getAlterHolder().put(VConstants.weapon, new Item("scythe"));
 						
-						OObject.setCurrent(lb, new Move(fmd.getData(home),"movecity"));
+						OObject.setCurrent(lb, new Move(cityH,"movecity"));
 						OObject.addToList(lb, new RemovePerson());
 						
 					}
@@ -245,6 +246,8 @@ public class VillageRule extends VParams {
 					LivingBeing lb=RandomPersonCreation.addRandomPerson(cityH, VConstants.human, VConstants.human);
 					lb.getAlterHolder().put(VConstants.weapon, new Item("staff"));
 					OObject.setCurrent(lb, new MoveClosest(VConstants.livingbeing,VConstants.cow));
+					OObject.setCurrent(lb, new Move(fmd.getData(home),"movehomefarm"));
+					
 					OObject.addToList(lb, new RemovePerson());
 					
 					break;

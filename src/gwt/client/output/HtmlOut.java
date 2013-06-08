@@ -12,6 +12,8 @@ import gwt.client.game.display.UIVParams;
 import gwt.client.item.Item;
 import gwt.client.main.Game;
 import gwt.client.main.MapArea;
+import gwt.client.main.Move;
+import gwt.client.main.Point;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.LivingBeing;
 import gwt.client.main.base.OObject;
@@ -438,8 +440,23 @@ public class HtmlOut extends MainPanel<GCanvas> {
 				}
 
 			}
+
 		}
 
+		if(parent instanceof FullMapData){
+			for(LivingBeing lb : ((FullMapData)parent).people){
+				if(lb.getTemplate().getCurrent() instanceof Move){
+					Move m = (Move) lb.getTemplate().getCurrent();
+					if(m.showMove()){
+						Point p = m.getTo().getPosition();
+						drawImage(symbolicShell2, p.y, p.x, MapData.getImageString("overlay/singing"));
+					}
+					
+					
+				}
+			}
+
+		}
 		//showArrows(parent, symbolicShell2, xs, ys, xe, ye);
 
 	}
