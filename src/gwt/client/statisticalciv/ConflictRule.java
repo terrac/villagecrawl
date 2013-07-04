@@ -34,57 +34,7 @@ public class ConflictRule extends VParams {
 	public void execute(Map<String, Object> map) {
 		for (LivingBeing person : getFMD(map).people.toArray(new LivingBeing[0])) {
 
-			HashMapData parent = person.getParent();
-//			int growth = parent.getInt("growth");
-
-			PBase p = person.getPBase(VConstants.population);
-			if (p == null) {
-				return;
-			}
-			double size = PBase.getDouble(p,VConstants.size);
-
-			if (size <= 0) {
-				person.death();
-				return;
-			}
-			//PBase techStats = p.getType(VConstants.technology);
-			int growthIteration = TechnologyRule.getDefaultInt(VConstants.person,person.getType(),VConstants.maxsize, 1000);
-			p.put("totalsize", growthIteration);
-			if (size > growthIteration) {
-				p.put(VConstants.size, growthIteration);
-				size = growthIteration;
-			}
-			// debug code really
-			person.getStats().put(VConstants.health,(int) size);
-			person.getStats().put(VConstants.maxhealth, growthIteration);
-
-			if (PeopleRule.isHuman(person)) {
-				if (size == growthIteration) {
-					PBase p2 = p.clone();
-					double hsize = size / 2;
-					randomize(p2);
-					p2.put(VConstants.size, hsize);
-					p.put(VConstants.size, hsize);
-					HashMapData hmd = parent.getParent()
-							.getNearestEmpty(person);
-					if (hmd != null) {
-						hmd.putAppropriate(addPerson(p2));
-					}
-				}
-			} else {
-				if (size == growthIteration) {
-
-					PBase p2 = p.clone();
-					double hsize = size / 2;
-					p2.put(VConstants.size, hsize);
-					p.put(VConstants.size, hsize);
-					HashMapData hmd = parent.getParent()
-							.getNearestEmpty(person);
-					if (hmd != null) {
-						hmd.putAppropriate(addAnimal(p2));
-					}
-				}
-			}
+			executeSplit(person);
 
 			// it checks whether or not two people are next to each other
 			// and determines how they interact
@@ -92,13 +42,73 @@ public class ConflictRule extends VParams {
 		}
 	}
 
-	private MapData addPerson(PBase p2) {
+	public static void executeSplit(LivingBeing person) {
+		HashMapData parent = person.getParent();
+//			int growth = parent.getInt("growth");
+
+		PBase p = person.getPBase(VConstants.population);
+		if (p == null) {
+			return;
+		}
+		double size = PBase.getDouble(p,VConstants.size);
+
+		if (size <= 0) {
+			person.death();
+			return;
+		}
+		//PBase techStats = p.getType(VConstants.technology);
+		int growthIteration = TechnologyRule.getDefaultInt(VConstants.person,person.getType(),VConstants.maxsize, 1000);
+		p.put("totalsize", growthIteration);
+		if (size > growthIteration) {
+			p.put(VConstants.size, growthIteration);
+			size = growthIteration;
+		}
+		// debug code really
+		person.getStats().put(VConstants.health,(int) size);
+		person.getStats().put(VConstants.maxhealth, growthIteration);
+
+		if (PeopleRule.isHuman(person)) {
+			if (size == growthIteration) {
+				PBase p2 = p.clone();
+				double hsize = size / 2;
+				randomize(p2);
+				p2.put(VConstants.size, hsize);
+				p.put(VConstants.size, hsize);
+				HashMapData hmd = parent.getParent()
+						.getNearestEmpty(person);
+				if (hmd != null) {
+					hmd.putAppropriate(addPerson(p2));
+				}
+			}
+		} else {
+			if (size == growthIteration) {
+
+				PBase p2 = p.clone();
+				double hsize = size / 2;
+				p2.put(VConstants.size, hsize);
+				p.put(VConstants.size, hsize);
+				HashMapData hmd = parent.getParent()
+						.getNearestEmpty(person);
+				if (hmd != null) {
+					hmd.putAppropriate(addAnimal(p2));
+				}
+			}
+		}
+	}
+
+	private static MapData addPerson(PBase p2) {
 		LivingBeing lb = PeopleRule.addPerson();
 		lb.put(VConstants.population, p2);
+		
+		PBase tech=p2.getType(VConstants.technology);
+		//tech.put(SConstants.hunting,VConstants.getRandom().nextDouble());
+		tech.put(SConstants.fishing,VConstants.getRandom().nextDouble()-TechnologyRule.getDefaultDouble(SConstants.fishing,0));
+		tech.put(VConstants.conflict,VConstants.getRandom().nextDouble()-TechnologyRule.getDefaultDouble(VConstants.conflict,.5));
+		
 		return lb;
 	}
 
-	private MapData addAnimal(PBase p2) {
+	private static MapData addAnimal(PBase p2) {
 		LivingBeing lb = FoodRule.addCow();
 		lb.put(VConstants.population, p2);
 		return lb;
@@ -172,9 +182,11 @@ public class ConflictRule extends VParams {
 		return new ConflictRule().copyProperties(this);
 	}
 
-	public static void checkDeath(LivingBeing person) {
+	public static boolean checkDeath(LivingBeing person) {
 		if(PBase.getDouble(person.getPopulation(),VConstants.size) <= 0){
 			person.death();
+			return true;
 		}
+		return false;
 	}
 }

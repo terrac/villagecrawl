@@ -85,23 +85,23 @@ public class BuildFeatures extends HttpServlet {
 		//addResources(person);
 		AttachUtil.shouldRun = false;
 
-		Key<ServerGame> firstGame = addFeature(person,"StatcivSmall",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActions(),StatisticalCiv.doTechnology());
+		Key<ServerGame> firstGame = addFeature(person,"StatcivSmall (try me)",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActions(),StatisticalCiv.doTechnology());
 		person.add(firstGame);
 //		
-		Key<ServerGame> secondGame = addFeature(person,"Statciv",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActionsBigMap(),StatisticalCiv.doTechnology());
+		Key<ServerGame> secondGame = addFeature(person,"Statciv (try me)",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActionsBigMap(),StatisticalCiv.doTechnology());
 		person.add(secondGame);
 //		
-		Key<ServerGame> sGame = addFeature(person,"Haggle",ClientBuildDungeon.doBasicDungeon(),ClientBuild2.doPeople(),ClientBuildDungeon.doInitialAdventurers());
+		Key<ServerGame> sGame = addFeature(person,"Haggle ( work in progress )",ClientBuildDungeon.doBasicDungeon(),ClientBuild2.doPeople(),ClientBuildDungeon.doInitialAdventurers());
 		person.add(sGame);
 		
-		person.add(addFeature(person,"Adventurer vs Undead",ClientBuild.doDC1(),ClientBuildAvU.doInitialAdventurers(),ClientBuild2.doPeople(),ClientBuildAvU.doPeople(),ClientBuildAvU.doFirstBattle()));
+		//person.add(addFeature(person,"Adventurer vs Undead",ClientBuild.doDC1(),ClientBuildAvU.doInitialAdventurers(),ClientBuild2.doPeople(),ClientBuildAvU.doPeople(),ClientBuildAvU.doFirstBattle()));
 
 		
 		
 		
 		
 		
-		person.add(addFeature(person,"Adventurers vs Monsters",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(false),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(false),ClientBuildAvZ.doFireNecromancer(),ClientBuildAvZ.doIllusionGnome()));
+		person.add(addFeature(person,"Adventurers vs Monsters (work in progress)",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(false),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(false),ClientBuildAvZ.doFireNecromancer(),ClientBuildAvZ.doIllusionGnome()));
 
 		
 		

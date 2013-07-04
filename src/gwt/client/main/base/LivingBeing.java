@@ -248,7 +248,7 @@ public class LivingBeing extends AgeMapData implements Mover, IAge, IPhysical {
 		if (getParent() == null) {
 			return;
 		}
-
+		EntryPoint.game.getRunTurn().onDeath(this);
 		getParent().removeAppropriate(getKey());
 		AttachUtil.run(AttachUtil.death, this, this);
 		// Item md = (Item) getItemsMap().get(VConstants.corpse).clone();

@@ -55,14 +55,22 @@ public class PrettyEdit {
 			if(rootPanel == null){
 				return;
 			}
-			
-			goa.getObject("jsondata", Window.Location.getParameter("jsonkey"),new AsyncCallback<Map<String,IClientObject>>() {
-				
+			//Window.Location.getParameter("jsonkey")
+			final String jsonkey=rootPanel.getElement().getAttribute("jsonkey");
+			goa.getObject("jsondata", jsonkey, new AsyncCallback<Map<String,IClientObject>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					caught.printStackTrace();
+					Window.alert(caught.getMessage()+caught.getStackTrace());
+	
+				}
+
 				@Override
 				public void onSuccess(Map<String, IClientObject> result) {
 					JSONObject jo;
 					try {
-						jo = (JSONObject) JSONParser.parseStrict(((CString)result.get(Window.Location.getParameter("jsonkey"))).value);
+						jo = (JSONObject) JSONParser.parseStrict(((CString)result.get("jsondata")).value);
 					} catch (Exception e) {
 						Window.alert(e.getMessage());
 						e.printStackTrace();
@@ -73,21 +81,16 @@ public class PrettyEdit {
 						return;
 					}
 					name = jdPBase.getS(VConstants.name);
-					tech = jdPBase.getPBase(VConstants.technology).getPBase(VConstants.map);
+					tech = jdPBase.getPBase(VConstants.technology).getPBase(VConstants.main);
 					
 					VerticalPanel vp = new VerticalPanel();
 					rootPanel.add(vp);
 					
 					
-					for(Object o : tech.getObjMap().values()){
+					for(String n : tech.getObjMap().keySet()){
 						
-						if(o instanceof PBase){
-							displayTechs(vp, (PBase) o);
-						} else {
-							for(PBase p : ((List<PBase>)o)){
-								displayTechs(vp, p);
-							}
-						}
+						double v = tech.getDouble(n);
+						displayTechProperty(vp, n, v);
 						//add an enable/disable checkbox
 						
 						//other stuff
@@ -102,10 +105,10 @@ public class PrettyEdit {
 							JsonData jd = new JsonData(name);
 							int count = 0;
 							for(Map<String, Object> ent :techRep){
-								postTechs(ent);
+								postTechs(ent,tech);
 							}
 							
-							String gkey=Window.Location.getParameter("jsonkey");
+							String gkey=jsonkey;
 							jdPBase.put(VConstants.classname, Game.class.getName());
 							jd.setData(jdPBase.export());
 							soa.sendObjectDefault(jd, gkey,"actions",  new AsyncCallback<Void>() {
@@ -127,42 +130,30 @@ public class PrettyEdit {
 							});
 						}
 					});
-
-				}
-				
-				@Override
-				public void onFailure(Throwable caught) {
-					caught.printStackTrace();
-					Window.alert(caught.getMessage()+caught.getStackTrace());
 					
 				}
 			});
 			
 					}
-	public static void displayTechs(VerticalPanel vp, PBase t) {
+	public static void displayTechProperty(VerticalPanel vp, String name, double amount) {
 		HorizontalPanel hp = new HorizontalPanel();
 		vp.add(hp);
 		//list name
-		hp.add(new Label(t.getS(VConstants.name)));
+		hp.add(new Label(name));
 		//for size put a text box accepting ints
 		TextBox tb = new TextBox();
-		tb.setText(""+t.get(VConstants.size));
-		CheckBox cb = new CheckBox("Enable");
-		cb.setValue(t.getB(VConstants.enabled));
+		tb.setText(""+amount);
 		hp.add(tb);
-		hp.add(cb);
 		Map<String,Object> hashMap = new HashMap<String, Object>();
 		techRep.add(hashMap);
-		hashMap.put(VConstants.size, tb);
-		hashMap.put(VConstants.enabled, cb);
-		hashMap.put(AttachUtil.OBJECT, t);
+		hashMap.put(VConstants.name,name);
+		hashMap.put(AttachUtil.OBJECT, tb);
 	}
-	public static void postTechs(Map<String, Object> m) {
-		PBase p = (PBase) m.get(AttachUtil.OBJECT);
-		TextBox tb = (TextBox) m.get(VConstants.size);
-		p.put(VConstants.size, Double.parseDouble(tb.getText()));
-		CheckBox cb = (CheckBox)m.get(VConstants.enabled);
-		p.put(VConstants.enabled, cb.getValue());
+	public static void postTechs(Map<String, Object> m,PBase techProps) {
+		String name= (String) m.get(VConstants.name);
+		TextBox tb = (TextBox) m.get(AttachUtil.OBJECT);
+		techProps.put(name, Double.parseDouble(tb.getText()));
+		
 	}
 
 }

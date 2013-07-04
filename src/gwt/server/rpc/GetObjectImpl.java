@@ -59,11 +59,8 @@ public class GetObjectImpl extends RemoteServiceServlet implements
 		
 	}
 	public Map<String,IClientObject> getObject(String type, String name) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		Map<String,IClientObject> map = new HashMap<String, IClientObject>();
-		//map.put("site", new CString(site));
-		map.put(name,  defaultMap.get(type).get(name,map));
-	    return map;
+		return getObject(new String[]{type},new String[]{name});
+		
 	    
 		
 	}

@@ -23,12 +23,9 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.googlecode.objectify.Key;
 
 @RemoteServiceRelativePath("displaypersongames")
-public class DisplayJsonGame extends HttpServlet {
+public class DisplayAdvancedEdit extends HttpServlet {
 
 
-	static String html = "<link type=text/css rel=stylesheet href=Villagedc.css>"+
-			 "<script type=text/javascript language=javascript src=villagedc/villagedc.nocache.js></script>" +
-			 "<div id=prettyEdit jsonkey=a></div>";
 
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -67,24 +64,15 @@ public class DisplayJsonGame extends HttpServlet {
 		
 		
 		for(JsonData jd :sg.getMainJsonDatasByGame()){
-			if("technology".equals(jd.getName())){
-				html = html.replace("jsonkey=a", "jsonkey="+jd.getKey().getId());
-				
-			}
-			//response.getWriter().write("<br><br><a href=\"/editjson?jsonkey="+jd.getKey().getId()+"\">"+jd.getName()+ "</a></br>");
+			response.getWriter().write("<br><br><a href=\"/editjson?jsonkey="+jd.getKey().getId()+"\">"+jd.getName()+ "</a></br>");
 			//add a delete
 		}
 		for(JsonData jd :sg.getOtherJsonDatasByGame()){
-			if("technology".equals(jd.getName())){
-				html = html.replace("jsonkey=a", "jsonkey="+jd.getKey().getId());
-				
-			}
-			//response.getWriter().write("<br><br><a href=\"/editjson?jsonkey="+jd.getKey().getId()+"\">"+jd.getName()+ "</a></br>");
+			response.getWriter().write("<br><br><a href=\"/editjson?jsonkey="+jd.getKey().getId()+"\">"+jd.getName()+ "</a></br>");
 			//add a delete
 		}
 		//response.getWriter().write("<br><br><br><a href=/editjson?new=true&gkey="+sg.getKey().getId()+">Start a new json</a></br>");
 		
-		response.getWriter().write(html);
 		
 		response.getWriter().write("<br><br><br><a href=/?gamekey="+sg.getKey().getId()+"><h1 style=\"font-size:200%\">Play "+sg.getName()+"</h1></a></br>");
 		

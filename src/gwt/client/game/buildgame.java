@@ -188,6 +188,8 @@ import gwt.client.statisticalciv.GrowthRule;
 import gwt.client.statisticalciv.PeopleRule;
 import gwt.client.statisticalciv.RunRules;
 import gwt.client.statisticalciv.TechnologyRule;
+import gwt.client.statisticalciv.VillageRule;
+import gwt.client.statisticalciv.oobjects.RemovePerson;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
 import gwt.shared.buildjson;
 
@@ -413,6 +415,9 @@ public class buildgame {
 		addO(new TechnologyAction());
 		addO(new PeopleRule());
 		addO(new FoodRule());
+		addO(new VillageRule());
+		addO(new RemovePerson());
+		
 		JSONObject jo;
 		try {
 			jo = (JSONObject) JSONParser.parseStrict(json);

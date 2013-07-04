@@ -20,5 +20,14 @@ public class SConstants {
 	public static final String research = "research";
 	public static final String city = "city";
 	public static final String raid = "raid";
+	public static final String farm = "farm";
+	public static final String guard = "guard";
+	public static final String merchant = "merchant";
+	public static final String home = "home";
+	public static final String disaffected = "disaffected";
+	public static final String beggar = "beggar";
+	public static final String bandit = "bandit";
+	public static final String territory = "territory";
+	public static final String shepherd = "shepherd";
 	
 }

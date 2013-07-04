@@ -18,6 +18,7 @@ import gwt.client.map.FullMapData;
 import gwt.client.map.MapData;
 import gwt.client.output.OutputDirector;
 import gwt.client.state.State;
+import gwt.client.statisticalciv.PeopleRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +27,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import java.io.Serializable;
+
+import com.google.gwt.user.client.Window;
 
 public class RationalPersonality implements Serializable {
 
@@ -142,6 +145,11 @@ public class RationalPersonality implements Serializable {
 				}
 
 			}
+//			if(true){
+//				if(PeopleRule.isHuman(person)){
+//					Window.alert(currentoob.getClass().getName());					
+//				}
+//			}
 			Returnable ret = currentoob.execute(fullMapData, person);
 			if (ret == null) {
 				ret = new Returnable();

@@ -76,6 +76,9 @@ public class PeopleRule extends VParams {
 		FullMapData fmd = getFMD(map);
 
 		addTemplate(fmd);
+		for(LivingBeing person : fmd.people.toArray(new LivingBeing[0])){
+			ConflictRule.executeSplit(person);
+		}
 
 
 	}
@@ -155,7 +158,7 @@ public class PeopleRule extends VParams {
 						} 
 						PBase popg = target.getType(VConstants.population);
 						Double popsize=PBase.getDouble(popg,VConstants.size);
-						popsize += TechnologyRule.getDefaultInt(person,SConstants.hunting, 0);
+						//popsize += TechnologyRule.getDefaultInt(person,SConstants.hunting, 0);
 						popsize=FoodRule.eatByPopulation(popsize, person.getType(VConstants.population), pinc);
 						popg.put(VConstants.size, popsize);
 						return null;
@@ -163,12 +166,11 @@ public class PeopleRule extends VParams {
 					
 					
 				});
-				TechnologyRule.setState(person,SConstants.hunting);
 				return new Returnable(true);
 			}
 			public Returnable handleConflict(FullMapData fullMapData,
 					final LivingBeing person) {
-				double conflict =((double) TechnologyRule.getDefaultInt(person,VConstants.conflict, 0))/100;
+				double conflict = TechnologyRule.getDefaultDouble(person,VConstants.conflict, .1);
 				if(VConstants.getRandom().nextDouble() < conflict){
 					HashMapData hmd=fullMapData.getNearby(person, new GetForNearby<HashMapData>(fullMapData) {
 						public HashMapData get(HashMapData hashmapdata) {
@@ -197,16 +199,22 @@ public class PeopleRule extends VParams {
 							displayPopup.displaypopup(hmd.getLivingBeing(), null, 1);							
 						}
 
-						PBase popAttacked=hmd.getLivingBeing().getPBase(VConstants.population);
+						PBase popAttacked=hmd.getLivingBeing().getType(VConstants.population);
 						PBase pop = person.getPBase(VConstants.population);
 						double sizeAttacking = PBase.getDouble(pop,VConstants.size);
 						double sizeAttacked=PBase.getDouble(popAttacked,VConstants.size);
 						int damage = (int) (sizeAttacking * conflict);
-						pop.put(VConstants.size, sizeAttacking-damage);
+						damage += 5;
 						popAttacked.put(VConstants.size, sizeAttacking-damage);
-						ConflictRule.checkDeath(person);
-						ConflictRule.checkDeath(hmd.getLivingBeing());
-						TechnologyRule.setState(person,VConstants.conflict);
+						if(ConflictRule.checkDeath(hmd.getLivingBeing())){
+							//etc
+						} else {
+							pop.put(VConstants.size, sizeAttacking-damage);
+							ConflictRule.checkDeath(person);
+						}
+						
+						
+						//TechnologyRule.setState(person,VConstants.conflict);
 						//Window.alert("Damage:"+damage +"Attacking:"+sizeAttacking+"Attacked:"+sizeAttacked);
 						return new Returnable(true);
 					}
@@ -215,20 +223,18 @@ public class PeopleRule extends VParams {
 			}
 			public Returnable handleFishing(FullMapData fullMapData,
 					final LivingBeing person) {
-				double fishing =(double)( TechnologyRule.getDefaultInt(person,SConstants.fishing, 0))/100;
-				fishing += TechnologyRule.addOppositeStates(person,SConstants.fishing,SConstants.hunting);
+				double fishing = TechnologyRule.getDefaultDouble(person,SConstants.fishing,.5 );
 				if(VConstants.getRandom().nextDouble() < fishing){
 					HashMapData hmd=fullMapData.getNearKeyValue(VConstants.obstacle, "goldfish", person, 5);
 					if(hmd != null){
 						addToList(person, new Move(hmd, "fish",VConstants.water));
 						double popsize = PBase.getDouble(person.getPopulation(),VConstants.size);
 						double pinc = popsize/10+1;
-						int eat = (int) (2+((pinc * fishing) + pinc*TechnologyRule.getDefaultDouble(SConstants.fishingEffectiveness,VConstants.size, .5)));
+						int eat = (int) (2+((pinc * fishing) + pinc*.5));
 						FoodRule.eatByPopulation(eat, person.getType(VConstants.population), pinc);
 						hmd.getMapData(VConstants.obstacle).getPBase(VConstants.population);
 						
 					}
-					TechnologyRule.setState(person,SConstants.fishing);
 					return new Returnable(true);
 				}
 				return null;
@@ -239,7 +245,7 @@ public class PeopleRule extends VParams {
 			}
 		});
 
-		TechnologyRule.addTechs(lb);
+		//TechnologyRule.addTechs(lb);
 		return lb;
 	}
 

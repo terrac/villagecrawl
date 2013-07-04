@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import gwt.client.game.display.LogDisplay;
+import gwt.client.main.Move;
 import gwt.client.main.Returnable;
 import gwt.client.main.VConstants;
 import gwt.client.map.FullMapData;
@@ -60,5 +61,8 @@ public class OobList extends OObject {
 	public OObject clone() {
 		
 		return (OObject) new OobList().copyProperties(this);
+	}
+	public void addNextAction(OObject move) {
+		getListCreate(VConstants.list).add(move);
 	}
 }

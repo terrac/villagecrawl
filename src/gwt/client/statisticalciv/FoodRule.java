@@ -109,22 +109,40 @@ public static LivingBeing addCow() {
 
 
 
-	public static double eatByPopulation(double food, PBase pop, double pinc) {
-		double size = PBase.getDouble(pop, VConstants.size);
-		
-		food = -(pinc+size)+food;
-		if(food < 0){
-			if(size +food< 10){
-				food = 1;
-			}
-			PBase.increment(pop, VConstants.size, food);
-			
-			food = 0;
-		} else {
-			PBase.increment(pop, VConstants.size, pinc);
-			
+public static double eatByPopulation(double food, PBase pop, double pinc) {
+	double size = PBase.getDouble(pop, VConstants.size);
+	
+	food = -(pinc+size)+food;
+	if(food < 0){
+		if(size +food< 10){
+			food = 1;
 		}
-	return food;
+		PBase.increment(pop, VConstants.size, food);
+		
+		food = 0;
+	} else {
+		PBase.increment(pop, VConstants.size, pinc);
+		
+	}
+return food;
+}
+
+public static double getFood(double food, PBase pop, double pinc) {
+	double size = PBase.getDouble(pop, VConstants.size);
+	
+	food = -(pinc+size)+food;
+	if(food < 0){
+		if(size +food< 10){
+			food = 1;
+		}
+		PBase.increment(pop, VConstants.food, food);
+		
+		food = 0;
+	} else {
+		PBase.increment(pop, VConstants.food, pinc);
+		
+	}
+return food;
 }
 
 	/**

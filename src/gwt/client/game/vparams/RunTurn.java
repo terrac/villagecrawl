@@ -43,6 +43,13 @@ public class RunTurn extends VParams {
 
 	}
 
+	public void onDeath(LivingBeing lb){
+		for(Object pb :lb.getListCreate(VConstants.pbase)){
+			if (pb instanceof Pop) {
+				((Pop) pb).pop();
+			}
+		}
+	}
 	public void add(LivingBeing lb, PBase pbase) {
 
 		lb.getListCreate(VConstants.pbase).add(pbase);

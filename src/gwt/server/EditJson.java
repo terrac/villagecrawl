@@ -25,10 +25,7 @@ import com.googlecode.objectify.Key;
 @RemoteServiceRelativePath("displaypersongames")
 public class EditJson extends HttpServlet {
 
-	static String html = "<link type=text/css rel=stylesheet href=Villagedc.css>"+
-						 "<script type=text/javascript language=javascript src=villagedc/villagedc.nocache.js></script>" +
-						 "<div id=prettyEdit></div>";
- 
+
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +40,6 @@ public class EditJson extends HttpServlet {
 		long id;
 		JsonData jd;
 		
-		response.getWriter().write(html);
 		if (request.getParameter("new") != null) {
 
 			
