@@ -398,16 +398,21 @@ public class LivingBeing extends AgeMapData implements Mover, IAge, IPhysical {
 	@Override
 	public String toString() {
 
-		return getTemplate().getRationalMap().getObjMap() + "\n\n"
-				+"current:"+ getTemplate().getCurrent() + "\n\n"
+		return "current:"+ getTemplate().getCurrent() + "\n\n"
 				+"pop:"+ getType(VConstants.population) + "\n\n"
-				//+"currentTemplate"+ getTemplate().getTemplateName() + "\n\n"
-				//+ PUtil.pToString(VConstants.attributes, getAttributes())
-				//+ "\n\n" + getStats() 
-				//+"alter:"+getAlterHolder()
-				+"id:"+getId()+"\n"
-				//+ "\n\n money:"+(get(VConstants.money))+"\n\n"
-				+ getItems() + "\n\nteam:" + getTeam();
+				+"alter:"+ getAlterHolder() + "\n\n"
+				;
+		
+//		return getTemplate().getRationalMap().getObjMap() + "\n\n"
+//				+"current:"+ getTemplate().getCurrent() + "\n\n"
+//				+"pop:"+ getType(VConstants.population) + "\n\n"
+//				//+"currentTemplate"+ getTemplate().getTemplateName() + "\n\n"
+//				//+ PUtil.pToString(VConstants.attributes, getAttributes())
+//				//+ "\n\n" + getStats() 
+//				//+"alter:"+getAlterHolder()
+//				+"id:"+getId()+"\n"
+//				//+ "\n\n money:"+(get(VConstants.money))+"\n\n"
+//				+ getItems() + "\n\nteam:" + getTeam();
 	}
 
 	public String getType() {
@@ -467,7 +472,7 @@ public class LivingBeing extends AgeMapData implements Mover, IAge, IPhysical {
 
 	public PBase getPopulation() {
 		// TODO Auto-generated method stub
-		return getPBase(VConstants.population);
+		return getType(VConstants.population);
 	}
 	
 }

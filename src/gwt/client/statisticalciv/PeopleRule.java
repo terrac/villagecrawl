@@ -182,36 +182,8 @@ public class PeopleRule extends VParams {
 						
 					}, 2);
 					if(hmd != null){
-						hmd.getLivingBeing().put(VConstants.visualdamage, VConstants.damage+"sword");
-						
-						
-						person.put(VConstants.visualdamage, VConstants.damage+"sword");
-						
-						//for some reason the visual damage stuff isn't showing up
-						{
-							DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
-									 new UImage("/images/"+VConstants.damage+"sword.png")));
-							displayPopup.displaypopup(person, null, 1);							
-						}
-						{
-							DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
-									 new UImage("/images/"+VConstants.damage+"sword.png")));
-							displayPopup.displaypopup(hmd.getLivingBeing(), null, 1);							
-						}
-
-						PBase popAttacked=hmd.getLivingBeing().getType(VConstants.population);
-						PBase pop = person.getPBase(VConstants.population);
-						double sizeAttacking = PBase.getDouble(pop,VConstants.size);
-						double sizeAttacked=PBase.getDouble(popAttacked,VConstants.size);
-						int damage = (int) (sizeAttacking * conflict);
-						damage += 5;
-						popAttacked.put(VConstants.size, sizeAttacking-damage);
-						if(ConflictRule.checkDeath(hmd.getLivingBeing())){
-							//etc
-						} else {
-							pop.put(VConstants.size, sizeAttacking-damage);
-							ConflictRule.checkDeath(person);
-						}
+						LivingBeing lbAttacked = hmd.getLivingBeing();
+						conflictDamage(person, lbAttacked, conflict);
 						
 						
 						//TechnologyRule.setState(person,VConstants.conflict);
@@ -272,5 +244,39 @@ public class PeopleRule extends VParams {
 		}
 		return growth;
 		
+	}
+
+	public static void conflictDamage(final LivingBeing lbAttacker,
+			LivingBeing lbAttacked, double conflict) {
+		lbAttacked.put(VConstants.visualdamage, VConstants.damage+"sword");
+		
+		
+		lbAttacker.put(VConstants.visualdamage, VConstants.damage+"sword");
+		
+		//for some reason the visual damage stuff isn't showing up
+		{
+			DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
+					 new UImage("/images/"+VConstants.damage+"sword.png")));
+			displayPopup.displaypopup(lbAttacker, null, 1);							
+		}
+		{
+			DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
+					 new UImage("/images/"+VConstants.damage+"sword.png")));
+			displayPopup.displaypopup(lbAttacked, null, 1);							
+		}
+
+		PBase popAttacked=lbAttacked.getType(VConstants.population);
+		PBase pop = lbAttacker.getPBase(VConstants.population);
+		double sizeAttacking = PBase.getDouble(pop,VConstants.size);
+		double sizeAttacked=PBase.getDouble(popAttacked,VConstants.size);
+		int damage = (int) (sizeAttacking * conflict);
+		damage += 5;
+		popAttacked.put(VConstants.size, sizeAttacking-damage);
+		if(ConflictRule.checkDeath(lbAttacked)){
+			//etc
+		} else {
+			pop.put(VConstants.size, sizeAttacking-damage);
+			ConflictRule.checkDeath(lbAttacker);
+		}
 	}
 }

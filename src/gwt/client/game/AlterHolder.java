@@ -57,6 +57,7 @@ public class AlterHolder extends MapData{
 		if(value == null){
 			return;
 		}
+		getParent().remove(VConstants.imagecache);
 		ApplyDamage ad = (ApplyDamage) getParent().getMapArea().game
 		.get(VConstants.applydamage);
 		List<String> types =ad.getListCreate(VConstants.altertypes);

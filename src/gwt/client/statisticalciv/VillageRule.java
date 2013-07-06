@@ -1,13 +1,17 @@
 package gwt.client.statisticalciv;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gwt.user.client.Window;
 
 import gwt.client.game.vparams.random.RandomPersonCreation;
 import gwt.client.item.Item;
 import gwt.client.item.SimpleMD;
 import gwt.client.main.Move;
+import gwt.client.main.Point;
 import gwt.client.main.Returnable;
 import gwt.client.main.VConstants;
 import gwt.client.main.Wait;
@@ -29,20 +33,29 @@ public class VillageRule extends VParams {
 	public VillageRule() {
 	}
 	static List<HashMapData> farmList = new ArrayList<HashMapData>();
+	static List<String> bodyList = new ArrayList<String>(Arrays.asList(new String[] {
+			"leather armor", "black coat", "animal skin",
+			"green breastplate", "dress", "robe", "rags" }));
 	@Override
 	public void execute(Map<String, Object> map) {
 		FullMapData fmd = getFMD(map);
 
+		
 		for(LivingBeing person : fmd.people.toArray(new LivingBeing[0])){		//.005
-			if(PeopleRule.isHuman(person)&&VConstants.getRandom().nextDouble() < .1){
+			if(person.getParent() == null){
+				continue;
+			}
+			if(PeopleRule.isHuman(person)&&VConstants.getRandom().nextDouble() < .005){
 				doFarmer(fmd, person);
 			}
+			doLeaderConflict(person,fmd);
+			
 		}
 
 		
 		
 		for(HashMapData hmd : farmList){			//.005
-			if(VConstants.getRandom().nextDouble() < .04){
+			if(VConstants.getRandom().nextDouble() < .005){
 				doBandit(fmd, hmd);
 			}
 		}
@@ -73,6 +86,45 @@ public class VillageRule extends VParams {
 	
 	}
 	
+	private void doLeaderConflict(final LivingBeing person,FullMapData fmd) {
+		if(person.getParent() == null){
+			return;
+		}
+		fmd.getNearby(person, new GetForNearby<HashMapData>(fmd) {
+			@Override
+			public HashMapData get(HashMapData hashmapdata) {
+				LivingBeing lb = hashmapdata.getLivingBeing();
+				if(lb != null&&!lb.equals(person)){
+					if(VConstants.getRandom().nextDouble() > .3){
+						return null;
+					}
+					String lbType = lb.getPopulation().getS(VConstants.type);
+					String personType = person.getPopulation().getS(VConstants.type);
+					if(VConstants.leader.equals(lbType)){
+						//do damage to each other
+						if(testType(VConstants.leader,personType)||testType(SConstants.bandit,personType)){
+							PeopleRule.conflictDamage(person, lb, 1.0);
+						}
+							
+					}
+					if(SConstants.bandit.equals(lbType)){
+						//do damage to each other
+						PeopleRule.conflictDamage(person, lb, 1.0);
+						
+					}
+				}
+				return null;
+			}
+		}, 2);
+	}
+
+	public static boolean testType(String t1, String t2) {
+		if(t1 == null || t2 == null){
+			return false;
+		}
+		return t1.equals(t2);
+	}
+
 	private void doBandit(FullMapData fmd, HashMapData hmd) {
 		//could add a vparam onto ondeath for bandit to change this
 		for(LivingBeing lb :banditList ){
@@ -87,16 +139,18 @@ public class VillageRule extends VParams {
 		LivingBeing lb=RandomPersonCreation.addRandomPerson(hmd, VConstants.human, VConstants.human);
 		banditList.add(lb);
 		lb.getAlterHolder().put(VConstants.weapon, new Item("dagger"));
+		lb.getAlterHolder().put(VConstants.body, new Item(VConstants.getRandomFromList(bodyList)));
+		lb.getPopulation().put(VConstants.type, SConstants.bandit);
+		lb.getPopulation().put(VConstants.size, 10);
 		OObject.setCurrent(lb, new SimpleOObject() {
-			HashMapData home;
 			@Override
 			public Returnable execute(FullMapData fullMapData, LivingBeing person) {
 				//bandits randomly pick a nearby spot and try to raid that farm
 				//bandits have a % chance of moving back to their initial farm after every raid
 				//if they do they increment a raid counter which warrior creation uses
-				if(home == null){
-					home = person.getParent();
-				}
+				final HashMapData home = getHome(person);
+				
+				
 				HashMapData hmd=fullMapData.getNearby(person, new GetForNearby<HashMapData>(fullMapData) {
 					@Override
 					public HashMapData get(HashMapData hashmapdata) {
@@ -104,7 +158,11 @@ public class VillageRule extends VParams {
 							return null;
 						}
 						MapData gate = hashmapdata.getMapData(VConstants.gate);
-						if(gate != null && SConstants.farm.equals(gate.getValue())&&VConstants.getRandom().nextDouble() > .40){//
+						double chance = .40;
+						if(hashmapdata.containsKey(VConstants.owned)){
+							chance += .30;
+						}
+						if(gate != null && SConstants.farm.equals(gate.getValue())&&VConstants.getRandom().nextDouble() > chance){//
 							return hashmapdata;
 						}
 						return null;
@@ -115,14 +173,14 @@ public class VillageRule extends VParams {
 					OobList oobList = new OobList(new Move(hmd, "raid"),new Wait("happy", 7));
 					addToList(person, oobList);
 					//add to raid counter
-					if(VConstants.getRandom().nextDouble() < .5){
+					if(VConstants.getRandom().nextDouble() < .05){
 						//death from raiding
 						oobList.addNextAction(new RemovePerson());
 						
 					}
 					
 					//turn into leader
-					if(VConstants.getRandom().nextDouble() < .5){
+					if(VConstants.getRandom().nextDouble() < .1){
 						doLeader(person);
 					}
 					if(VConstants.getRandom().nextDouble() < .30){
@@ -137,18 +195,56 @@ public class VillageRule extends VParams {
 
 	}
 
-	protected void doLeader(LivingBeing person) {
+	protected void setHome(LivingBeing person, HashMapData parent) {
+		person.getPopulation().put(VConstants.home, parent.getPosition());
+	}
+
+	protected HashMapData getHome(LivingBeing person) {
+		Point p=(Point) person.getPopulation().get(VConstants.home);
+		if(p == null){
+			setHome(person, person.getParent());
+			
+			p=(Point) person.getPopulation().get(VConstants.home);
+		}
+		return person.getParent().getParent().getData(p);
+	}
+
+	protected void doLeader(final LivingBeing person) {
 		//give a sword
+		person.getAlterHolder().remove(VConstants.weapon);
+		person.getAlterHolder().put(VConstants.weapon, new Item("axe"));
 		
+		person.getPopulation().put(VConstants.type, VConstants.leader);
+		person.getTemplate().clear();
 		//clear oobjects
+		HashMapData home = getHome(person);
+		person.put(VConstants.name, person.getId());
+		final List<HashMapData> ownedList = new ArrayList<HashMapData>();
+		person.getParent().getParent().getNearby(home, new GetForNearby<HashMapData>(home.getParent()) {
+			@Override
+			public HashMapData get(HashMapData hashmapdata) {
+				hashmapdata.put(VConstants.owned,person.getName());
+				ownedList.add(hashmapdata);
+				return null;
+			}
+		}, 5);
 		
+		OObject moveLeader = new SimpleOObject() {
+			int count;
+			@Override
+			public Returnable execute(FullMapData fullMapData, LivingBeing person) {
+				HashMapData h=ownedList.get(count);
+				count++;
+				if(count >= ownedList.size()){
+					count = 0;
+				}
+				addToList(person, new OobList(new Move(h,"")));
+				//take some tribute
+				return new Returnable(true);
+			}
+		};
 		//set current object
-		
-		//visit every farm in order in a certain radius from home
-		//take a little bit of tribute
-		//fight or convert bandits along the way (convert adds to population,fight reduces both, either way other bandit pops dissapear)
-		//leaders also fight any other leaders (the losing leader loses that farm and potentially dies)
-		//bandits still spawn and raid, but they have a % chance of avoiding leader owned tiles
+		OObject.setCurrent(person, moveLeader);
 		
 	}
 

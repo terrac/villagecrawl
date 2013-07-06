@@ -253,8 +253,8 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 		}
 	}
 
-	static List<String> hair = Arrays.asList(new String[] { "arwen-hair",
-			"short_black", "fem_red", "brown-hair" });
+	static List<String> hair = Arrays.asList(new String[] { "arwen-hair", "brown-hair", "fem_red", "green", "long_black",
+			"pigtail_red", "short_black", "short-red", "short-white" });
 	static String[] iArr = new String[] { VConstants.body, VConstants.leg };
 	static String[] invA = new String[] { VConstants.cloak, VConstants.body,
 			VConstants.leg, VConstants.gloves, VConstants.weapon };
