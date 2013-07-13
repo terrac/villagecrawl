@@ -638,7 +638,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		hp.add(pause);
 		//gdp = new Label("Score");
 		//hp.add(gdp);
-		UIVParams uivpar = (UIVParams)get(VConstants.score);
+		UIVParams uivpar = (UIVParams)EntryPoint.game.get(VConstants.score);
 		if(uivpar != null){
 			hp.add(uivpar.getWidgetAndInit());
 		}

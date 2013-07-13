@@ -36,11 +36,12 @@ public class VillageRule extends VParams {
 	static List<String> bodyList = new ArrayList<String>(Arrays.asList(new String[] {
 			"leather armor", "black coat", "animal skin",
 			"green breastplate", "dress", "robe", "rags" }));
+	TimeRule tr = new TimeRule();
 	@Override
 	public void execute(Map<String, Object> map) {
 		FullMapData fmd = getFMD(map);
 
-		
+		tr.execute(map);
 		for(LivingBeing person : fmd.people.toArray(new LivingBeing[0])){		//.005
 			if(person.getParent() == null){
 				continue;
@@ -141,7 +142,7 @@ public class VillageRule extends VParams {
 		lb.getAlterHolder().put(VConstants.weapon, new Item("dagger"));
 		lb.getAlterHolder().put(VConstants.body, new Item(VConstants.getRandomFromList(bodyList)));
 		lb.getPopulation().put(VConstants.type, SConstants.bandit);
-		lb.getPopulation().put(VConstants.size, 10);
+		lb.getPopulation().put(VConstants.size, 10.0);
 		OObject.setCurrent(lb, new SimpleOObject() {
 			@Override
 			public Returnable execute(FullMapData fullMapData, LivingBeing person) {
@@ -180,10 +181,11 @@ public class VillageRule extends VParams {
 					}
 					
 					//turn into leader
-					if(VConstants.getRandom().nextDouble() < .1){
+					if(VConstants.getRandom().nextDouble() < .01){
 						doLeader(person);
 					}
 					if(VConstants.getRandom().nextDouble() < .30){
+						PBase.increment(person.getPopulation(),VConstants.size,5.0);
 						oobList.addNextAction(new Move(home, "returnhome"));
 						oobList.addNextAction(new Wait("happy", 7));
 					}
@@ -240,6 +242,7 @@ public class VillageRule extends VParams {
 				}
 				addToList(person, new OobList(new Move(h,"")));
 				//take some tribute
+				PBase.increment(person.getPopulation(),VConstants.size,10.0);
 				return new Returnable(true);
 			}
 		};

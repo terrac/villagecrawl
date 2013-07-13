@@ -188,6 +188,7 @@ import gwt.client.statisticalciv.GrowthRule;
 import gwt.client.statisticalciv.PeopleRule;
 import gwt.client.statisticalciv.RunRules;
 import gwt.client.statisticalciv.TechnologyRule;
+import gwt.client.statisticalciv.UVLabel;
 import gwt.client.statisticalciv.VillageRule;
 import gwt.client.statisticalciv.oobjects.RemovePerson;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
@@ -417,6 +418,7 @@ public class buildgame {
 		addO(new FoodRule());
 		addO(new VillageRule());
 		addO(new RemovePerson());
+		addO(new UVLabel());
 		
 		JSONObject jo;
 		try {

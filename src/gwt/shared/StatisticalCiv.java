@@ -3,6 +3,7 @@ package gwt.shared;
 import gwt.client.game.ApplyDamage;
 import gwt.client.game.AttachUtil;
 import gwt.client.game.CreateRandom;
+import gwt.client.game.display.UVerticalPanel;
 import gwt.client.game.vparams.RunTurn;
 import gwt.client.main.Game;
 import gwt.client.main.MapArea;
@@ -17,6 +18,7 @@ import gwt.client.statisticalciv.PeopleRule;
 import gwt.client.statisticalciv.RunRules;
 import gwt.client.statisticalciv.SConstants;
 import gwt.client.statisticalciv.TechnologyRule;
+import gwt.client.statisticalciv.UVLabel;
 import gwt.client.statisticalciv.VillageRule;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
 
@@ -71,6 +73,7 @@ public class StatisticalCiv extends ClientBuild2 {
 		AttachUtil.attach(AttachUtil.clickfmd, new CreateInternal(), game
 				.getMapArea().getMap());
 
+		
 		return game;
 	}
 
@@ -93,7 +96,6 @@ public class StatisticalCiv extends ClientBuild2 {
 
 		AttachUtil.attach(AttachUtil.mapstart, StatisticalCivMap.getMap1(),
 				mapArea);
-
 		return pb;
 	}
 
@@ -118,6 +120,8 @@ public class StatisticalCiv extends ClientBuild2 {
 
 	public static PBase doTechnology() {
 		PBase pb = new PBase();
+		pb.put(VConstants.score, new UVLabel());
+		
 		pb.put(VConstants.name, VConstants.technology);
 		pb.put(VConstants.classname, Game.class.getName());
 		pb.put(VConstants.main, true);

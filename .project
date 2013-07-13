@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>villagedc</name>
+	<name>villagedcBroken</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -25,7 +25,6 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>

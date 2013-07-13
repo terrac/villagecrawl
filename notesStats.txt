@@ -1,3 +1,321 @@
+1 disease
+  a randomly gets created on a certain year on a certain person
+  b it then spreads and has dormancy/flare ups
+  c it has a death rate which can drastically exceed population rates
+  d traits start getting selected for that resist disease 
+  (trait x has +1 fundamentalism and +1 disease resistance, over time these build up when population hurt from disease, and lower when pop is high)
+  e smallpox is a completely devistating disease that drastically alters the course of the game
+  
+3 reverse conflict and add a few additional options (disease, trade, speed of tech growth(ie both faster techs and more buildings faster)
+
+#1 finish time segment
+#2 let play and watch leaders form and wipe out the indegenouspopulation 
+
+1 put a time restriction on when things start happening
+  a have a series of times and a series of increments for them
+  b put up a counter with the time
+    1 put it next to the pause button (where the item list was)
+
+3 leader updates
+  a the leader gains population on every successful move (up to a limit of 100)
+  b 
+
+2 historical updates 
+  a start in middle paleolithic
+  b seed with a number of hunter/gatherers
+  c move to neolithic and thus farming
+
+
+  
+3 winning farms
+  a up   
+1 create some more defaults to do a generic progression
+  #a lower chance of bandit being created
+  #b same with leader
+  c same with
+
+
+
+
+
+
+1 finish leader comments
+  types of leaders
+  a gang leader 
+  b monarchy
+  
+  
+2 disease
+  a diseases are living things that spread and potentially kill
+  b after a number of turns smallpox appears and decimates everyone that contacts it
+  c techs start being gained to deal with smallpox
+3 more animals
+  a most animals appear and dissapear (the idea being that they aren't absolutely gigantic like the herds of large grazing animals)
+  b snakes pop up out of marshlands, do a little damange and then go back to them and dissapear
+  c lions pop up on grasslands and attack herds (or people)
+4 more techs
+  a copper 1+ to damage  
+  b bronze 1+ more to damage and the creation of long distance trade routes  
+
+5 choices
+  a much like the trading logic you are given choices to make which have an effect of some sort
+    
+4 add flavor (disease, more animals, more techs like copper, etc)  
+
+1 make the farms spawn a lot
+2 write the code that creates leaders/bandits/shepherds/etc
+3 leaders carve out kingdoms through force
+ technology to sacrifice a maiden to marauders
+
+
+
+1 page that pulls down all the associated jsons and gets the one with the right name
+2 it then picks out the few properties we want to set and pulls them out like how edit json does
+3 successful posts go back to edit json to save
+4 it also has a play game link
+5 it requires a login and points to the correct game to build, to make a single experience, the url is game1 and it should
+  be shown for feedback
+
+
+
+
+1 give the random, but set chance for fishing vs hunting
+
+3 have the randomly created farmers
+4 do the farmer village logic while having hunters gradually be displaced
+
+
+1 make the gaining of population follow the curve of easy to hard
+2 make fishing check if next to fish and show a "fail" if not
+3 make hunting use check to make a fail symbol on the hunter and the sheep
+4 add the technology restraint on farmland
+
+1 
+
+5 (add some logic that allows to make the farmland immediately occur and be rapid
+6
+
+
+1 shepherding
+  a if low move from farm
+  b pull cow population into farm
+  c domesticated cows move around farm in open grass spots
+
+2 splitting
+  #a small chance of creating a population that is a new population
+  #b gathering provides 50% of the food needs (and is low on desert)
+  #c returned food adds food to the main pop and the gathering process uses it as well
+  #d if a main population gets low enough it will dissapear
+
+3 activist farms
+  a farms develop centers like the splits
+  b shepherds pull from neighboring farms
+  c farms quarrel and the center develops fighters that take some food and temporarily quell antisocial behavior
+  d farms also produce fishermen
+  
+4 pottery
+  a farms get a boost to max pop
+  
+5 copper
+  a farm warriors get a boost to attack
+  b conflict gives a random chance of two pops with a different home fighting (initially each farm has a home, but then you get additional homes for more complex and less conflict)
+  c farms have the advantage due to a higher pop with pottery and copper
+  d but hunter/gatherers still exist in wooded areas
+  e some shepherds break off and permanently live in arid regions
+6 tin
+  a when the technology tin is researched it is revealed on the map (there is an item of tin, and an amount of tin)
+  b after tin is found the population center that gained the technology sends miners to it
+  c that population gains an additional attack bonus
+7 collapse
+  a tin runs out (it simply has an amount and becomes harder to mine)
+  b complex populations in cities are reduced (priest/blacksmith/artist/fighter)
+  c blacksmith gained wealth by selling bronze tools which supported the rest
+8 iron age
+  a iron replaces tin
+  b but there are a lot more iron spots so miners are closer  
+9 disease
+  a smallpox is created and it devistates everything (on touch it spreads and reduces the pop by 80%) 
+  b cities are permanently lessened in population
+  c associated disease resistant techs are formed
+  d monogamy,opposition to sex for pleasure, obsession with cleanliness, aversion to outsiders (each reduce the effect of smallpox)
+  e when a disease is created shepherds have a small chance of bringing it to a farm
+  f each uninfected population has a chance of being infected
+  g infected populations rapidly gain new traits to deal with disease resistance and lose a lot of people
+    (ie natural resistance, fear of people and the higher the number of the trait the more resistance and the
+     more potential for personality changes
+10 add lots of little techs that give a lot of background, but aren't too important
+   a shinto religious pratices
+   b prostitution (temple prostitutes
+   c slavery
+   d hammurabi's code
+   e moral prescriptions
+   f stories  
+  
+1 finish farmer function
+  #a make farmer first move to any other farms
+  #b test
+2 bronze age collapse
+  a animal husbandry (shepherding)
+  b pottery (boost to pop)
+  c copper (boost to attack)
+  d tin (creation of bronze, first long distance mining)
+  e collapse 
+    1 outsiders are seperate and do not participate in bronze culture due to lack of tin
+    2 tin supplies run out
+    3 people leave cities as the lack of tin reduces opportunity
+    
+3 iron age
+  a more complex interactions
+  b specific distinguishing cultures that fight, grow, and die, and get hit by disease and such    
+1 pull the two things off into functions
+2 create a farmer function based off of the village rule idea
+3
+
+1 put techincrement in peoplerule execute
+  a check techs against turns and randomly assign tech if ready
+2 put population and splitting in peoplerule
+  a the population splits off into specialists fishers/hunters/shepherds/etc
+  b if a specialist gets too far away it can start its own new population
+  c and populations can merge/fight/interact
+      
+
+#1 commit everything
+2 delete everything not relevant to initial fishing and hunting
+3 simplify tech (initial fishing and hunting that control chance of occurring)
+4 create differentiating cultures (each pop has its own culture. It also maintains a list of cultures it has contact with)
+5 introduce territory tech after a certain amount of turns (when moving to a spot mark it, favor random movement on spots already marked)
+6 introduce items tech (split off populations inside the main one, these have a subordinate type and move to resources and make items)
+7 introduce shepherding tech (these are like items, but they hold cows and seek out wheat and occasionally join back up)
+8 introduce farm tech ( these split off permanently and grow food)
+
+1 do shepherds
+  a move to cow
+  b split off a few cows
+  c move back to farm with food
+  d (eventually tech increases make the shepherd start out with cows and a large amount
+     showing a seperate breed of domesticated cows)
+2 do bandit code
+  a bandit moves to neighboring farms and take some food
+  b then it moves back to its home
+3 do warrior code
+  a warrior moves to each farm and has a 10% chance of killing bandits
+4 do merchant code
+5 test all of the above
+
+
+
+1 write code that adds population to farms,etc
+2 iterate through those populations and runs them
+  a list of all pops
+  b based on type, determine how to increment and whether to create
+  c write a method that takes a pop, adds the right oobject, and lets it run
+
+1 bronze age - after agriculture
+  a tin resources are discovered
+  b pepper, frankensence, gold, silver traded
+  c minoan culture as a potential tree
+  d bronze age collapse.  
+    1 technologies that allow for cities to be expanded, but eventually are counterproductive
+       a basically merit that turns into heirarchy and then creates bad leaders who disrupt the system and make bad choices
+    2 natural disasters that disrupt complex systems
+    3 warfare changes, (ie nobles use chariots, but then another group develops swords and dominates everyone else while decimating them
+  e research literature and combine into techs, (mostly scattered and random, but combine by culture)
+    1 moral precepts
+    2 stories
+    3 specific events (like the creation of a sorcerer that damages crops, two nations send disputes, etc
+
+2 iron age
+  a pick the different dynasties and cultures
+  b add more items and a larger variety
+1 do basic technologies and timelines to show proper thoughts
+2 do more advanced technologies with some very basic stat effects
+3 focus on creating a tech tree to show technologies over time
+
+
+
+1 disease
+  a diseases randomly start and spread
+  b they cause fundamentalism to spread and activities to alter
+  
+2 flooding
+  a very libertarian culture
+  b floods start the progression of progressivism  
+
+3 show tech lists that then represent how the cities deal with the world.
+
+
+2 leave in card game elements and make them some random things with storyline elements
+  (very basic to start with, focus on simulation)
+  a basically its like tetris where things will happen, but you have basic optional controls
+
+1  village rule will take care of this era's techs
+  a when this era is entered the people rule still is run
+  b the village rule then starts to create villages in appropriate spots
+    based on the people rule that already exist
+  c more villages can be created over time based on existing villages
+2 initially when settled a few farms and a tax man is created
+  a over time based on techs the farms expand and the tax man visits them too
+  b based on techs the farms generate basic items and cities have a more complex
+    set they can build which in turn helps warriors/farmers/traders
+3 in response to bandrity or other attacks on farms warriors start being created
+  a warriors initally just patrol and defend 
+4 if there are other villages then traders automatically come by and take and give extra
+  unneeded items
+5 farmers create bandits, especially if they are suffering in some way
+  a bandits raid farms
+  b if they raid a neighboring civ then they can provoke them
+  c if they raid farms they provoke warriors
+6 one of the techs allows civilizations to convert the remaining hunters (fishers convert easily)
+  a they send out temple prostitutes (not called that, pick some ancient sounding name)
+  b those bring back some of the population and make them more likely to convert wholesale
+7 various catastrophies can happen which get prevented by items and techs
+  a disease
+  b flooding (rain)
+  c earthquake (can be lessened with proper buildings)  
+  d animal attacks     
+    
+8 once all that is done then add some differentiation techs
+
+2 agriculture
+  a once settle tech is ready a village is created
+  b bronze weapons 
+  c villages create subordinate populations
+    1 warriors
+    2 tax men
+    3 traders
+  d likewise farms are created around the villages
+3 subordinate populations
+  a warriors patrol and fight bandits or attack other civilizations  
+  b tax men move to farms and gather coin/items
+  c traders seek out neighboring civilizations or specific important resources
+4 friendlyness of neighbors
+  a civilizatios are friendly, but will eventually fight when they bump up against each other
+  b normally the fights are small and low level, but they can become bigger (ie
+     normal fighting is a farm creating a population that attacks another farm, opposing civ
+     can potentially up the scale of the retaliation and start a war)
+5 traders, when not in war go out and produce beneficial trade.
+  a beneficial trade is basically a more even distribution of items
+  b cities are stronger when they have a more even distribution (ie they benefit from 10 of
+  something, they use it and 11 doesn't help them any more)
+6 tax men gather items for the cities
+  a a civ has an inherent greediness tech set by variablility that sets how it does
+  b if it misuses its farmers it will be weaker and be behind other civs
+  c losing a war can change variability
+  
+           
+  
+  
+3 iron age
+  more techs that mostly just affect things rather than change them substatially  
+
+1 trading section
+  a reveal resources when the appropriate trading technology is researched
+  b on next to another group of people either trade or conflict and give the appropriate increment
+  c use the opposite thing to determine which is more likely
+  d create an image of the items being traded (just flash the most owned item to start)
+  e on high trading occasionally move to a resource to deplete that trade item (they are random in location, and only show if wheat isn't there)
+  f if high in trade and conflict then that population will suppliment its conflicts with slaves
+
 1 start off with initial techs.
 2 rules that allow techs to increase over time, and for the necessity of
   interaction to increase different techs
