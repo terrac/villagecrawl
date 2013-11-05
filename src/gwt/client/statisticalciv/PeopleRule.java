@@ -279,4 +279,6 @@ public class PeopleRule extends VParams {
 			ConflictRule.checkDeath(lbAttacker);
 		}
 	}
+	
+	
 }

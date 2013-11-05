@@ -38,6 +38,7 @@ public class ConflictRule extends VParams {
 
 			// it checks whether or not two people are next to each other
 			// and determines how they interact
+
 			// it also determines when a population splits
 		}
 	}
@@ -58,7 +59,7 @@ public class ConflictRule extends VParams {
 		}
 		//PBase techStats = p.getType(VConstants.technology);
 		int growthIteration = TechnologyRule.getDefaultInt(VConstants.person,person.getType(),VConstants.maxsize, 1000);
-		p.put("totalsize", growthIteration);
+		p.put(SConstants.totalsize, growthIteration);
 		if (size > growthIteration) {
 			p.put(VConstants.size, growthIteration);
 			size = growthIteration;

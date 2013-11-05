@@ -1,3 +1,203 @@
+1 time rule
+2 spread rule (disease,technology) 
+  a actions initiate spread on action (add spread command)
+  
+1 write a function that ages a population a year given a set of demographics and a set
+  of technologies
+  a in time rule write a method that takes each lb on the map, gets its population
+    and inrements
+  b incrementing saves the population size, compares it to last, and if it is larger or
+    smaller it applies the appropriate demographic shifting
+  c to start with (if the .demographic doesn't exist) create a normal distribution of
+    20% children, 40% young adults, 40% middle age, and 20% elderly
+  d this distribution will be sets of exact numbers for people incremented yearly
+    (ie all numbers shift up 1)
+  e in any given year 30% of young adults have children, increased or decreased by size changes
+    and other factors
+  f large size reductions by default take from young men, but current diseases alter that
+      
+      
+2 write a function that runs over the population sets and sets a % for technologies
+  a each farm has the potential of becoming a cultural center 
+  b when a new technology is introduced one farm now spreads that technology to anything next
+    to it
+  c other contacts in between people also spread technology (along with disease and whatever)  
+  
+3 take the previous technologies and describe how they would be useful in this situation
+  (candles lead to belief in soul)
+4 create a layer that shows the demographcs of the populations,and that shows the strength of 
+  the technologies
+  
+5 write a series of scenarios that take the population to the bronze age    
+
+technologies are reinforced due to closeness to a center (or due to warfare/death)
+They should dynamically show how groups form
+
+Each person represents a group of people
+They are guided by the cycle of history and events
+(IE instead of growth it has a set of people with a set of techs which affect that growth
+and the demographics of that tribe
+so a youth heavy demographic would primarily be about violence 
+an elderly demographic would be conservative and weak
+middle would be middle
+male dominated (like a tech that influences gender, or violence directed at one gender
+) would affect things too
+conflict primarily kills men, disease kills liberal personalities
+liberal demographics are more prone to agressive things, fundamental to avoidance
+
+The point of all of this is to see a tribe/civ and watch it interact with the world
+
+
+
+1 technology philosophies
+ a technologies influence people (and the gameplay is regulated enough to notice
+ b no interactions with techs.  They are created, they spread, and they show
+   descriptive stuff
+ c the fun comes from creating a map or viewing other's maps
+ d interactions might be choosing major things (like ritual sacrifice)  
+
+
+
+1 make sure totalsize doesn't go to 1000 for leaders (so they keep their health bar)
+2 make leader's chance of attacking nomads smaller but not nonexistant
+
+Simulation tells a story
+a it gives data about how long lasting each person is
+b it gives statistics on different things
+c it provides the ability to add in certain "techs" that affect things
+
+
+
+
+
+
+
+3 simple playable game in the simulation
+  a interesting text when clicking on a unit
+  b clicking pauses and clicking when not on a unit unpauses (to make clicking on units easier)
+  c liberalism vs fundamentalism
+    (basically at any time describe all the problems each person is dealing with
+    you can click on them to make your choices or just let them play out)
+  d the basic idea is to describe problems and put them into the simulation  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 disease rule change
+  a diseases have a resistance factor.  every turn they are on a person/village the village gains resistance to that specific disease
+  b occasionally they mutate and the resistance factor lessens
+  c resistance factor basically makes them go dormant, they don't do anything for a number of turns
+  
+  farmer change
+  a farmers move to the leader and give or trade like how the other game was
+  b farmers produce different goods over time
+  c occasionally there is a crop failure
+  
+  leader change
+  a only one leader is the acknowledged leader of a tile (and its a % basis that can be
+    eroded or changed like culture
+    
+(then     
+    
+
+1 more statistical designs
+ a eventually lets say 50% should be covered with farms
+ b small leaders each defend and patrol their own areas
+ c they deal with a number of different criseses (disease breakouts, bandits, crop failure, etc)
+ d farms produce fruit and then farmers move to the center tile which can be clicked on to view a town
+ e as a long term thing leaders can create giant empires in rare circumstances
+ d areas develop their own culture/tech/etc
+
+
+1 first choice
+  a a wild man is terrorizing the local trappers
+  b should we send a temple prostitute or the local strongman?  
+    send the prostitute (do some gilgamesh lines) 
+    send the strongman (the two fight and the strongman dies, but they overcome the wildman with numbers) 
+  c what to do about the local strongman?  (get him an equal / try to organize against him) 
+  d disease has claimed the wildman (do we curse civilization, or accept disease as consequences)
+  e all of these are not interconnected  
+
+2 second choice
+  first written code of laws (give choices and one is a right and the other is a wrong choices
+  
+3 third choice
+  modern religion, why it exists  
+
+1 hunters fight each other more (set default conflict)
+2 add a few choices
+3 start in earnest on the world (ie choices are interesting, thought provoking, and illuminating)
+4 do the stuff to allow for a victory
+
+#1 realistic distribution of villages  
+#  a village planters seek out fishes (and eventually maybe super fertile spots)
+#  b they wait until the character is within a certain distance
+  
+2 fix the farmer action to do something
+
+3 tweak to make leaders dominate
+  a once a leader is formed the growth should increase due to decrease in banditry
+  b then leaders fight amongst themselves for supremacy (final goal)
+  c victory when all leaders have been beaten by yours (or disease or whatever)?
+
+1 choice rule
+  a list of choices (question, answer 1, answer 2, object of stats to change, turn to enable, potential action to run)
+  b 
+
+2 non choice tech rule
+  a create distributions of copper and tin
+  b miners come out and use copper and tin
+  c if they have both then bronze is potentially formed
+  d cultural centers then send out people to sieze tin deposits
+
+
+
+1 prostitution choice
+  a all choices come in on one population
+    and split off from that population. all populations make a random choice when
+    you make your choice.  At some point there will be choices to merge with or
+	fight leaders.  Merging gives some of your and their stats randomly and you take control
+  c -to conflict +to disease
+  b - to conflict - to disease
+  c +to conflict , conflict can increase population
+  d +to conflict damage
+  e + to growth + to conflict   
+  f - to disease - to growth
+  g
+
+1 disease option
+  a lower means disease has a less chance of spreading, higher means higher
+2 choices and technologies
+  a prostitution (lets call it temple maiden)
+  b masturbation
+  c slavery
+  d heirarchy
+  e patriarchial society
+  f fundamentalism
+  g shamanism
+  h city religion
+  i homophobia (promotes disease resistance with minor societal effects
+  j unification/splitting
+3 non choice technologies
+  a these alter your choices over time
+  b copper
+  c bronze
+  d advanced trade networks  
+
+1 rewrite disease to have a lower chance of of killing when low, higher when high
+2 think about some visual effects for disease (can turn off or on)
+  a do a popup with disease looking on transfer to the transferee
+
 1 disease
   a randomly gets created on a certain year on a certain person
   b it then spreads and has dormancy/flare ups

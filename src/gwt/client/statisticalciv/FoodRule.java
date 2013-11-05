@@ -236,7 +236,7 @@ return food;
 			return;
 		}
 		double size = PBase.getDouble(pop,VConstants.size);
-		double pinc = size/10+7;
+		double pinc = 5;
 		eatByPopulation(pinc, pop, pinc);
 		if(size >= TechnologyRule.getDefaultInt(SConstants.growthIteration, 1000)){
 			pop.put(VConstants.size,(double)TechnologyRule.getDefaultInt(SConstants.growthIteration, 1000)-1);

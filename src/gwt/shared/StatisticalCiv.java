@@ -140,7 +140,7 @@ public class StatisticalCiv extends ClientBuild2 {
 		addTechRoot(tech, "maxwheat", "maxwheat", 35, -1);
 		
 		addTechProperty(tech,SConstants.fishing,0);
-		addTechProperty(tech,VConstants.conflict,.99);
+		addTechProperty(tech,VConstants.conflict,.80);
 		
 		
 		

@@ -29,5 +29,7 @@ public class SConstants {
 	public static final String bandit = "bandit";
 	public static final String territory = "territory";
 	public static final String shepherd = "shepherd";
+	public static final String disease = "disease";
+	public static final String totalsize = "totalsize";
 	
 }

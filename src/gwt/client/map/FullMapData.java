@@ -580,6 +580,21 @@ public class FullMapData extends AreaMap<HashMapData, SymbolicMap> implements
 		int ySize = VConstants.getRandom().nextInt(fmd.getYsize());
 		fmd.getNearestEmpty(new Point(xSize, ySize)).putAppropriate(item);
 	}
+
+	public HashMapData getNearestPerson(final IPhysical lb,int radius) {
+		return getNearby(lb, new GetForNearby<HashMapData>(this) {
+			@Override
+			public HashMapData get(HashMapData hashmapdata) {
+				if(hashmapdata.getPosition().equals(lb.getPosition())){
+					return null;
+				}
+				if(hashmapdata.getLivingBeing() != null){
+					return hashmapdata;
+				}
+				return null;
+			}
+		}, radius);
+	}
 	
 	
 }

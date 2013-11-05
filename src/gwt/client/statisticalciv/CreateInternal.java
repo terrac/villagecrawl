@@ -40,6 +40,11 @@ public class CreateInternal extends VParams {
 		HashMapData h = (HashMapData) map.get(AttachUtil.OBJECT);
 		if(!Window.confirm(h.toString())){
 			return;
+		} else {
+			Window.alert("Not working yet");
+			if(true){
+				return;	
+			}
 		}
 		map.put(VConstants.main, h);
 		

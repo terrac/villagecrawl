@@ -46,6 +46,9 @@ public class VillageRule extends VParams {
 			if(person.getParent() == null){
 				continue;
 			}
+			person.getStats().put(VConstants.health,(int) person.getPopulation().getDouble(VConstants.size));
+			person.getStats().put(VConstants.maxhealth, person.getPopulation().getInt(SConstants.totalsize));
+
 			if(PeopleRule.isHuman(person)&&VConstants.getRandom().nextDouble() < .005){
 				doFarmer(fmd, person);
 			}
@@ -96,7 +99,7 @@ public class VillageRule extends VParams {
 			public HashMapData get(HashMapData hashmapdata) {
 				LivingBeing lb = hashmapdata.getLivingBeing();
 				if(lb != null&&!lb.equals(person)){
-					if(VConstants.getRandom().nextDouble() > .3){
+					if(VConstants.getRandom().nextDouble() > .8){
 						return null;
 					}
 					String lbType = lb.getPopulation().getS(VConstants.type);
@@ -110,7 +113,9 @@ public class VillageRule extends VParams {
 					}
 					if(SConstants.bandit.equals(lbType)){
 						//do damage to each other
-						PeopleRule.conflictDamage(person, lb, 1.0);
+						if(PeopleRule.isHuman(person)){
+							PeopleRule.conflictDamage(person, lb, 1.0);
+						}
 						
 					}
 				}
@@ -181,7 +186,9 @@ public class VillageRule extends VParams {
 					}
 					
 					//turn into leader
-					if(VConstants.getRandom().nextDouble() < .01){
+					if(VConstants.getRandom().nextDouble() < .3){
+						PBase.increment(person.getPopulation(),VConstants.size,20.0);
+						person.getPopulation().put(SConstants.totalsize,100);
 						doLeader(person);
 					}
 					if(VConstants.getRandom().nextDouble() < .30){
@@ -225,7 +232,6 @@ public class VillageRule extends VParams {
 		person.getParent().getParent().getNearby(home, new GetForNearby<HashMapData>(home.getParent()) {
 			@Override
 			public HashMapData get(HashMapData hashmapdata) {
-				hashmapdata.put(VConstants.owned,person.getName());
 				ownedList.add(hashmapdata);
 				return null;
 			}
@@ -236,6 +242,9 @@ public class VillageRule extends VParams {
 			@Override
 			public Returnable execute(FullMapData fullMapData, LivingBeing person) {
 				HashMapData h=ownedList.get(count);
+				//eventually make more complicated
+				h.put(VConstants.owned,person.getName());
+				
 				count++;
 				if(count >= ownedList.size()){
 					count = 0;
@@ -256,7 +265,8 @@ public class VillageRule extends VParams {
 		if(hmd == null){
 			hmd = mainPerson.getParent();
 		}
-		final HashMapData farm=fmd.getNearby(mainPerson.getParent(), new GetForNearby<HashMapData>(fmd) {
+		Point randomFertileSpot = getRandomFertileSpot(fmd);
+		final HashMapData farm=fmd.getNearby(randomFertileSpot, new GetForNearby<HashMapData>(fmd) {
 			@Override
 			public HashMapData get(HashMapData hashmapdata) {
 				if(hashmapdata.isBlock()) return null;
@@ -265,7 +275,7 @@ public class VillageRule extends VParams {
 					MapData pfarm = hashmapdata.getMapData(VConstants.gate);
 					if(pfarm.getValue().equals(SConstants.farm)){
 						PBase pop = pfarm.getType(VConstants.population);
-						if(pop.getDouble(VConstants.size)< 50){
+						if(pop.getDouble(VConstants.size)< 1){//50
 							return hashmapdata;
 						}
 					}
@@ -313,6 +323,20 @@ public class VillageRule extends VParams {
 		});
 	}
 	
+	static List<Point> fertileSpots;
+	private static Point getRandomFertileSpot(FullMapData fmd) {
+		if(fertileSpots == null){
+			fertileSpots = new ArrayList<Point>();
+			for(HashMapData hmd : fmd){
+				MapData obstacle = hmd.getMapData(VConstants.under);
+				if(obstacle != null&&obstacle.containsKey("fish")){
+					fertileSpots.add(hmd.getPosition());
+				}
+			}
+		}
+		return VConstants.getRandomFromList(fertileSpots);
+	}
+
 	public boolean countLimit(String name,int limit){
 		int count = getInt(name);
 		if(limit < count){
