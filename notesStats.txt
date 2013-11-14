@@ -1,4 +1,39 @@
+1 statistical civ 3
+  a fork the project on bitbucket (move the current code onto github eventually)
+  b strip out all code, try to simplify to 20 classes to start with
+  c duplicate long movement, add short movement, make configurable from describing starting civs
+  d (4 civs to start with, that are isolated (potentially across continents)
+  e they have different traits and abilities that are selectable and then they aquire
+    diseases and technologies over time (once a year has been reached there is a small %
+    chance of them getting it and conflict can also spread technology or diseases)
+  f so to start with you might have a montezuma civ that has a sacrificial trait.  For them
+    that means they dont take slaves, they are compelled to conflict
+      another might have slave taking that would mean that they boost their size through conflict
+      but they get the demographic of % slaves with associated problems and solutions (slave
+      takers have a large chance to gain new technologies, but they can occasionally get the
+      "wrong" types of slavery, if they gain heritage based slavery they have increased internal
+      conflict.  If they have general slavery then their chance of gaining new technologies
+      through time is reduced
+  g a big part of this is the growth and decline of civilizations.  Once a civilization 
+    turns into a farm then that is the central farm that controls an area with a leader
+    it can expand, it can move its base due to events (conflict, climate change), and
+    some techs can spawn new similar bases.
+  h the hunter gathereres just gradually expand everywhere (based on a trait or tech that
+    is optional and have a small range.        
+      
+
+1 demographics
+  a each age with a number is saved, also a % gender
+  b move each number up one age and call a set of random chances for each age
+  c for example 14-40 potentially will create a baby
+  d men age 14-25 will increase agression in purportion to size
+  e combat kills mostly young men and causes special events
+(For demographics create a static object that works on PBases and then put it
+ on the time method, for now just work on creating the demographics and viewing
+ when clicked)
+
 1 time rule
+  a make sure that you can do increments in less than a year
 2 spread rule (disease,technology) 
   a actions initiate spread on action (add spread command)
   
