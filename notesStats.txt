@@ -1,3 +1,37 @@
+1 basic stories complete
+2 disasters and disease
+3 technology progression (where it becomes really interesting)
+
+1 aggressive story, elderly story, fertility story
+2 split story, etc on stories, add additional demographics
+
+
+
+
+
+
+
+1 do 3 points (and the chart has 3 points
+2 age changes the % infant/child/young adult/adult/middle age/elderly
+3 (age has a method that takes a range and then converts to % based on the range and number)
+4 (the chart changes slowly, but for debugging purposes I'll just output a string list)
+5 
+
+
+1 write a few basic stories
+2 run with map to see how it works
+3 expand stories and do a nice demographic window.
+
+
+
+
+
+
+
+
+
+
+
 1 statistical civ 3
   a fork the project on bitbucket (move the current code onto github eventually)
   b strip out all code, try to simplify to 20 classes to start with

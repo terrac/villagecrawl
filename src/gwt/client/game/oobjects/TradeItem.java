@@ -51,7 +51,7 @@ public class TradeItem extends VParams {
 					ClientBuild.list(new UImage(person.getImage()), new UImage(
 							newit.getImage())));
 			displayPopup.displaypopup(hmd.getLivingBeing(), null, 5);
-
+			
 		}
 	}
 

@@ -4,6 +4,7 @@ import gwt.client.EntryPoint;
 import gwt.client.edit.BagMap;
 import gwt.client.game.AttachUtil;
 import gwt.client.game.VisualDamage;
+import gwt.client.game.display.DemographicDisplay;
 import gwt.client.game.display.HMDDisplay;
 import gwt.client.game.display.LogDisplay;
 import gwt.client.game.display.PauseDisplay;
@@ -659,7 +660,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 //		flextable.setWidget(1, 0, canvasPanel);
 //		flextable.getCellFormatter().getElement(1, 0).getStyle().setDisplay(Display.BLOCK);
 		VerticalPanel displayData = new VerticalPanel();
-		HMDDisplay hmdDisplay = new HMDDisplay();
+		HMDDisplay hmdDisplay = new DemographicDisplay();
 		AttachUtil.attach(DISPLAY_MAP_DATA, hmdDisplay, this);
 //		flextable.getElement().getStyle().setTableLayout(TableLayout.FIXED);
 //		flextable.setPixelSize(800, 600);
@@ -693,10 +694,9 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		
 	}
 	public void displayMapData(HashMapData mapData) {
-		if(mapData == null){
-			return;
-		}
-		LivingBeing lb = mapData.getPerson();
+//		if(mapData == null){
+//			LivingBeing lb = mapData.getPerson();
+//		}
 
 		// setCurrentlyFollwedUnset(mapData);
 										//selectedTile

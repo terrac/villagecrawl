@@ -192,6 +192,7 @@ import gwt.client.statisticalciv.UVLabel;
 import gwt.client.statisticalciv.VillageRule;
 import gwt.client.statisticalciv.oobjects.RemovePerson;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
+import gwt.client.statisticalciv.rules.DemographicRule;
 import gwt.shared.buildjson;
 
 import gwt.shared.datamodel.VExecute;
@@ -419,7 +420,7 @@ public class buildgame {
 		addO(new VillageRule());
 		addO(new RemovePerson());
 		addO(new UVLabel());
-		
+		addO(new DemographicRule());
 		JSONObject jo;
 		try {
 			jo = (JSONObject) JSONParser.parseStrict(json);

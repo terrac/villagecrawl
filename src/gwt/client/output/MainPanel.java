@@ -203,6 +203,8 @@ public abstract class MainPanel <Canvas> extends PBase{
 //				}
 //			}
 //			lastMap = currentlyFollowed.getParent().getParent();
+		} else {
+			displayMapData(null);
 		}
 
 		Canvas shell = fmdMap.get(parent);

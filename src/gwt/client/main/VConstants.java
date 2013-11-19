@@ -356,6 +356,8 @@ public class VConstants {
 	public static final String technology = "technology";
 	public static final String enabled = "enabled";
 	public static final String general = "general";
+	public static final String age = "age";
+	public static final String demographics = "demographics";
 	
 	
 	public static String string = "string";

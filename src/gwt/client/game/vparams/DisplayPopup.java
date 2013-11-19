@@ -93,6 +93,27 @@ public class DisplayPopup extends VParams implements Pop{
 		db.show();
 		EntryPoint.game.getRunTurn().add(p,this,turns);
 	}
+	public void displaypopup(PBase pb,Point p,int turns) {
+		
+		HorizontalPanel vp = new HorizontalPanel();
+		for (UIVParams uv : (List<UIVParams>) getList(VConstants.list)) {
+			Widget widgetAndInit = uv.getWidgetAndInit();
+			if(widgetAndInit == null){
+				continue;
+			}
+			vp.add(widgetAndInit);
+			
+		}
+
+		
+		
+		db.setWidget(vp);
+		GCanvas gcanvas=(GCanvas) EntryPoint.game.getHtmlOut().fmdMap.values().toArray()[0];
+		
+		db.setPopupPosition(gcanvas.getAbsoluteLeft()+p.getX()*HtmlOut.imagesize, gcanvas.getAbsoluteTop()+p.getY()*HtmlOut.imagesize);
+		db.show();
+		EntryPoint.game.getRunTurn().add(pb,this,turns);
+	}
 
 	
 

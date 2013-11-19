@@ -16,7 +16,7 @@
    <entry-point class='gwt.client.EntryPoint'/>
     <inherits name='com.allen_sauer.gwt.voices.gwt-voices'/>
        <inherits name="com.google.gwt.json.JSON"/>
-    
+    <inherits name="org.moxieapps.gwt.highcharts.Highcharts"/> 
     
 
  <inherits name='com.googlecode.gchart.GChart'/>

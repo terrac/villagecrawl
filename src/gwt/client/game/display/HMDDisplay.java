@@ -1,9 +1,14 @@
 package gwt.client.game.display;
 
 import gwt.client.game.AttachUtil;
+import gwt.client.main.VConstants;
 import gwt.client.map.HashMapData;
+import gwt.client.map.MapData;
 
 import java.util.Map;
+
+import org.moxieapps.gwt.highcharts.client.Chart;
+import org.moxieapps.gwt.highcharts.client.Series.Type;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
@@ -12,23 +17,20 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class HMDDisplay extends UIVParams {
 	VerticalPanel dhmd;
-
+	HashMapData current;
 	public HMDDisplay() {
 	
 	}
 
 	@Override
 	public void execute(Map<String, Object> map) {
-		HashMapData mapData = (HashMapData) map.get(AttachUtil.OBJECT);
-		if(mapData == null){
+		setup(map);
+		if(current == null){
 			return;
 		}
-
 		HTML ht = (HTML) dhmd.getWidget(0);
 		
-		ht.setHTML(mapData.getPosition()+" <br> "+mapData.toString().replace("\n","<br>"));
-		
-		
+		ht.setHTML(current.getPosition()+" <br> "+current.toString().replace("\n","<br>"));
 		
 
 		// ((Label)).setText(text+mapData.getPosition()
@@ -39,6 +41,14 @@ public class HMDDisplay extends UIVParams {
 //			return;
 //		}
 //		image.setUrl(url);
+	}
+
+	public void setup(Map<String, Object> map) {
+		HashMapData mapData = (HashMapData) map.get(AttachUtil.OBJECT);
+		if(mapData != null){
+			current = mapData;
+		}
+		
 	}
 
 	@Override

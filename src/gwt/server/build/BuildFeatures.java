@@ -18,6 +18,7 @@ import gwt.shared.ClientBuild2;
 import gwt.shared.ClientBuildAvU;
 import gwt.shared.ClientBuildAvZ;
 import gwt.shared.ClientBuildDungeon;
+import gwt.shared.DemographicCiv;
 import gwt.shared.PrefetchImageList;
 import gwt.shared.StatisticalCiv;
 import gwt.shared.datamodel.JsonData;
@@ -85,6 +86,10 @@ public class BuildFeatures extends HttpServlet {
 		//addResources(person);
 		AttachUtil.shouldRun = false;
 
+		Key<ServerGame> dGame = addFeature(person,"Demographic Civ (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions());
+		person.add(dGame);
+
+		
 		Key<ServerGame> firstGame = addFeature(person,"StatcivSmall (try me)",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActions(),StatisticalCiv.doTechnology());
 		person.add(firstGame);
 //		
