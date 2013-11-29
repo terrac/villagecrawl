@@ -104,6 +104,7 @@ public class BuildMap extends VParams {
 		PBase pBase = EntryPoint.game.getPBase(VConstants.stored);
 		if (!(md instanceof String) && md instanceof MapData) {
 			mapdata = (MapData) md;
+			mapdata = mapdata.clone();
 		} else if (md instanceof String) {
 			String name = (String) md;
 			if (pBase != null) {

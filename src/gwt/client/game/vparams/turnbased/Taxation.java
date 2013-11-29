@@ -43,7 +43,7 @@ public class Taxation extends VParams{
 			lb.getItemsCreate().subtractMoneyAndThenItems(10);
 			DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
 					new UImage(lb.getImage()), new UImage("/images/gold.png")));
-			displayPopup.displaypopup(lb, null, 1);
+			displayPopup.displaypopup(lb, 1);
 
 			//display a coin and do a cha chin
 			if(lb.getItems().getTotalValue() < 1){

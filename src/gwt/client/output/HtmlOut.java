@@ -333,7 +333,11 @@ public class HtmlOut extends MainPanel<GCanvas> {
 						imgCache.setCache(x, y, value);
 						continue;
 					}
+					MapData gate = hashMapData.getMapData(VConstants.gate);
+					if(gate != null&&gate.containsKey(VConstants.overlay)){
+						drawOverlay(symbolicShell2, y, x, gate.getS(VConstants.overlay));
 
+					}
 					LivingBeing lb = hashMapData.getLivingBeing();
 
 					if (lb == null){
@@ -421,11 +425,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 										VConstants.overlay);
 							}
 							
-							if (overlayname != null) {
-								drawImage(symbolicShell2, y, x,
-										"/images/overlay/" + overlayname
-												+ ".png");
-							}
+							drawOverlay(symbolicShell2, y, x, overlayname);
 
 						}
 						drawPerson(symbolicShell2, y, x, lb);
@@ -460,6 +460,15 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		}
 		//showArrows(parent, symbolicShell2, xs, ys, xe, ye);
 
+	}
+
+	public void drawOverlay(final GCanvas symbolicShell2, int y, int x,
+			String overlayname) {
+		if (overlayname != null) {
+			drawImage(symbolicShell2, y, x,
+					"/images/overlay/" + overlayname
+							+ ".png");
+		}
 	}
 
 	public void loadMissing(UIVParams uiv) {

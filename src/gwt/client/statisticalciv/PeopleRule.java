@@ -257,12 +257,12 @@ public class PeopleRule extends VParams {
 		{
 			DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
 					 new UImage("/images/"+VConstants.damage+"sword.png")));
-			displayPopup.displaypopup(lbAttacker, null, 1);							
+			displayPopup.displaypopup(lbAttacker, 1);							
 		}
 		{
 			DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
 					 new UImage("/images/"+VConstants.damage+"sword.png")));
-			displayPopup.displaypopup(lbAttacked, null, 1);							
+			displayPopup.displaypopup(lbAttacked,  1);							
 		}
 
 		PBase popAttacked=lbAttacked.getType(VConstants.population);

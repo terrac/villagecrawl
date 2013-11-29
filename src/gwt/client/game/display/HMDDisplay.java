@@ -66,7 +66,7 @@ public class HMDDisplay extends UIVParams {
 		
 		dhmd.add(w);
 
-		w.setSize("20em", "35em");
+		w.setSize("20em", "21em");
 		dhmd.setSize("20em", "20em");
 
 	}

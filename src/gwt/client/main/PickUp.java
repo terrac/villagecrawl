@@ -38,7 +38,7 @@ public class PickUp extends OObject {
 			
 			Entry<String,Item> item=(Entry<String,Item>) person.getParent().getItems().getObjMap().entrySet().toArray()[0];
 			DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(new UImage(item.getValue().getImage())));
-			displayPopup.displaypopup(person, null,5);
+			displayPopup.displaypopup(person, 5);
 			
 			person.getItemsCreate().add(person.getParent().getItems());
 			if(person.getParent() != null&&person.getParent().getItems() != null){

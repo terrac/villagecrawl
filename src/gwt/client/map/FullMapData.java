@@ -237,11 +237,11 @@ public class FullMapData extends AreaMap<HashMapData, SymbolicMap> implements
 			HashMapData hmd = null;
 
 			HashMapData chmd = getData(x1, y1);
-			if (chmd.containsKey(VConstants.livingbeing)) {
+			if (chmd == null||chmd.containsKey(VConstants.livingbeing)) {
 				return null;
 			}
 			MapData md = chmd.getMapData(key);
-			if (md == null) {
+			if (md == null&&chmd.getItems() != null) {
 				md = chmd.getItems().getItem(key);
 			}
 			// if we only want the key checked

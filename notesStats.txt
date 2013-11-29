@@ -1,5 +1,149 @@
+1 trade story (A moves to b and spreads culture)
+ a each leader starts at 100% culture
+ b each spread spreads 5%
+ c each new village starts at 50%
+2 overlay display culture (pick 3 colors and use them as images (it changes on 51%, and can change later)
+3 change fighting chances to go through a central function and to use culture (100% and 100% would mean a 2% chance of fighting)
+  a if a fight successfully goes through then the person who has less culture gets that culture completely wiped out
+  
+4 techs that happen over time and alter behavior
+5 disasters
+6 disease (ideally a lot like techs)
+
+#1 take destruct village logic and make sure it checks for village
+
+1 put down 3 villages
+  a just 
+2 have 3 preselected cultures be set for them on start
+3 one has +10 to conflict, another has -10 to conflict, and another has normal conflict
+ (montezuma, ghandi, washington)
+4 add a trade tech, a person is sent back and forth to villages within a certain radius
+5 trade adds a cultural influence, whoever has 51% is in control of the village
+  (warriors of seame culture, and villages have a vastly reduced chance of fighting
+6 do fundamentalism  vs liberalism and the incremental techs
+7 test until you can clearly watch cultures fight and gain advantage.
+8 more maps
+9 disease, disasterY   
+
+
+1 initial tech adds agriculture 100% to all villages
+
+
+1 techs
+  agriculture (incremental)
+  d pottery
+  e shepherd
+  a copper
+  b tin
+  c bronze (writing, sword, chariot)
+  iron
+  (comparison table for techs http://en.wikipedia.org/wiki/Ancient_history)
+  urban/rural
+  
+
+1 fundamentalism vs liberalism (fundamenatlism is disease resistance and population boom, liberalism is incremental tech increases)
+2 have some long term techs that are incremental and boost with liberalism
+
+1 fun comes after additional cultural technologies
+  a it is more about crafting your cultures, setting them against each other
+    and then seeing the result
+  b it has historical elements, but is not historical
+  i
+1 fun, play historical scenarios by choosing your technologies
+  a for example play the jomons, being invaded by the chinese
+  b or roman culture (with a tech that enforces culture and takes taxes)
+  c or the adoption of copper and long tail civilizations
+  d pick some random civ and do a scenario with slavery
+  e the scenario ends and you get a score
+  f also the tribal jewish culture (in various stories)
+  
+
+1 put tech on time with appropriate time amount
+2 when time executes then 
+  add larger forces tech to a single village, whenever a person loses
+  in combat then it has a chance of adding on that tech (but not if it is an 
+  optional tech and they have a different option, smaller forces might be a tech too)
+  Attack weak points will do more overall damage, but less damage to young men this will
+  boost the retalitory aspect by increasing conflict in the damaged tribe (by having a higher young men %
+  the hatred should attack based on conflict % and conflict % should be based on young men in
+  age 
+1 maybe larger forces, or have attackers be more generally damaging (or have those as techs)
+(larger forces, attack weak points as first two technologies)
+put the list of techs in the display list (villages stay relatively similar, most different ones
+stay on top)
+
+2 random disasters and diseases
+
+3 put an age on villages and maybe have some color to show that
+
+1 
+1st, damage and village dissolution
+
+1 conflict stat,fertility stat, disease resistance stat
+  basically the current random values are influenced by these stats.  These stats
+  are influenced by the current population as well
+  so high amount of young men boosts the conflict stat above the base conflict stat
+  (which means killing/dying needs to alter the gender demographics) 
+  high amount of young women boosts fertility stat, old people reduce both stats
+  then techs are introduced that would subtly alter behavior, and conflict is changed to
+  win or lose based on these stats (also a village might simply disband if it gets too small)
+  what all that means is that you could introduce a technology and it could alter the balance of power
+  so a specific village gets a stone tool or a religious practice and it uses that to dominate in conflicts
+  through superior numbers or fighting ability
+  the cities then display their logs and their tech lists (as a pop up)
+  the tech lists will alter the clothing to make things more interesting.
+  so for example a religious practice of food for the dead would protect against disaster (basically
+  when disaster is implemented it would reduce the food supply which would increase conflict and cause lots of issues
+  then the religious tech "food for the dead" gets added to one tribe and that tribe has a slight decrease to fertility,
+  but when a disaster hits it doesn't suffer nearly as much internal conflict due to the traditionally wasted food
+
+1 on demographic have a list of diseases, include current pop resistance in stats
+2 run through disease and have it cause demographic changes based on properties
+3 current pop resistance does not copy over on cloning
+
+1 have a list of technologies and maybe a % adoption
+  a
+  
+1 stories and responses
+  (keep a log of each village, tell complicated stories in the different
+   random chances that can happen  
+#1 interplay between cities set of stories
+#  a do fighting, make the young men on mystical quests have a chance to fight if they are on an existing village
+#  b that village could be destroyed or taken over
+#  c alternatively if it wins then the young men are destroyed (or potentially just driven out)
+#  d create hatreds and wars that come out of this fighting
+  
+2 Add onto the quest an ability to spread disease (diseases are added like technologies, and spread like technologies
+  a diseases will have an infectiousness, and a death rate or side effects
+  b diseases with high infectiousness will burn themselves out due to resistance (infection breeds resistance, at 100% infection becomes impossible
+    so if there is a 40% infection rate then within 3 years the village will be 100% resistant and stop the disease, but every death reduces 
+    resistance rate.  A high death rate has its own affects
+3 Technology
+  a technologies are added at a certain time to a random village
+  b when a person meets a village without the tech it can potentially spread it
+  c lots of techs, and techs      
+
+1 do mystical ending that ends in successfull village (restricting saying no village can be within 2 of another)
+2 boost stories to make that overtake the area
+
+
+1 change notifications to log (log identifies the town)
+2 the mystical quest log starts with 3 endings, complete death, potential death and failure or success
+  success is defined by a random amount that says "a village was founded
+3 migratory patterns on villages and surrounding areas
+  a villages have age, but also migration which naturally puts some population in the surrounding area
+  b it puts more  
+
+1 drastically reduce chance of story being hit
+2 work through the scenarios in mystical quest (have direct colonization and then women migrating over
+
+
 1 basic stories complete
-2 disasters and disease
+  a make it so that the world is populated (though some will be hermit pops, others will be farms)
+  b create stories about the interplay between cities (conflict)
+  c then move on and see
+
+2 disasters and disease (for example you might want to have a zombie outbreak disease
 3 technology progression (where it becomes really interesting)
 
 1 aggressive story, elderly story, fertility story

@@ -73,9 +73,10 @@ public class Move extends OObject implements WhatSound{
 		
 		setTo(to);
 		setDescr(description);
-	
-		
-		
+	}
+	public Move(HashMapData to,String description,OCommand oc) {
+		this(to,description);
+		command = oc;
 	}
 	public Move(HashMapData to,String description,String overlay) {
 		this(to,description);
@@ -170,7 +171,7 @@ public class Move extends OObject implements WhatSound{
 			return null;
 		}
 		if(command != null){
-			if(!command.execute(this)){
+			if(!command.execute(this,person)){
 				return new Returnable(false,1);
 			}
 		}

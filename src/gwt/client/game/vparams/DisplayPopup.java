@@ -66,11 +66,11 @@ public class DisplayPopup extends VParams implements Pop{
 		
 		//HashMapData hmd = (HashMapData) map.get(AttachUtil.OBJECT);
 		Point p;
-		displaypopup(null, map,5);
+		displaypopup(null, null,5);
 
 	}
 	PopupPanel db = new PopupPanel();
-	public void displaypopup(LivingBeing p, final Map<String, Object> map,int turns) {
+	public void displaypopup(LivingBeing p, int turns) {
 		if(!EntryPoint.game.getHtmlOut().currentFMD.equals( p.getParent().getParent())){
 			return;
 		}
@@ -81,7 +81,7 @@ public class DisplayPopup extends VParams implements Pop{
 				continue;
 			}
 			vp.add(widgetAndInit);
-			uv.execute(map);
+			uv.execute(null);
 		}
 
 		

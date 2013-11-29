@@ -71,7 +71,7 @@ public class Attack extends OObject  {
 			move.command = new OCommand() {
 				
 				@Override
-				public boolean execute(OObject oo) {
+				public boolean execute(OObject oo,LivingBeing person) {
 					Move move = (Move) oo;
 					LivingBeing livingBeing = (LivingBeing) Attack.this.get(VConstants.livingbeing);
 					if(livingBeing == null||livingBeing.getParent() == null ){

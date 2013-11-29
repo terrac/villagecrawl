@@ -14,6 +14,7 @@ import gwt.client.game.GameUtil;
 import gwt.client.item.Item;
 import gwt.client.main.Game;
 import gwt.client.main.PTemplate;
+import gwt.client.main.Person;
 import gwt.client.main.Point;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.LivingBeing;
@@ -120,39 +121,46 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 				.getPBase(VConstants.templatemap);
 
 		LivingBeing lb = (LivingBeing) person.get(VConstants.livingbeing);
-
+		if(lb == null){
+			lb = new Person();
+			lb.put(VConstants.humanoid, true);
+		}
 		lb = lb.clone();
 		lb.getAlterHolder();
-		for (String key : tarr) {
-
-			for (Entry<String, Object> eo : templateMap.getObjMap().entrySet()) {
-				if (eo.getValue() instanceof PBase) {
-					PBase pb = (PBase) ((PBase) eo.getValue()).get(key);
-					if (pb != null) {
-						String key2 = eo.getKey();
-						transfer(lb, key2, pb);
-
-						break;
+		
+		if(templateMap != null){
+			for (String key : tarr) {
+	
+				for (Entry<String, Object> eo : templateMap.getObjMap().entrySet()) {
+					if (eo.getValue() instanceof PBase) {
+						PBase pb = (PBase) ((PBase) eo.getValue()).get(key);
+						if (pb != null) {
+							String key2 = eo.getKey();
+							transfer(lb, key2, pb);
+	
+							break;
+						}
 					}
 				}
+	
 			}
-
-		}
-
-		// the canonical living being
+		}		// the canonical living being
 
 		lb.getType(VConstants.attributes).put(
 				VConstants.personality,
 				VConstants.getRandomFromList(person
-						.getList(VConstants.personality)));
+						.getListCreate(VConstants.personality)));
 		lb.getType(VConstants.attributes).put(
 				VConstants.intelligence,
 				VConstants.getRandomFromList(person
-						.getList(VConstants.intelligence)));
+						.getListCreate(VConstants.intelligence)));
 
+
+		if(templateMap != null){
 		transfer(lb, VConstants.traits,
 				(PBase) VConstants.getRandomFromPBase(templateMap
 						.getPBase(VConstants.traits)));
+		}
 		setTemplateBasedOnMap(lb);
 
 		if (tarr.length > 1) {
@@ -165,7 +173,7 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 		// generateRandomItems(lb);
 		doHair(lb);
 		
-		if(tarr.length > 1){
+		if(tarr.length > 1&& person.containsKey(VConstants.name)){
 			lb.put(VConstants.name,
 					VConstants.getRandomFromList(person.getPBase(VConstants.name).getList(tarr[1])));
 				
@@ -402,6 +410,9 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 	}
 
 	public static void addToMap(HashMapData hmd, LivingBeing lb) {
+		if(hmd ==null){
+			return;
+		}
 		HashMapData nearestEmpty = hmd.getParent().getNearestEmpty(hmd);
 		if (nearestEmpty != null) {
 

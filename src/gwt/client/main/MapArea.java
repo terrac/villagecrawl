@@ -386,7 +386,7 @@ public class MapArea extends MapData {
 		AttachUtil.run(AttachUtil.runpersonbefore, person, person);
 		EntryPoint.game.getRunTurn()
 				.execute(AttachUtil.createMap(person, null));
-		if (!EntryPoint.game.getPBase(VConstants.templatemap).getB(
+		if (!EntryPoint.game.getType(VConstants.templatemap).getB(
 				VConstants.disabled)) {
 			personality.runAI(person, game.getOOMap(), game);
 		}
