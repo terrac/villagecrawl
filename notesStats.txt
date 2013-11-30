@@ -1,8 +1,51 @@
+  f fundamentalism/liberalism
+    a fundamentalism boosts war/population/disease resistance/etc, but without a hated enemy
+      it causes massive internal conflicts (mystical quest is an elderly counter to that)
+    b liberalism reduces internal conflicts    
+
+
+1 basically you have a large list of leaders with associated stats that make them
+  approach the world in different ways
+  a some differ on conflict
+  b some have unique cultural attributes
+  c some have unique conflict techs 
+  d the basic goal is to build out the pieces so that I can pull the rest along
+  
+1 incremental tech
+  a gets placed onto an incremental tech list and that increments all the villages techs
+  b 
+
+1 for the combat stuff just have the 10% difference be evident in the combat check
+
+#1 move leaders to a central area to pull from so that they can spread to new villages
+2 disasters
+  #a add a disaster story that occasionally strikes, it just kills people and says a flood occurred
+  #b make it control its own popping up and be relatively rare
+  c make sure that it combined with fighting can destroy villages
+
+1 techs
+  agriculture (incremental)
+  d pottery
+    plus to total pop
+  e shepherd
+    plus to total pop, disease
+  a copper
+    plus to combat/pop, needs mining for later increments
+  b tin
+    plus to combat/pop, needs mining for later increments
+  c bronze (writing, sword, chariot)
+    plus to combat/pop, needs both tin and bronze, has attributes to form
+    a long mining chain to gather
+  (all sorts of items eventually, have popup for button after clicking on)
+  iron
+  (comparison table for techs http://en.wikipedia.org/wiki/Ancient_history)
+  urban/rural
+
 1 trade story (A moves to b and spreads culture)
- a each leader starts at 100% culture
- b each spread spreads 5%
- c each new village starts at 50%
-2 overlay display culture (pick 3 colors and use them as images (it changes on 51%, and can change later)
+ #a each leader starts at 100% culture
+ #b each spread spreads 5%
+ #c each new village starts at 50%
+#2 overlay display culture (pick 3 colors and use them as images (it changes on 51%, and can change later)
 3 change fighting chances to go through a central function and to use culture (100% and 100% would mean a 2% chance of fighting)
   a if a fight successfully goes through then the person who has less culture gets that culture completely wiped out
   
@@ -29,16 +72,6 @@
 1 initial tech adds agriculture 100% to all villages
 
 
-1 techs
-  agriculture (incremental)
-  d pottery
-  e shepherd
-  a copper
-  b tin
-  c bronze (writing, sword, chariot)
-  iron
-  (comparison table for techs http://en.wikipedia.org/wiki/Ancient_history)
-  urban/rural
   
 
 1 fundamentalism vs liberalism (fundamenatlism is disease resistance and population boom, liberalism is incremental tech increases)
