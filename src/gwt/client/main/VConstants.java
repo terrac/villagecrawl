@@ -359,6 +359,7 @@ public class VConstants {
 	public static final String age = "age";
 	public static final String demographics = "demographics";
 	public static final String hatred = "hatred";
+	public static final String computed = "computed";
 	
 	
 	public static String string = "string";

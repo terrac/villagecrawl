@@ -1,8 +1,33 @@
-  f fundamentalism/liberalism
-    a fundamentalism boosts war/population/disease resistance/etc, but without a hated enemy
-      it causes massive internal conflicts (mystical quest is an elderly counter to that)
-    b liberalism reduces internal conflicts    
+1 game aspect
+  a a series of 100 little decisions that alter the gameplay in minor ways individually, but add up 
 
+1 rule of law
+  a is needed for the usage of higher level technologies
+  b lowers when losing/gains when winning
+  c so a big empire will maintain only so long as it is percieved to be winning
+    as soon as it starts losing it will start to fall apart
+  d losing would be, losing a village or a war  
+
+1 take the mappings in age and make them work
+  a make it run through the list and clear all computed with the method
+  b make it run through the computations and create them
+  c make the computations be added to calculations through specific demographic rule
+    methods for getting those things
+    
+2 think about each leader in Civ 5 and try to set their stats to tell a story    
+  a introduce divisions and new leaders are created when divisions occur
+3 create a technology line called slavery
+  c slaughter (destroy opposing villages)
+  a slavery (opposing villages have a chance of not being destroyed, they just have a culture reduction
+  b colony (very high chance of not being destroyed, small culture reduction, trade links)
+  d multiculturalism (free trade)
+  f fundamentalism/liberalism
+    #a fundamentalism boosts war/population/disease resistance/etc, but without a hated enemy
+      it causes massive internal conflicts (mystical quest is an elderly counter to that)
+    #b liberalism reduces internal conflicts    
+   # c create a mapping which basically just takes a number, takes the map to, the map from and then applies a forumla to it
+      age then just runs a set of these mappings to arrive at the final numbers
+	#d fundamentalism is a fixed constant based on leader	
 
 1 basically you have a large list of leaders with associated stats that make them
   approach the world in different ways
