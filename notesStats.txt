@@ -1,6 +1,40 @@
+#1 tie the beginning stories to chances
+  a tie killing young to a +.2 increase in average age,  
+2 make increased conflict increase chance of internal fighting and expansion massively (just put a really high number)
+3 
+
+1 run and see what happens
+  a plot out some story lines and basically force them to happen as test cases
+  b implement the gaming aspect so that by default you have 9 seconds to choose
+    an option presented to you (and it pauses while presenting that option)
+    an option will come every 20 seconds
+1st story
+  a montezuma has increased conflict, he fights the other two and occasionally wins or loses
+    he suffers a lot of internal conflict, but picks religious traits that make war profitable 
+  b ghandi has less conflict.  His religous traits allow for strong villages, and he does not
+    benefit from war
+  c washington is a mix.  He occasionally wars and his villages occasionally avoid internal
+    conflict    
+2nd stories
+  a a disaster early on sets montezuma back, he then tries to fight the other villages and is
+    ineffective, washington has a moderate chance of destrying him, ghandi a small chance
+  b a disaster hits ghandi, his villages are destroyed by montezuma
+  c same with washington
+3rd
+  a contagious disease hits ghandi, he suffers, but montezuma attacks and then suffers too
+    both of them build resistance to disease, eventually montezuma attacks washington
+    and washington succombs to a combination of disease and fighting (mostly disease)
+4th montezuma builds an empire with a strong rule of law, but he loses a battle
+    his generals then turn on him and his villages start fighting each other
+5th add a "wealth statistic", it does mappings and so on      
+
 1 game aspect
   a a series of 100 little decisions that alter the gameplay in minor ways individually, but add up 
-
+     1 "food for the dead", reduce fertility, increase robustness
+     2 "xenophobia"++ (a couple of different options)
+     3 "fundamentalism"++ (
+     4 pick traditional religions, put in a big list, have influence conflict, etc
+  
 1 rule of law
   a is needed for the usage of higher level technologies
   b lowers when losing/gains when winning
