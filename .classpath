@@ -8,6 +8,7 @@
 	<classpathentry kind="lib" path="gwt-voices-2.1.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gchart.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet-deps.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/org.moxieapps.gwt.highcharts-1.5.0.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Google/appengine-java-sdk-1.7.7.1/lib/shared/appengine-local-runtime-shared.jar">
 		<attributes>
