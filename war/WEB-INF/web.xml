@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<web-app>
+
+
+<servlet-mapping>
+    <servlet-name>getobjectServlet</servlet-name>
+    <url-pattern>/villagedc/getobject</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>getobjectServlet</servlet-name>
+    <servlet-class>gwt.server.rpc.GetObjectImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>sendobjectServlet</servlet-name>
+    <url-pattern>/villagedc/sendobject</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>sendobjectServlet</servlet-name>
+    <servlet-class>gwt.server.rpc.SendObjectImpl</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>buildfeaturesServlet</servlet-name>
+    <url-pattern>/buildfeatures</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>buildfeaturesServlet</servlet-name>
+    <servlet-class>gwt.server.build.BuildFeatures</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>displaypersongameServlet</servlet-name>
+    <servlet-class>gwt.server.DisplayPersonGames</servlet-class>
+  </servlet>
+  
+  
+  
+  <servlet-mapping>
+    <servlet-name>displaypersongameServlet</servlet-name>
+    <url-pattern>/displaypersongames</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>displayJsonGameservlet</servlet-name>
+    <servlet-class>gwt.server.DisplayJsonGame</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>displayJsonGameservlet</servlet-name>
+    <url-pattern>/displayjsongame</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet-mapping>
+    <servlet-name>editJsonervlet</servlet-name>
+    <url-pattern>/editjson</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>editJsonervlet</servlet-name>
+    <servlet-class>gwt.server.EditJson</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>editDisplayPerson</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>editDisplayPerson</servlet-name>
+    <servlet-class>gwt.server.DisplayProfile</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>paid</servlet-name>
+    <url-pattern>/paid</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>paid</servlet-name>
+    <servlet-class>gwt.server.Paid</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>res</servlet-name>
+    <url-pattern>/resource/*</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>res</servlet-name>
+    <servlet-class>gwt.server.ServeResource</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>rm</servlet-name>
+    <url-pattern>/resourcemanager</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>rm</servlet-name>
+    <servlet-class>gwt.server.DisplayResourceManager</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>cr</servlet-name>
+    <url-pattern>/createresource</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>cr</servlet-name>
+    <servlet-class>gwt.server.CreateResource</servlet-class>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>lb</servlet-name>
+    <url-pattern>/leaderboard</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>lb</servlet-name>
+    <servlet-class>gwt.server.LeaderBoard</servlet-class>
+  </servlet>
+  
+  
+  
+  
+    
+
+  <servlet>
+  <servlet-name>remoteLoggingServiceImpl</servlet-name>
+  <servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>remoteLoggingServiceImpl</servlet-name>
+  <url-pattern>/villagedc/logging</url-pattern>
+</servlet-mapping>  
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Villagedc.html</welcome-file>
+  </welcome-file-list>
+
+  
+  
+</web-app>
