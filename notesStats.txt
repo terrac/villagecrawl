@@ -1,5 +1,29 @@
+1 violence promotes culture changes (high conflict just tries to destroy villages, low conflict takes over villages with culture)
+2 once a society suffers a rule of law failure it splits in two not necessarily equal parts
+   (basically for every village a leader has there is a chance that half of them will
+    split off and pull from the leader pile (the leader pile has generic leaders and has a secondary
+    pile that gets removed from to get leaders so that you don't get overlapping)
+3 a rule of law failure would be disaster, disease, loss in war, or a failure of new technology 
+
+1 disease
+  a contact spreads disease
+  b define a few things at contact and call a method that promotes that
+  c add a disease section to demographics, expand demographic window
+  d add smallpox, put a health bar on the villages
+2 disaster  
+   a  make it so that disaster can dissolve villages (think crop failure)
+   b add a "tribal outsiders" disaster that destroys the village through barbarians attacking
+
+3 tech   
+
+
+1 conflict is tied to certain stories (think about how to implement such that it can dominate
+  and the others can still affect, maybe just remove the others if you want that
+  a formula that creates a chance based on either how close stat matches 
+    or on how much the stat is greater than
+
 #1 tie the beginning stories to chances
-  a tie killing young to a +.2 increase in average age,  
+  #a tie killing young to a +.2 increase in average age,  
 2 make increased conflict increase chance of internal fighting and expansion massively (just put a really high number)
 3 
 

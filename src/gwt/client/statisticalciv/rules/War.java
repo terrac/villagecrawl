@@ -64,6 +64,8 @@ public class War implements PBaseRule {
 					LivingBeing person) {
 				HashMapData home = MysticalQuest.getHome(person);
 				OobList oobList = new OobList(new Move(fullMapData.getData(location), "raid",MysticalQuest.moveCombat));
+				put(VConstants.overlay, CultureTrade.getOverlay(home));
+				
 				addToList(person, oobList);
 				oobList.addNextAction(new MysticalQuest.FightVillage());
 

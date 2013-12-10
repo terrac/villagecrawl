@@ -69,7 +69,7 @@ public class DemographicRule extends VParams {
 	public void init(FullMapData fmd) {
 		singleton = this;
 
-		beginningStories.add(new BasicStory("Young men are excessively fighting",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.3,VConstants.chance,.4),new CauseDeaths(.1)));
+		beginningStories.add(new BasicStory("Young men are excessively fighting",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.3,VConstants.chance,.4,VConstants.conflict,.5),new CauseDeaths(.1)));
 		beginningStories.add(new BasicStory("Young women are very fertile",new PBase(Demographics.female,.4,Age.YOUNG_ADULT,.4,VConstants.chance,.4),new Birth(.1)));
 		beginningStories.add(new BasicStory("The elders send some young men on a mystical quest",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.7,VConstants.chance,.4),new MysticalQuest()));
 		beginningStories.add(new BasicStory("Trade occurs",.2,new CultureTrade()));
