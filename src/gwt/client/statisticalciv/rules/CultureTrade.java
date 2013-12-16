@@ -103,10 +103,7 @@ public class CultureTrade implements PBaseRule {
 					put(VConstants.overlay, CultureTrade.getOverlay(hmd));
 					addToList(person, oobList);
 					
-					String cultureName = Demographics
-							.getHighestCultureName(home);
-					Demographics demo = DemographicRule.getDemo(hmd);
-					Demographics.addCulture(demo, cultureName, .05);
+					spreadCulture(home, hmd);
 //					if(Demographics.getCulture(demo).getDouble(cultureName) > .5){
 //						demo.put(VConstants.leader, DemographicRule.getDemo(home).get(VConstants.leader));
 //					}
@@ -118,5 +115,13 @@ public class CultureTrade implements PBaseRule {
 			}
 		});
 
+	}
+
+	public static void spreadCulture(HashMapData home, HashMapData hmd) {
+		String cultureName = Demographics
+				.getHighestCultureName(home);
+		Demographics demo = DemographicRule.getDemo(hmd);
+		Demographics.addCulture(demo, cultureName, .05+1/(1+demo.getConflict(home))*10);
+		//
 	}
 }

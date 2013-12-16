@@ -16,7 +16,7 @@ public class CauseDeaths implements PBaseRule{
 	@Override
 	public boolean run(PBase p, HashMapData hmd, FullMapData fmd) {
 		Age.kill(p, Age.YOUNG_ADULT, amt *p.getDouble(VConstants.size));
-
+		RuleOfLaw.checkFailure(hmd);
 		return true;
 	}
 }

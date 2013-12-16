@@ -333,11 +333,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 						imgCache.setCache(x, y, value);
 						continue;
 					}
-					MapData gate = hashMapData.getMapData(VConstants.gate);
-					if(gate != null&&gate.containsKey(VConstants.overlay)){
-						drawOverlay(symbolicShell2, y, x, gate.getS(VConstants.overlay));
 
-					}
 					LivingBeing lb = hashMapData.getLivingBeing();
 
 					if (lb == null){
@@ -345,9 +341,14 @@ public class HtmlOut extends MainPanel<GCanvas> {
 						if(drawImage(symbolicShell2, y, x, value, imagesize)) {
 							imgCache.setCache(x, y, value);
 						}
-					
+						MapData gate = hashMapData.getMapData(VConstants.gate);
+						if(gate != null&&gate.containsKey(VConstants.overlay)){
+							drawOverlay(symbolicShell2, y, x, gate.getS(VConstants.overlay));
+							imgCache.addCache(x, y, gate.getS(VConstants.overlay));
+						}
 					}
 
+					
 					if (lb != null) {
 						imgCache.setCache(x, y, lb.getId());
 
@@ -437,6 +438,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 					if (drawImage(symbolicShell2, y, x, value, imagesize)) {
 						imgCache.setCache(x, y, value);
 					}
+					
 
 				}
 

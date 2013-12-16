@@ -1,9 +1,70 @@
-1 violence promotes culture changes (high conflict just tries to destroy villages, low conflict takes over villages with culture)
+#1 make the max start out at 1
+#2 make a disaster always cause a rule of law failure if above max
+#3 add additional leaders (they are basically just names for now, maybe give some random stats)
+5 work on initial techs that shape the villages
+  a slavery (cultures with tech take over villages, cultures without destroy villages, though slavery cultures can still destroy villages)
+  b prostitution (cultures with tech have a high chance to convert outsiders, but not enemies, based on conflict, conflict is a double)
+  c early disease (cultures with tech spread the tech, the tech damages based on liberalism, but burns itself out)
+  d domestication (precursor to disease, gives population boost)
+  e archery (extra damage, population boost)
+  f copper (extra damage, population boost)
+  g tin (population boost if tin is nearby)
+  h bronze (requires copper, tin, needs tin nearby, damage, pop boost)
+  i long distance trade (can procure long distance resources, but potentially fragile)
+  j religious story techs increase max size, but slavery then reduces that
+  k tolerance (requires slavery, revolts cause damage instead of destroying rule of law)
+  (add a few techs that do different clothing and weapons)  
+4 start picking technologies that will increase the max
+
+
+1 100 story-techs
+  a story about a man who rose from the dead after 3 days (slight max to population health, slight boost to average age)
+    after hearing this story people were more likely to go extra lengths to check for life 
+    before burying people.  Occasionally a few more would be saved, additionally it teaches
+    more humility in medicine
+  b hippocratic oath- (+ to pop health + to average age) The earliest healthcare was completely 
+    random.  In the purest scientific method people tried everything and then checked if they 
+    became better.  Unfortunately they weren't so great at double blind studies so they tended
+    to see more positive results than were strictly warranted.  The hippocratic oath taught them
+    to not trust medical knowledge that harmed patients.
+  c hammurabi
+  d flood myth
+  e african myths
+  f other myths
+  g superstitious dieties
+  h monotheism
+  i stonehenge - Keeping proper track of time was essential to predicting
+   the weather which was essential to growing crops. *pop boost)
+  j godking - (precursor is leader, reduced conflict with enemies)
+    There is a natural human instinct to hype individuals to godlike
+    porportions.  If your leader is a god then your enemies should
+    fear warring with you (comes quicker with high fundamentalism
+    which is essentially just the desire to take things to an extreme)
+    (note it should go leader, great spiritual leader, partially god,
+     godking).  On this tech there is an additional story which is
+     basically (leader or whatever title) is abusing his people. 
+      
+2 intrapersonal conflict
+  a leaders analyze the situation and can make decisions based on the lay of the land.
+  b they can call for increased aggression against a specific target based on cultural differences,
+    greed, or revenge
+  c to start with there should be dozens of leaders and splitting because of low tech for large 
+   societies but there should be cultural influence (ie techs).  Then over time leaders should
+   go on campaigns where they become larger, but eventually lose on a rule of law failure
+     
+3 change the time scale (have a number of years and then a % for the year  
+
+#1 violence promotes culture changes (high conflict just tries to destroy villages, low conflict takes over villages with culture)
 2 once a society suffers a rule of law failure it splits in two not necessarily equal parts
    (basically for every village a leader has there is a chance that half of them will
     split off and pull from the leader pile (the leader pile has generic leaders and has a secondary
     pile that gets removed from to get leaders so that you don't get overlapping)
+  a put rule of law failure on leader when a village is attacked and below a certain max size.
+  b if a rule of law failure occurs and a random chance gets hit then go through the villages and
+  randomly assign half of them to a new leader.  If the current leader city amount is less
+  than x then it wont split (number can be increased through techs)
 3 a rule of law failure would be disaster, disease, loss in war, or a failure of new technology 
+
 
 1 disease
   a contact spreads disease
@@ -14,8 +75,8 @@
    a  make it so that disaster can dissolve villages (think crop failure)
    b add a "tribal outsiders" disaster that destroys the village through barbarians attacking
 
-3 tech   
-
+3 tech (combined with disease and time)   
+  a, culture promotion ties with spreading 100 stories
 
 1 conflict is tied to certain stories (think about how to implement such that it can dominate
   and the others can still affect, maybe just remove the others if you want that

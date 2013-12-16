@@ -40,13 +40,15 @@ public class MysticalQuest implements PBaseRule{
 			if(difference < .5){
 				return null;
 			}
+			CultureTrade.spreadCulture(getHome(person), person.getParent());
 			Age.kill(demo, Age.YOUNG_ADULT, person.getPopulation().getDouble(VConstants.size)*2);
+			RuleOfLaw.checkFailure(person.getParent());
 			if(demo.getDouble(VConstants.size) < 20){
 				DemographicRule.removeVillage(person.getParent());
 				{
 					DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
 							 new UImage("/images/"+VConstants.damage+"fireball.png")));
-					displayPopup.displaypopup(person,  1);							
+					displayPopup.displaypopup(person,  3);							
 				}
 			} else {
 				HashMapData nearestFarm;

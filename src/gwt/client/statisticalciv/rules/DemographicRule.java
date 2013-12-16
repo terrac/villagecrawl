@@ -28,6 +28,7 @@ import gwt.client.statisticalciv.FoodRule;
 import gwt.client.statisticalciv.SConstants;
 import gwt.client.statisticalciv.TechnologyRule;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
+import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 import gwt.shared.ClientBuild;
 import gwt.shared.StatisticalCiv;
 import gwt.shared.datamodel.VParams;
@@ -65,6 +66,7 @@ public class DemographicRule extends VParams {
 	List<PBaseRule> hatredStories = new ArrayList<PBaseRule>();
 	
 	private List<PBase> leadersList = new ArrayList();
+	private List<PBase> tLeadersList = new ArrayList();
 	
 	public void init(FullMapData fmd) {
 		singleton = this;
@@ -78,6 +80,14 @@ public class DemographicRule extends VParams {
 		leadersList.add(new PBase(VConstants.name,"Montezuma",VConstants.overlay,"attack",VConstants.conflict,.1));
 		leadersList.add(new PBase(VConstants.name,"Ghandi",VConstants.overlay,"heart",VConstants.conflict,-.1));
 		leadersList.add(new PBase(VConstants.name,"Washington",VConstants.overlay,"food"));
+		leadersList.add(new PBase(VConstants.name,"a",VConstants.overlay,"axe"));
+		leadersList.add(new PBase(VConstants.name,"b",VConstants.overlay,"build"));
+		leadersList.add(new PBase(VConstants.name,"c",VConstants.overlay,"dancing"));
+		leadersList.add(new PBase(VConstants.name,"d",VConstants.overlay,"lavatory"));
+		leadersList.add(new PBase(VConstants.name,"e",VConstants.overlay,"singing"));
+		leadersList.add(new PBase(VConstants.name,"f",VConstants.overlay,"sleep"));
+		leadersList.add(new PBase(VConstants.name,"g",VConstants.overlay,"trade"));
+		leadersList.add(new PBase(VConstants.name,"h",VConstants.overlay,"water"));
 
 		hatredStories.add(new BasicStory("The elders send some young men to fight against a hated town",new War()));
 
@@ -88,7 +98,7 @@ public class DemographicRule extends VParams {
 			MapData gate = hmd.getMapData(VConstants.gate);
 			if(gate != null&&gate.getValue().equals(SConstants.farm)){
 				Demographics demo = getDemo(hmd);
-				addRandomCiv(demo,hmd);
+				addLeader(getNextLeader(),hmd);
 				villageList.add(hmd);
 			}
 		}
@@ -96,6 +106,13 @@ public class DemographicRule extends VParams {
 		init = true;
 	}
 
+	public void addLeader(PBase leader, HashMapData hmd) {
+		// TODO Auto-generated method stub
+		Demographics.getCulture(getDemo(hmd)).put(leader.getS(VConstants.name),1.0);
+		getType(VConstants.leader).put(leader.getS(VConstants.name), leader);
+		hmd.getMapData(VConstants.gate).put(VConstants.overlay,CultureTrade.getOverlay(hmd));
+		
+	}
 	static int count = 0;
 	public static void addVillage(HashMapData hmd, HashMapData home){
 		villageList.add(hmd);
@@ -202,14 +219,14 @@ public class DemographicRule extends VParams {
 	}
 
 
-	private void addRandomCiv(Demographics demo,HashMapData hmd) {
-		PBase leader = VConstants.getRandomFromList(leadersList);
-		leadersList.remove(leader);
+	PBase getNextLeader() {
+		if(tLeadersList.isEmpty()){
+			tLeadersList.addAll(leadersList);
+		}
+		PBase leader = VConstants.getRandomFromList(tLeadersList);
+		tLeadersList.remove(leader);
 		//demo.put(VConstants.leader, leader.clone());
-		Demographics.getCulture(demo).put(leader.getS(VConstants.name),1.0);
-		getType(VConstants.leader).put(leader.getS(VConstants.name), leader);
-		hmd.getMapData(VConstants.gate).put(VConstants.overlay,CultureTrade.getOverlay(hmd));
-		
+		return leader;
 	}
 	public static Demographics getDemo(HashMapData hmd) {
 		return getDemo(hmd, true);
@@ -327,14 +344,58 @@ public class DemographicRule extends VParams {
 			}
 			return 1;
 		}
+
+		public int getMaxSize() {
+			return getInt(VConstants.maxsize);
+		}
+
+		public double getSize() {
+			return getDouble(VConstants.size);
+		}
+
+		public String getLeader() {
+			return getHighestCultureName(this);
+		}
+
+		public void setLeader(String newLeader) {
+			getCulture(this).put(newLeader, 1.0);
+			getCulture(this).remove(getLeader());
+		}
+
+		public  int getConflict(HashMapData home) {
+			return getLeaderPBase().getInt(VConstants.conflict);
+		}
+
+		public PBase getLeaderPBase() {
+			return DemographicRule.getSingleton().getLeader(getLeader());
+		}
+
+		public int getMaxVillages() {
+			return getLeaderPBase().getInt(DCon.maxvillages)+1;
+		}
 	}
 	public static boolean isVillage(HashMapData hashmapdata) {
 		MapData gate = hashmapdata.getMapData(VConstants.gate);
 		return gate != null && gate.getValue().equals(SConstants.farm);
 	}
 	
+	public PBase getLeader(String leader) {
+		return getPBase(VConstants.leader);
+	}
 	static DemographicRule singleton;
-	public static PBase getSingleton() {
+	public static DemographicRule getSingleton() {
 		return singleton;
 	}
+
+	public int getVillageCount(Demographics demo) {
+		String leader = demo.getLeader();
+		int amt = 0;
+		for(HashMapData hmd : villageList){
+			if(leader.equals(DemographicRule.getDemo(hmd).getLeader())){
+				amt++;
+			}
+		}
+		return amt;
+	}
+
 }
