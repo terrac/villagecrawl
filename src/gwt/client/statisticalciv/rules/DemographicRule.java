@@ -36,6 +36,7 @@ import gwt.shared.datamodel.VParams;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -65,17 +66,37 @@ public class DemographicRule extends VParams {
 	
 	List<PBaseRule> hatredStories = new ArrayList<PBaseRule>();
 	
+	public Map<String,PBase> techMap = new HashMap();
+	{
+//		  a slavery (cultures with tech take over villages, cultures without destroy villages, though slavery cultures can still destroy villages)
+//		  b prostitution (cultures with tech have a high chance to convert outsiders, but not enemies, based on conflict, conflict is a double)
+//		  c early disease (cultures with tech spread the tech, the tech damages based on liberalism, but burns itself out)
+//		  d domestication (precursor to disease, gives population boost)
+//		  e archery (extra damage, population boost)
+//		  f copper (extra damage, population boost)
+//		  g tin (population boost if tin is nearby)
+//		  h bronze (requires copper, tin, needs tin nearby, damage, pop boost)
+//		  i long distance trade (can procure long distance resources, but potentially fragile)
+//		  j religious story techs increase max size, but slavery then reduces that
+//		  k tolerance (requires slavery, revolts cause damage instead of destroying rule of law)
+		addTech(Demographics.slavery,"red");
+		addTech(Demographics.prostution,"yellow");
+		addTech(Demographics.earlyDisease,"blue");
+		  
+	}
+	
 	private List<PBase> leadersList = new ArrayList();
+	
 	private List<PBase> tLeadersList = new ArrayList();
 	
 	public void init(FullMapData fmd) {
 		singleton = this;
 
-		beginningStories.add(new BasicStory("Young men are excessively fighting",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.3,VConstants.chance,.4,VConstants.conflict,.5),new CauseDeaths(.1)));
-		beginningStories.add(new BasicStory("Young women are very fertile",new PBase(Demographics.female,.4,Age.YOUNG_ADULT,.4,VConstants.chance,.4),new Birth(.1)));
-		beginningStories.add(new BasicStory("The elders send some young men on a mystical quest",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.7,VConstants.chance,.4),new MysticalQuest()));
-		beginningStories.add(new BasicStory("Trade occurs",.2,new CultureTrade()));
-		beginningStories.add(new BasicStory("Flooding causes massive",.1,new CauseDeaths(.4)));
+		beginningStories.add(new BasicStory("damagesword.png","Young men are excessively fighting",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.3,VConstants.chance,.4,VConstants.conflict,.5),new CauseDeaths(.1)));
+		beginningStories.add(new BasicStory("damageheal.png","Young women are very fertile",new PBase(Demographics.female,.4,Age.YOUNG_ADULT,.4,VConstants.chance,.4),new Birth(.1)));
+		beginningStories.add(new BasicStory("damagepunch.png","The elders send some young men on a mystical quest",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.7,VConstants.chance,.4),new MysticalQuest()));
+		beginningStories.add(new BasicStory("trade.png","Trade occurs",.2,new CultureTrade()));
+		beginningStories.add(new BasicStory("waterdamage.png","Flooding causes massive",.1,new CauseDeaths(.4)));
 
 		leadersList.add(new PBase(VConstants.name,"Montezuma",VConstants.overlay,"attack",VConstants.conflict,.1));
 		leadersList.add(new PBase(VConstants.name,"Ghandi",VConstants.overlay,"heart",VConstants.conflict,-.1));
@@ -89,7 +110,7 @@ public class DemographicRule extends VParams {
 		leadersList.add(new PBase(VConstants.name,"g",VConstants.overlay,"trade"));
 		leadersList.add(new PBase(VConstants.name,"h",VConstants.overlay,"water"));
 
-		hatredStories.add(new BasicStory("The elders send some young men to fight against a hated town",new War()));
+		hatredStories.add(new BasicStory("damagesword.png","The elders send some young men to fight against a hated town",new War()));
 
 		pbrList.add(new Age());
 
@@ -104,6 +125,13 @@ public class DemographicRule extends VParams {
 		}
 
 		init = true;
+	}
+
+	private void addTech(String prostution,String color) {
+		techMap.put(prostution, new PBase(VConstants.color,color));
+	}
+	public PBase getTech(String tech){
+		return techMap.get(tech);
 	}
 
 	public void addLeader(PBase leader, HashMapData hmd) {
@@ -124,18 +152,23 @@ public class DemographicRule extends VParams {
 		//essentially this area inits the leader, probably should do it on add village
 		Demographics.addCulture(DemographicRule.getDemo(hmd), Demographics.getHighestCultureName(home), .55);
 		hmd.getMapData(VConstants.gate).put(VConstants.overlay,CultureTrade.getOverlay(hmd));
-		getDemo(hmd).put(DCon.fundamentalism,DemographicRule.getSingleton().getType(VConstants.leader).getPBase(Demographics.getHighestCultureName(hmd)).getDouble(DCon.fundamentalism));		
-	}
+		getDemo(hmd).put(DCon.fundamentalism,DemographicRule.getSingleton().getType(VConstants.leader).getPBase(Demographics.getHighestCultureName(hmd)).getDouble(DCon.fundamentalism));	
+		
+		getDemo(hmd).getListCreate(VConstants.technology).addAll(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
+		getDemo(hmd).getListCreate(Demographics.technologyColor).addAll(DemographicRule.getDemo(home).getListCreate(Demographics.technologyColor));
+		}
 	public static void removeVillage(HashMapData hmd){
 		villageList.remove(hmd);
 		hmd.remove(VConstants.gate);
 	}
+	DemographicTimeRule dtr = new DemographicTimeRule();
 	@Override
 	public void execute(Map<String, Object> map) {
 		FullMapData fmd = getFMD(map);
 		if(!init){
 			init(fmd);
 		}
+		dtr.execute(map);
 		for(HashMapData hmd: villageList){
 			Demographics demo = getDemo(hmd);
 			
@@ -263,11 +296,16 @@ public class DemographicRule extends VParams {
 		return new DemographicRule().copyProperties(this);
 	}	
 	public static class Demographics extends PBase{
+		public static final String earlyDisease = "earlyDisease";
+		public static final String prostution = "prostitution";
+		public static final String slavery = "slavery";
 		public static final String old = "old";
 		public static final String young = "young";
 		public static final String female = "female";
 		public static final String male = "male";
 		public static final String averageAge = "averageAge";
+		public static final String technologyColor ="technologyColor";
+		public static final String genocide = "genocide";
 		public static boolean chart=false;
 		public static Chart c =new Chart();{
 			c.setType(Type.SPLINE);
@@ -304,6 +342,7 @@ public class DemographicRule extends VParams {
 			}
 			//ret +="\n"+ get(VConstants.leader);
 			ret +="\n"+ get(VConstants.culture);
+			ret +="\n"+ get(VConstants.technology);
 			
 			return ret;
 		}
@@ -398,4 +437,20 @@ public class DemographicRule extends VParams {
 		return amt;
 	}
 
+	public void enableTech(String s) {
+		HashMapData hmd=VConstants.getRandomFromList(villageList);
+		addTech(s, hmd);
+	}
+
+	public void addTech(String s,HashMapData hmd) {
+		if(s == null){
+			return;
+		}
+		getDemo(hmd).getListCreate(VConstants.technology).add(s);
+		PBase.addToListIfNotExists(getDemo(hmd),Demographics.technologyColor,getTech(s).getS(VConstants.color));
+	}
+
+	public boolean hasTech(String tech) {
+		return getTech(tech) != null;
+	}
 }

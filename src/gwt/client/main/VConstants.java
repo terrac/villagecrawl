@@ -360,6 +360,7 @@ public class VConstants {
 	public static final String demographics = "demographics";
 	public static final String hatred = "hatred";
 	public static final String computed = "computed";
+	public static final String color = "color";
 	
 	
 	public static String string = "string";

@@ -47,6 +47,8 @@ public class DemographicCiv extends ClientBuild2 {
 		game.getMapArea().put(VConstants.turnbased, false);
 		AttachUtil.attach(AttachUtil.runpersonbefore, VConstants.runturn,
 				game.getMapArea());
+		game.put(VConstants.score, new UVLabel());
+
 		return game;
 	}
 

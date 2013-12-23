@@ -1,6 +1,40 @@
-#1 make the max start out at 1
-#2 make a disaster always cause a rule of law failure if above max
-#3 add additional leaders (they are basically just names for now, maybe give some random stats)
+1 tweak to make fighting spread techs, and trading to be initially just within the same leader
+2 make fighting have a small chance of destroying a village
+3 work on a set of 10 simple technologies (story based, not gameplay based)
+4 add a set of "cards" which come down and allow you to cause certain things to happen (ie trade, expansion, disasters, huge disasters)
+  you should then be able to "sculpt" how your place turns out
+
+
+1 technology color shows the youngest 4 techs (or possibly more maybe)
+
+
+1 add genocide tech
+2 make genocide tech give a random chance to do extra damage to a village
+3 make slavery have a chance of altering culture on low population
+4 add tech names and times to the demographic time rule
+5 make the demographic time rule pick a population to add the tech to
+6 make sure the checks are based on the demographic rules
+
+
+1 finish the htmlout on the colored tech thing
+2 make each tech set a boolean variable which works with a demographic rule to check on
+3 more techs finished, added and viewed
+
+1 add iterations to the damage of war (ie tactics, it is more effective with conflict)
+
+1 4 techs show as colored blocks on each village (each tech has a color)
+2 it can take a long time for techs to spread
+3 genocide is a tech
+4 techs automatically spread to nearest if a village is destroyed
+5 you take the role of a godly figure.  You have no control over the humans, but you get options to shape the environment
+  these would be to cause disasters, reshape the land, etc
+6 every story has an associated popup icon
+
+essentially the next step is to have the time/tech thing display the turns again
+make the turns be year + double
+after a suitable amount of turns (ie to where things are relatively distributed
+then a technology should be introduced.  Most techs should be superior enough that they take over the majority of the 
+curtain with new behavior/stats
 5 work on initial techs that shape the villages
   a slavery (cultures with tech take over villages, cultures without destroy villages, though slavery cultures can still destroy villages)
   b prostitution (cultures with tech have a high chance to convert outsiders, but not enemies, based on conflict, conflict is a double)

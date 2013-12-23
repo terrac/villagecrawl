@@ -10,6 +10,8 @@ import java.util.Map;
 import org.moxieapps.gwt.highcharts.client.Chart;
 import org.moxieapps.gwt.highcharts.client.Series.Type;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -62,12 +64,18 @@ public class HMDDisplay extends UIVParams {
 		dhmd = new VerticalPanel();
 //		Image image = new Image();
 //		dhmd.add(image);
-		HTML w = new HTML();
+		final HTML w = new HTML();
 		
 		dhmd.add(w);
 
 		w.setSize("20em", "21em");
 		dhmd.setSize("20em", "20em");
-
+		w.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				Window.alert(w.getHTML());
+			}
+		});
 	}
 }

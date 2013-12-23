@@ -28,6 +28,8 @@ import gwt.client.map.SymbolicMap;
 import gwt.client.output.html.Click;
 import gwt.client.output.html.GCanvas;
 import gwt.client.rpc.IExecute;
+import gwt.client.statisticalciv.rules.DemographicRule;
+import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +42,7 @@ import java.util.Set;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.canvas.dom.client.FillStrokeStyle;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.ImageElement;
@@ -337,7 +340,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 					LivingBeing lb = hashMapData.getLivingBeing();
 
 					if (lb == null){
-						
+						//hashmapdata gate logic
 						if(drawImage(symbolicShell2, y, x, value, imagesize)) {
 							imgCache.setCache(x, y, value);
 						}
@@ -346,6 +349,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 							drawOverlay(symbolicShell2, y, x, gate.getS(VConstants.overlay));
 							imgCache.addCache(x, y, gate.getS(VConstants.overlay));
 						}
+						drawTechs(symbolicShell2,y,x,hashMapData,imgCache);
 					}
 
 					
@@ -462,6 +466,26 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		}
 		//showArrows(parent, symbolicShell2, xs, ys, xe, ye);
 
+	}
+
+	private void drawTechs(GCanvas symbolicShell2, int y, int x, HashMapData hmd,
+			ImageCache imgCache) {
+		//for the 4 most recent techs, fill 4 rectangles
+		// 8 pixels across and 24 height
+		
+		//get the tech name list from the village demographics
+		//get the techs off of the demographic time rule mapping
+		//increment through
+		Demographics demo = DemographicRule.getDemo(hmd);
+		if(demo == null){
+			return;
+		}
+		List<String> techNames = demo.getListCreate(Demographics.technologyColor);
+		for(int a = 0; a < 4&&a < techNames.size(); a++){
+			String name = techNames.get(a);
+			symbolicShell2.getContext2d().setFillStyle(name);
+			symbolicShell2.getContext2d().fillRect(x*imagesize+a*8, y*imagesize+24, 8, 8);
+		}
 	}
 
 	public void drawOverlay(final GCanvas symbolicShell2, int y, int x,

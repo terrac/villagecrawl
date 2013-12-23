@@ -121,7 +121,10 @@ public class CultureTrade implements PBaseRule {
 		String cultureName = Demographics
 				.getHighestCultureName(home);
 		Demographics demo = DemographicRule.getDemo(hmd);
-		Demographics.addCulture(demo, cultureName, .05+1/(1+demo.getConflict(home))*10);
-		//
+		Demographics.addCulture(demo, cultureName, .05+1.0/((1+demo.getConflict(home))*10.0));
+		
+		String tech=(String)VConstants.getRandomFromList(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
+		DemographicRule.getSingleton().addTech(tech, hmd);
+		
 	}
 }

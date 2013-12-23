@@ -27,25 +27,29 @@ public class BasicStory implements PBaseRule{
 	PBaseRule pbr;
 	private Double chance;
 	private PBase correlations;
+	private String popup;
 
 
-	public BasicStory(String message, PBaseRule pbr) {
+	public BasicStory(String popup,String message, PBaseRule pbr) {
 		super();
 		this.message = message;
 		this.pbr = pbr;
+		this.popup = popup;
 	}
 	
-	public BasicStory(String message,double chance, PBaseRule pbr) {
+	public BasicStory(String popup,String message,double chance, PBaseRule pbr) {
 		super();
 		this.message = message;
 		this.pbr = pbr;
 		this.chance = chance;
+		this.popup = popup;
 	}
-	public BasicStory(String message,PBase correlations, PBaseRule pbr) {
+	public BasicStory(String popup,String message,PBase correlations, PBaseRule pbr) {
 		super();
 		this.message = message;
 		this.pbr = pbr;
 		this.correlations = correlations;
+		this.popup = popup;
 	}
 
 	public static void runStory(List<PBaseRule> beginningStories,
@@ -81,9 +85,9 @@ public class BasicStory implements PBaseRule{
 		if(pbr != null){
 			if(pbr.run(p, hmd, fmd)){
 				if(false){
-					DisplayPopup displayPopup = new DisplayPopup(
-							ClientBuild.list(new UVLabel(message)));
-					displayPopup.displaypopup(p,hmd.getPosition(), 5);
+					DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
+							 new UImage("/images/"+popup)));
+					displayPopup.displaypopup(hmd,hmd.getPosition(),  3);							
 					
 				} else {
 					LogDisplay.log(message, 2);

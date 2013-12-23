@@ -3,6 +3,7 @@ import gwt.client.game.generator.MarkerInterface;
 import gwt.client.game.util.PUtil;
 import gwt.client.main.VConstants;
 import gwt.client.map.MapData;
+import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -364,6 +365,14 @@ public class PBase implements MarkerInterface {
 	}
 	public double getDouble(String size) {
 		return PBase.getDouble(this, size);
+	}
+	public static void addToListIfNotExists(PBase pBase, String key,
+			Object tech) {
+		List list = pBase.getListCreate(key);
+		
+		if(tech!=null&&!list.contains(tech)){
+			list.add(tech);
+		}
 	}
 	
 
