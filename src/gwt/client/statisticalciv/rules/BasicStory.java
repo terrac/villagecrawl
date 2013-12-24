@@ -84,14 +84,11 @@ public class BasicStory implements PBaseRule{
 		
 		if(pbr != null){
 			if(pbr.run(p, hmd, fmd)){
-				if(false){
-					DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
-							 new UImage("/images/"+popup)));
-					displayPopup.displaypopup(hmd,hmd.getPosition(),  3);							
-					
-				} else {
-					LogDisplay.log(message, 2);
-				}
+				DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
+						 new UImage("/images/"+popup)));
+				displayPopup.displaypopup(hmd,hmd.getPosition(),  3);							
+				LogDisplay.log(message, 2);
+				
 			}
 		}
 		//story message pops up with an option to pause on story popups

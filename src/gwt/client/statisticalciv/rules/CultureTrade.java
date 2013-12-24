@@ -57,7 +57,7 @@ public class CultureTrade implements PBaseRule {
 		return DemographicRule.getSingleton().getType(VConstants.leader).getPBase(highestCultureName).getS(VConstants.overlay);
 	}
 
-	private void doCultureTrader(HashMapData hmd) {
+	public static void doCultureTrader(HashMapData hmd) {
 
 		LivingBeing lb = RandomPersonCreation.addRandomPerson(hmd,
 				VConstants.human, VConstants.human);

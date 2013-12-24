@@ -89,14 +89,17 @@ public class DemographicRule extends VParams {
 	
 	private List<PBase> tLeadersList = new ArrayList();
 	
+	public static BasicStory flood = new BasicStory("waterdamage.png","Flooding causes massive",.1,new CauseDeaths(.4));
+	
+	
 	public void init(FullMapData fmd) {
 		singleton = this;
 
 		beginningStories.add(new BasicStory("damagesword.png","Young men are excessively fighting",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.3,VConstants.chance,.4,VConstants.conflict,.5),new CauseDeaths(.1)));
 		beginningStories.add(new BasicStory("damageheal.png","Young women are very fertile",new PBase(Demographics.female,.4,Age.YOUNG_ADULT,.4,VConstants.chance,.4),new Birth(.1)));
 		beginningStories.add(new BasicStory("damagepunch.png","The elders send some young men on a mystical quest",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.7,VConstants.chance,.4),new MysticalQuest()));
-		beginningStories.add(new BasicStory("trade.png","Trade occurs",.2,new CultureTrade()));
-		beginningStories.add(new BasicStory("waterdamage.png","Flooding causes massive",.1,new CauseDeaths(.4)));
+		beginningStories.add(new BasicStory("gold.png","Trade occurs",.2,new CultureTrade()));
+		beginningStories.add(flood);
 
 		leadersList.add(new PBase(VConstants.name,"Montezuma",VConstants.overlay,"attack",VConstants.conflict,.1));
 		leadersList.add(new PBase(VConstants.name,"Ghandi",VConstants.overlay,"heart",VConstants.conflict,-.1));
@@ -123,7 +126,7 @@ public class DemographicRule extends VParams {
 				villageList.add(hmd);
 			}
 		}
-
+		new DemographicRandomEffects();
 		init = true;
 	}
 

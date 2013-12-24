@@ -1,3 +1,7 @@
+1 fix the bag map stuff
+2 work on an android phonegap app (and just displaying it in general)
+3 more cards, more techs, more
+
 1 tweak to make fighting spread techs, and trading to be initially just within the same leader
 2 make fighting have a small chance of destroying a village
 3 work on a set of 10 simple technologies (story based, not gameplay based)
