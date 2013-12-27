@@ -69,7 +69,7 @@ public class CultureTrade implements PBaseRule {
 		OObject.setCurrent(lb, new SimpleOObject() {
 			@Override
 			public Returnable execute(FullMapData fullMapData,
-					LivingBeing person) {
+					final LivingBeing person) {
 			
 				// find nearest friendly village (not on hatred list) with
 				// an imbalance of coins (give points to largest imbalance,
@@ -90,7 +90,8 @@ public class CultureTrade implements PBaseRule {
 						}
 
 						if (!hashmapdata.isBlock()
-								&& DemographicRule.isVillage(hashmapdata)) {//
+								&& DemographicRule.isVillage(hashmapdata)
+								&& DemographicRule.isSameLeader(person.getParent(),hashmapdata)) {//
 							otherVillages.add(hashmapdata);
 						}
 						return null;

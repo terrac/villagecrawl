@@ -25,10 +25,16 @@ public class Age implements PBaseRule{
 	}
 	@Override
 	public boolean run(PBase p, HashMapData hmd, FullMapData fmd) {
-		birth((Demographics)p, VConstants.getRandom().nextDouble()* .1);
+		ageOneYear(p);
+
+		return true;
+	}
+	public static void ageOneYear(PBase p) {
+		Demographics demo = (Demographics)p;
+		birth(demo, .1);
 		List<Integer> ageList =p.getListCreate(VConstants.age);
 		
-		int averageAge=50;
+		int averageAge=30;
 		//kill due to aging
 		double infantMortality = .2;
 		//a infant mortality rate is seperate
@@ -74,8 +80,6 @@ public class Age implements PBaseRule{
 			p.put(a, p.getDouble(a)/size);
 		}
 		p.put(VConstants.size, size);
-
-		return true;
 	}
 	//eventually have an option to hit others for a certain %
 	public static void kill(PBase p,String name, double size){
@@ -147,6 +151,9 @@ public class Age implements PBaseRule{
 		if(amount == 0){
 			amount  = VConstants.getRandom().nextInt(3);
 		}
+		if(p.getSize() > maxsize){
+			amount = 0;
+		}
 		ageList.add(0, amount);		
 		
 	}
@@ -169,6 +176,12 @@ public class Age implements PBaseRule{
 		}
 		public void clear(PBase demographic){
 			demographic.remove(VConstants.computed+mapTo);
+		}
+	}
+
+	public static void ageYears(int i, Demographics demo) {
+		for(int a = 0; a < 50; a++){
+			ageOneYear(demo);
 		}
 	}
 }

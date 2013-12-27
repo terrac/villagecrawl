@@ -124,6 +124,8 @@ public class DemographicRule extends VParams {
 				Demographics demo = getDemo(hmd);
 				addLeader(getNextLeader(),hmd);
 				villageList.add(hmd);
+				Age.ageYears(50,getDemo(hmd));
+
 			}
 		}
 		new DemographicRandomEffects();
@@ -159,7 +161,8 @@ public class DemographicRule extends VParams {
 		
 		getDemo(hmd).getListCreate(VConstants.technology).addAll(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
 		getDemo(hmd).getListCreate(Demographics.technologyColor).addAll(DemographicRule.getDemo(home).getListCreate(Demographics.technologyColor));
-		}
+		Age.ageYears(50,getDemo(hmd));
+	}
 	public static void removeVillage(HashMapData hmd){
 		villageList.remove(hmd);
 		hmd.remove(VConstants.gate);
@@ -180,9 +183,12 @@ public class DemographicRule extends VParams {
 					pbr.run(demo, hmd, fmd);
 				}
 			}
-			for(PBaseRule pbr : pbrList){
-				pbr.run(demo, hmd, fmd);
+			if(DemographicTimeRule.yearChange){
+				for(PBaseRule pbr : pbrList){
+					pbr.run(demo, hmd, fmd);
+				}
 			}
+			
 			if(VConstants.getRandom().nextDouble() < .03){
 				BasicStory.runStory(beginningStories,demo,hmd,fmd);
 			}
@@ -449,11 +455,21 @@ public class DemographicRule extends VParams {
 		if(s == null){
 			return;
 		}
-		getDemo(hmd).getListCreate(VConstants.technology).add(s);
+		PBase.addToListIfNotExists(getDemo(hmd),VConstants.technology,s);
 		PBase.addToListIfNotExists(getDemo(hmd),Demographics.technologyColor,getTech(s).getS(VConstants.color));
 	}
 
 	public boolean hasTech(String tech) {
 		return getTech(tech) != null;
+	}
+
+	public static boolean isSameLeader(HashMapData village1,
+			HashMapData village2) {
+		
+		String highestCultureName = Demographics.getHighestCultureName(village1);
+		if(highestCultureName == null){
+			return false;
+		}
+		return highestCultureName.equals(Demographics.getHighestCultureName(village2));
 	}
 }

@@ -37,6 +37,7 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class DemographicTimeRule extends VParams {
 
+	public static boolean yearChange;
 	public DemographicTimeRule() {
 	}
 	
@@ -56,7 +57,8 @@ public class DemographicTimeRule extends VParams {
 	@Override
 	public void execute(Map<String, Object> map) {
 		yearPct+= increment;
-		if(yearPct > 1){
+		yearChange = yearPct > 1;
+		if(yearChange){
 			yearPct = 0;
 			year++;
 			for(PBase pb : techs){

@@ -286,7 +286,7 @@ public class GCanvas extends FocusWidget {
 						if (hmd.getLivingBeing() != null) {
 							htmlOut.cfList.add(hmd.getLivingBeing());
 						}
-
+						
 						if (hmd.getParent().containsKey(VConstants.leftclick)) {
 							AttachUtil.run(VConstants.leftclick, hmd, hmd
 									.getParent());

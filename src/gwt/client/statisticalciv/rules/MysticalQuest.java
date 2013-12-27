@@ -37,9 +37,8 @@ public class MysticalQuest implements PBaseRule {
 				return null;
 			}
 			HashMapData home = getHome(person);
-			double difference = Demographics.compareCultureHighest(
-					home, hmd);
-			if (difference < .5) {
+			
+			if (DemographicRule.isSameLeader(hmd, home)) {
 				return null;
 			}
 			CultureTrade.spreadCulture(home, hmd);

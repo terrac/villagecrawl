@@ -1,4 +1,18 @@
-1 fix the bag map stuff
+1 logic to allow for choices
+  a restrict trade to within leaders (secrecy)
+
+1 work on meaningful results based on choices
+  a dump a bunch of random stat techs out there
+  b add some logic that prevents them from just spreading everywhere over time
+     (basically, certain techs aren't compatible with others, you can create your pure tech
+      society or a diverse one)
+  c explaining history aspect
+  d more choices to do things with
+  e make growth go much slower 
+    1 make age only age when a year passes
+    2 have an extremely small chance of 2
+
+#1 fix the bag map stuff
 2 work on an android phonegap app (and just displaying it in general)
 3 more cards, more techs, more
 

@@ -17,6 +17,8 @@ import gwt.client.main.base.under.FoodGroup;
 import gwt.client.main.base.under.Plant;
 import gwt.client.main.base.under.Under;
 import gwt.client.main.base.under.Water;
+import gwt.client.statisticalciv.rules.DemographicRule;
+import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 public class HashMapData extends HMapData implements IPhysical {
 
@@ -28,6 +30,10 @@ public class HashMapData extends HMapData implements IPhysical {
 	public String toString() {
 		if (size() == 0) {
 			return "()";
+		}
+		Demographics demo = DemographicRule.getDemo(this);
+		if(demo != null){
+			return demo.toString();
 		}
 		return super.toString();
 	}
@@ -79,6 +85,8 @@ public class HashMapData extends HMapData implements IPhysical {
 
 		for (String a : valueOrder) {
 			MapData md = getMapData(a);
+			remove(VConstants.visualdamage);
+			
 			if (md != null) {
 				//should replace visual damage with a generic "effect" label
 				

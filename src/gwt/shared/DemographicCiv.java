@@ -137,8 +137,7 @@ public class DemographicCiv extends ClientBuild2 {
 		
 		bm1.put(VConstants.resource, resource);
 
-		resource.getType(VConstants.resource)
-				.getListCreate(VConstants.leftclick)
+		resource.getListCreate(VConstants.leftclick)
 				.add(new CopySelection("bagselection"));
 
 		resource.put(VConstants.defaultimage, "/images/grass.png");
@@ -194,8 +193,7 @@ public class DemographicCiv extends ClientBuild2 {
 		
 		bm1.put(VConstants.resource, resource);
 	
-		resource.getType(VConstants.resource)
-				.getListCreate(VConstants.leftclick)
+		resource.getListCreate(VConstants.leftclick)
 				.add(new CopySelection("bagselection"));
 	
 		resource.put(VConstants.defaultimage, "/images/grass.png");

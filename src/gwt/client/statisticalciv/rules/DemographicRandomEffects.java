@@ -35,6 +35,7 @@ public class DemographicRandomEffects extends VParams {
 		nextRandom();
 		nextRandom();
 		nextRandom();
+		nextRandom();
 	}
 
 
@@ -48,8 +49,8 @@ public class DemographicRandomEffects extends VParams {
 		final BagMap bagMap = (BagMap) EntryPoint.game.get(VConstants.bagmap);
 
 //		MapDataAreaMap bm = bagMap.getBagMap();
-		final SimpleMD data = new SimpleMD(VConstants.gate, "green-effect");
-		AttachUtil.attach(AttachUtil.runbefore, new VParams() {
+		final SimpleMD data = new SimpleMD(VConstants.visualdamage, "green-effect");
+		AttachUtil.attach(AttachUtil.placed, new VParams() {
 			@Override
 			public void execute(Map<String, Object> map) {
 				HashMapData hashmapdata = (HashMapData) map
@@ -74,8 +75,8 @@ public class DemographicRandomEffects extends VParams {
 		final BagMap bagMap = (BagMap) EntryPoint.game.get(VConstants.bagmap);
 
 //		MapDataAreaMap bm = bagMap.getBagMap();
-		final SimpleMD data = new SimpleMD(VConstants.gate, "red-effect");
-		AttachUtil.attach(AttachUtil.runbefore, new VParams() {
+		final SimpleMD data = new SimpleMD(VConstants.visualdamage, "waterdamage");
+		AttachUtil.attach(AttachUtil.placed, new VParams() {
 			@Override
 			public void execute(Map<String, Object> map) {
 				HashMapData hashmapdata = (HashMapData) map
@@ -101,7 +102,7 @@ public class DemographicRandomEffects extends VParams {
 //		if(next == null){
 //			return;
 //		}
-		int count = VConstants.getRandom().nextInt(3);
+		int count = VConstants.getRandom().nextInt(2);
 		if(count == 0){
 			//start cultural trade on click
 			addTrade();

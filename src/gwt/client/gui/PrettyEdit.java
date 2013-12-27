@@ -57,6 +57,14 @@ public class PrettyEdit {
 			}
 			//Window.Location.getParameter("jsonkey")
 			final String jsonkey=rootPanel.getElement().getAttribute("jsonkey");
+			try {
+				Integer.parseInt(jsonkey);
+			} catch (NumberFormatException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return;
+			}
+			
 			goa.getObject("jsondata", jsonkey, new AsyncCallback<Map<String,IClientObject>>() {
 
 				@Override
