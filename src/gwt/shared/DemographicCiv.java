@@ -25,6 +25,7 @@ import gwt.client.statisticalciv.UVLabel;
 import gwt.client.statisticalciv.VillageRule;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
 import gwt.client.statisticalciv.rules.DemographicRule;
+import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 public class DemographicCiv extends ClientBuild2 {
 
@@ -71,7 +72,7 @@ public class DemographicCiv extends ClientBuild2 {
 		return pb;
 	}
 	
-	public static PBase doActionsBigMap() {
+	public static PBase doActions(BuildMap map) {
 		PBase pb = new PBase();
 		pb.put(VConstants.name, "actions");
 		pb.put(VConstants.classname, Game.class.getName());
@@ -83,7 +84,7 @@ public class DemographicCiv extends ClientBuild2 {
 		AttachUtil.attach(AttachUtil.runbefore, new RunRules(new DemographicRule()),
 				mapArea);
 
-		AttachUtil.attach(AttachUtil.mapstart, getMap3(),
+		AttachUtil.attach(AttachUtil.mapstart, map,
 				mapArea);
 		return pb;
 	}
@@ -105,21 +106,7 @@ public class DemographicCiv extends ClientBuild2 {
 		return pb;
 	}
 	public static BuildMap getMap1(){
-		PBase charmap = new PBase();
-
-		charmap.put("O", new SimpleMD(VConstants.gate, "orcentrance",
-				"/images/grass.png"));
-
-		charmap.put("m", new SimpleMD(VConstants.obstacle, "mountain"));
-		charmap.put("r", new SimpleMD(VConstants.gate, "rock"));
-		charmap.put("t", new SimpleMD(VConstants.gate, "tree"));
-		charmap.put("d", new SimpleMD(VConstants.under, "desert"));
-		SimpleMD fish = new SimpleMD(VConstants.obstacle, "water");
-		fish.put("fish", "fish");
-		charmap.put("w", new SimpleMD(VConstants.obstacle, "water"));
-		charmap.put("f", fish);
-		SimpleMD pop = new SimpleMD(VConstants.gate,SConstants.farm);
-		charmap.put("p", pop);
+		PBase charmap = buildCharMap();
 		
 		
 		BuildMap bm1 = new BuildMap(charmap, 
@@ -150,27 +137,32 @@ public class DemographicCiv extends ClientBuild2 {
 		return bm1;
 	}
 
-	public static BuildMap getMap3(){
+
+
+	public static PBase buildCharMap() {
 		PBase charmap = new PBase();
-	
+
 		charmap.put("O", new SimpleMD(VConstants.gate, "orcentrance",
 				"/images/grass.png"));
-	
+
 		charmap.put("m", new SimpleMD(VConstants.obstacle, "mountain"));
 		charmap.put("r", new SimpleMD(VConstants.gate, "rock"));
 		charmap.put("t", new SimpleMD(VConstants.gate, "tree"));
-		charmap.put("d", new SimpleMD(VConstants.under, "desert"));
-		charmap.put("s", new SimpleMD(VConstants.gate, "swamp"));
-		charmap.put("p", new SimpleMD(VConstants.gate, "plant"));
-		SimpleMD fish = new SimpleMD(VConstants.under, "water");
+		SimpleMD desert = new SimpleMD(VConstants.under, "desert");
+		desert.put(VConstants.maxsize, .3);
+		charmap.put("d", desert);
+		SimpleMD fish = new SimpleMD(VConstants.obstacle, "water");
 		fish.put("fish", "fish");
 		charmap.put("w", new SimpleMD(VConstants.obstacle, "water"));
-//		charmap.put("f", fish);
-//		SimpleMD pop = new SimpleMD(VConstants.population,null);
-//		charmap.put("p", pop);
-//		
+		charmap.put("f", fish);
 		SimpleMD pop = new SimpleMD(VConstants.gate,SConstants.farm);
-		charmap.put("v", pop);
+		charmap.put("p", pop);
+		return charmap;
+	}
+
+	public static BuildMap getMap3(){
+		PBase charmap = buildCharMap();
+
 			
 		BuildMap bm1 = new BuildMap(charmap, 
 				  "wwww   d    d      d     fwww\\n"
@@ -188,6 +180,53 @@ public class DemographicCiv extends ClientBuild2 {
 				+ "wwwwwwwwww   t    wwwwwwwwwww\\n"
 				+ "wwwwwwwwww       wwwwwwwwwwww\\n"
 				+ "wwwwwwwwwwww    fwwwwwwwwwwww\\n"
+				+ "wwwwwwwwwwwwwwwwwwwwwwwwwwwww", "mainarea");
+		PBase resource = new PBase();
+		
+		bm1.put(VConstants.resource, resource);
+	
+		resource.getListCreate(VConstants.leftclick)
+				.add(new CopySelection("bagselection"));
+	
+		resource.put(VConstants.defaultimage, "/images/grass.png");
+	
+		resource.getType(VConstants.resource).put(VConstants.image,
+				"/images/itemshop.png");
+		resource.getType(VConstants.resource).put(VConstants.sound,
+				"tradingmusic");
+	
+		return bm1;
+	}
+	
+	public static BuildMap getMap4(){
+		PBase charmap = buildCharMap();
+		SimpleMD pop = new SimpleMD(VConstants.gate,SConstants.farm);
+		charmap.put("z", pop);
+		charmap.getPBase("z").getListCreate(VConstants.technology).add(Demographics.simpleLayrnx);
+		charmap.getPBase("z").getListCreate(VConstants.technology).add(Demographics.giant);
+		BuildMap bm1 = new BuildMap(charmap, 
+				  "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\\n"
+				+ "www     wwww      wwwwwwwwwwww         \\n"
+				+ "ww   z  www       wwwwwwwww            \\n"
+				+ "w       ww         wwwwwww             \\n"
+				+ "ww                                     \\n"
+				+ "wwww                                   \\n"
+				+ "wwwwwwwwwwwwwwwwwwwwwwwwwww            \\n"
+				+ "wwwwwwwwwwwwwwwwwwwwwwwwwww            \\n"
+				  + "wwww   d    d      d     fwww        \\n"
+				+ "ww   d d ddddddddddddddd  ddwwww       \\n"
+				+ "www  v        ptr        dddwwwww      \\n"
+				+ "wwwwww       s r  t    v  wwwwwwwwwwwww\\n"
+				+ "wwwwwwwf  t  s t r       fwwwwwwwwwwwww\\n"
+				+ "wwwwwwwwwt sp s  t       wwwwwwwwwwwwww\\n"
+				+ "wwwwwwwww pp t  s       wwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwww sspr sss s   wwwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwwssnpppv sts  wwwwwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwwwt  p s trt wwwwwwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwww  s  pp r  wwwwwwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwwww   t    wwwwwwwwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwwww       wwwwwwwwwwwwwwwwwwwwww\\n"
+				+ "wwwwwwwwwwww    fwwwwwwwwwwwwwwwwwwwwww\\n"
 				+ "wwwwwwwwwwwwwwwwwwwwwwwwwwwww", "mainarea");
 		PBase resource = new PBase();
 		

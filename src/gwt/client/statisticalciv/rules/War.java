@@ -50,8 +50,7 @@ public class War implements PBaseRule {
 
 	private void doYoungMen(PBase p, HashMapData hmd,final Point location) {
 
-		LivingBeing lb = RandomPersonCreation.addRandomPerson(hmd,
-				VConstants.human, VConstants.human);
+		LivingBeing lb = MysticalQuest.addPerson(hmd);
 		lb.getAlterHolder().put(VConstants.weapon, new Item("Axe"));
 		lb.getAlterHolder().put(VConstants.body, new Item("Leather Armor"));
 		lb.getPopulation().put(VConstants.type, SConstants.bandit);

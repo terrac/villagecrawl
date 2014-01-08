@@ -25,13 +25,13 @@ public class Age implements PBaseRule{
 	}
 	@Override
 	public boolean run(PBase p, HashMapData hmd, FullMapData fmd) {
-		ageOneYear(p);
+		ageOneYear(p,hmd);
 
 		return true;
 	}
-	public static void ageOneYear(PBase p) {
+	public static void ageOneYear(PBase p, HashMapData hmd) {
 		Demographics demo = (Demographics)p;
-		birth(demo, .1);
+		birth(demo, .1,hmd);
 		List<Integer> ageList =p.getListCreate(VConstants.age);
 		
 		int averageAge=30;
@@ -122,7 +122,7 @@ public class Age implements PBaseRule{
 		}
 		PBase.decrement(p, VConstants.size, subtracted-size);
 	}
-	public static void birth(Demographics p, double amt){
+	public static void birth(Demographics p, double amt, HashMapData hmd){
 		List<Integer> ageList =p.getListCreate(VConstants.age);
 		double female = p.getDouble(Demographics.female);
 		if(female >.5){
@@ -141,12 +141,17 @@ public class Age implements PBaseRule{
 		}
 		p.put(Demographics.averageAge, aa);
 		
-		PBase leader = DemographicRule.getSingleton().getType(VConstants.leader).getPBase(Demographics.getHighestCultureName(p));
+		PBase leader = DemographicRule.getSingleton().getLeader(p);
 		double maxsize=leader.getDouble(VConstants.maxsize);
+		double tilemaxsize = Demographics.getTileSize(hmd);
 		if(maxsize == 0){
 			maxsize = 100;
 			leader.put(VConstants.maxsize, maxsize);
 		}
+		if(tilemaxsize == 0){
+			tilemaxsize = 1.0;
+		}
+		maxsize = maxsize * tilemaxsize;
 		int amount = (int) (maxsize * amt);
 		if(amount == 0){
 			amount  = VConstants.getRandom().nextInt(3);
@@ -179,9 +184,9 @@ public class Age implements PBaseRule{
 		}
 	}
 
-	public static void ageYears(int i, Demographics demo) {
+	public static void ageYears(int i, Demographics demo,HashMapData hmd) {
 		for(int a = 0; a < 50; a++){
-			ageOneYear(demo);
+			ageOneYear(demo,hmd);
 		}
 	}
 }

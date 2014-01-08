@@ -170,8 +170,7 @@ public class MysticalQuest implements PBaseRule {
 
 	private void doYoungMen(PBase p, HashMapData hmd) {
 
-		LivingBeing lb = RandomPersonCreation.addRandomPerson(hmd,
-				VConstants.human, VConstants.human);
+		LivingBeing lb = addPerson(hmd);
 		lb.getAlterHolder().put(VConstants.weapon, new Item("dagger"));
 		lb.getAlterHolder().put(VConstants.body, new Item("Animal Skin"));
 		lb.getPopulation().put(VConstants.type, SConstants.bandit);
@@ -237,6 +236,15 @@ public class MysticalQuest implements PBaseRule {
 			}
 		});
 
+	}
+
+	public static LivingBeing addPerson(HashMapData hmd) {
+		String type = VConstants.human;
+		if(DemographicRule.getDemo(hmd).hasTech(Demographics.giant)){
+			type = "dwarf";
+		}
+		return RandomPersonCreation.addRandomPerson(hmd,
+				type, type);
 	}
 
 	protected static void setHome(LivingBeing person) {

@@ -63,8 +63,13 @@ public class BasicStory implements PBaseRule{
 				}
 				continue;
 			}
-			
-			
+			double size = bs.correlations.getDouble(VConstants.size);
+			if(size != 0){
+				if(VConstants.getRandom().nextDouble() > Demographics.getTileSize(hmd)){
+					//eventually do some combination of size minus tilesize or something
+					continue;
+				}
+			}
 			//compare each stat in the demo to the correlation and test
 			int count = 0;
 			for(Entry<String, Object> ent : bs.correlations.getObjMap().entrySet()){

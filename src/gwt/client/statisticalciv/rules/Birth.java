@@ -17,7 +17,7 @@ public class Birth implements PBaseRule{
 	
 	@Override
 	public boolean run(PBase p, HashMapData hmd, FullMapData fmd) {
-		Age.birth((Demographics) p, amt);
+		Age.birth((Demographics) p, amt,hmd);
 
 		return true;
 	}

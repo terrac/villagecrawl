@@ -89,8 +89,11 @@ public class BuildFeatures extends HttpServlet {
 		Key<ServerGame> dGame = addFeature(person,"Demographic Civ (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions());
 		person.add(dGame);
 
-		Key<ServerGame> eGame = addFeature(person,"Demographic Civ Big (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActionsBigMap());
+		Key<ServerGame> eGame = addFeature(person,"Demographic Civ Big (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions(DemographicCiv.getMap3()));
 		person.add(eGame);
+
+		Key<ServerGame> fGame = addFeature(person,"Demographic Civ Bigger (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions(DemographicCiv.getMap4()));
+		person.add(fGame);
 
 		
 		

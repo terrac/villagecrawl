@@ -17,7 +17,7 @@ public class RuleOfLaw {
 		//add check for above max size
 		boolean tooLarge = VConstants.getRandom().nextDouble() > .7&& 
 				demo.getMaxVillages() < DemographicRule.getSingleton().getVillageCount(demo);
-		if(demo.getSize() < demo.getMaxSize()/2||tooLarge){
+		if(demo.getSize() < demo.getMaxVillageSize()/2||tooLarge){
 			String leader = demo.getLeader();
 			PBase newLeader = DemographicRule.getSingleton().getNextLeader();
 			for(HashMapData hmd: DemographicRule.getSingleton().villageList){

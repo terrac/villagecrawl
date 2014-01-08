@@ -59,8 +59,7 @@ public class CultureTrade implements PBaseRule {
 
 	public static void doCultureTrader(HashMapData hmd) {
 
-		LivingBeing lb = RandomPersonCreation.addRandomPerson(hmd,
-				VConstants.human, VConstants.human);
+		LivingBeing lb = MysticalQuest.addPerson(hmd);
 		lb.getAlterHolder().put(VConstants.weapon, new Item("Staff"));
 		lb.getAlterHolder().put(VConstants.body, new Item("Robe"));// make fancy
 		lb.getPopulation().put(VConstants.type, SConstants.merchant);
@@ -123,7 +122,9 @@ public class CultureTrade implements PBaseRule {
 				.getHighestCultureName(home);
 		Demographics demo = DemographicRule.getDemo(hmd);
 		Demographics.addCulture(demo, cultureName, .05+1.0/((1+demo.getConflict(home))*10.0));
-		
+		if(VConstants.getRandom().nextDouble() < demo.getTechProgression()){
+			return;
+		}
 		String tech=(String)VConstants.getRandomFromList(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
 		DemographicRule.getSingleton().addTech(tech, hmd);
 		

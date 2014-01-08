@@ -124,7 +124,10 @@ public class DemographicRule extends VParams {
 				Demographics demo = getDemo(hmd);
 				addLeader(getNextLeader(),hmd);
 				villageList.add(hmd);
-				Age.ageYears(50,getDemo(hmd));
+				for(Object a : gate.getListCreate(VConstants.technology)){
+					addTech((String)a, hmd);
+				}
+				Age.ageYears(50,getDemo(hmd),hmd);
 
 			}
 		}
@@ -161,7 +164,7 @@ public class DemographicRule extends VParams {
 		
 		getDemo(hmd).getListCreate(VConstants.technology).addAll(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
 		getDemo(hmd).getListCreate(Demographics.technologyColor).addAll(DemographicRule.getDemo(home).getListCreate(Demographics.technologyColor));
-		Age.ageYears(50,getDemo(hmd));
+		Age.ageYears(50,getDemo(hmd),hmd);
 	}
 	public static void removeVillage(HashMapData hmd){
 		villageList.remove(hmd);
@@ -315,6 +318,8 @@ public class DemographicRule extends VParams {
 		public static final String averageAge = "averageAge";
 		public static final String technologyColor ="technologyColor";
 		public static final String genocide = "genocide";
+		public static final String simpleLayrnx = "simpleLayrnx";
+		public static final String giant = "giant";
 		public static boolean chart=false;
 		public static Chart c =new Chart();{
 			c.setType(Type.SPLINE);
@@ -393,8 +398,13 @@ public class DemographicRule extends VParams {
 			return 1;
 		}
 
-		public int getMaxSize() {
-			return getInt(VConstants.maxsize);
+		public static double getTileSize(HashMapData hmd) {
+			
+			double maxsize = hmd.getDouble(VConstants.maxsize);
+			if(maxsize == 0){
+				return 1.0;
+			}
+			return maxsize;
 		}
 
 		public double getSize() {
@@ -420,6 +430,19 @@ public class DemographicRule extends VParams {
 
 		public int getMaxVillages() {
 			return getLeaderPBase().getInt(DCon.maxvillages)+1;
+		}
+
+		public int getMaxVillageSize() {
+			return getInt(VConstants.maxsize);
+		}
+		public boolean hasTech(String tech){
+			return getListCreate(VConstants.technology).contains(tech);
+		}
+		public double getTechProgression() {
+			if(hasTech(Demographics.simpleLayrnx)){
+				return .05;
+			}
+			return 1.0;
 		}
 	}
 	public static boolean isVillage(HashMapData hashmapdata) {
@@ -448,6 +471,16 @@ public class DemographicRule extends VParams {
 
 	public void enableTech(String s) {
 		HashMapData hmd=VConstants.getRandomFromList(villageList);
+		
+		//simple layrnx = no techs other than initially set
+		if(getDemo(hmd).hasTech(Demographics.simpleLayrnx)){
+			for(HashMapData h : villageList){
+				if(!getDemo(hmd).hasTech(Demographics.simpleLayrnx)){
+					hmd = h;
+					break;
+				}
+			}
+		}
 		addTech(s, hmd);
 	}
 
@@ -471,5 +504,10 @@ public class DemographicRule extends VParams {
 			return false;
 		}
 		return highestCultureName.equals(Demographics.getHighestCultureName(village2));
+	}
+
+	public PBase getLeader(Demographics p) {
+		return getLeader(Demographics.getHighestCultureName(p));
+		
 	}
 }

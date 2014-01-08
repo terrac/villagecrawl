@@ -1,5 +1,151 @@
+1 goals
+  a lead your early population to conquer the neanderthals ( and make it so that
+    it is only a small % of the genetic population that splits off)
+  b have an easy/moderate/hard mode (basically the neanderthals are stronger in the harder
+    versions)
+  c other difficulties would be non earth mode, like stronger diseases, more iron, etc
+    then the goal would be to spread and grow technology in these worlds.  The idea being that
+    technology should be difficult to spread and difficult to create in a lot of worlds 
+    (so like missing key techs on the list, or trying to maintain a large population, 
+    giants attacking and eating everyone.  
+       
+
+1 leader directed technology
+  a techs still spread like they currently do and show up the same
+  b a single object runs through the villages and leaders and just does an if statement for the techs
+    it then determines % (0 removes it) (no enabled/disabled, just low % have different effects)
+  c each tech action should be methods off of this object
+
+2 for the resource management an object runs through the villages and sets a tile growth every
+  10 or so turns
+  a it might change for seasons (in a predictable way)
+  b choices could allow you to alter the resources in the different locations
+   
+#1 make sure that lower population = reduced chance of too many young men story
+2 think about leader directed technology (ie you have a set of all technologies,
+leaders direct the actively set technologies, they direct it by recording and changing
+the technologies based on the associated variables)
+  a eat hominids -> cannibalism -> ritual sacrifice
+    (in response to disease effects)
+  b slavery -> genocide -> tolerance
+    (in response to slave revolts)
+  c prostitution -> fundamentalism -> gay male sex ban, prostitution ban, etc
+     (in response to increased disease transmission from prostitution)
+  d domestication -> early disease -> disease conquest
+    (this just happens in response to use, disease conquest is just a really bad disease
+     that allows for large conquests)
+  e stone -> copper -> tin -> bronze -> long distance trade
+  f archery
+  g fish
+    (if water is nearby)
+  h religious practices 
+    (basically in this case religion follows leaders, if practices aren't done at the capital
+      they have a chance of being removed or changed to be more similar to the capital over time)
+  i revenge killings 
+    (in response to revenge killings)
+
+1 resource management (ie each tile is different as far as resources go and that 
+  alters how things turn out)
+2 more choices (specific ones, nonspecific ones, like you might choose to dump a holy book 
+on a population, burning bush, destruction )
+
+  
+1 add in technology
+  #a simple layrnx.  this makes all technological acquizition much slower
+  #  (basically I add a stat "tech progression", use it on the spread techs and 
+  #    it then gives a random chance to migrate, this stat puts it at .05)
+ # b giant, this replaces the image body with the giant one
+ #   (in doyoungmen addrandomperson, if giant then set to orc, otherwise do human)
+2 make that technolgy by default start in europe (in a specially set farm with a tag on it
+#3 make max size partially dependent on tile
+
+1 start the stories (you can read a list of stories that have been developed, it gives a description
+  and a name, stories are techs and they have tech effects)
+
+#1 build a model of africa, asia, europe
+2 Add in neanderthals, early hominids 
+  #a see if compatible with farming timeline
+  b basically you will have nomadic, different looking people that will slowly fight and lose
+3 villages in deserts have reduced population, reduced chance of too many young men,
+  same with cold  
+
+1 slavery
+  a attacking spreads culture backwards, reduces population, increases population in attacking city
+    (show a slavery icon, maybe a collar)
+  b increases internal dissent  
+2 ritual sacrifice
+  a needs slaves, slavery
+  b kills population, increases main culture, shows an altar  
+2 prostituion
+  a chance of "converting" outsiders (show image)
+  b reduces internal dissent
+  c spreads disease
+3 gay male sex ban
+  a reduces disease
+  b increases internal dissent     
+
+1 each tech has a % adopted, these grow over time, but can be reduced with contact with
+  civs that don't have that tech (only some), some techs also reduce other techs 
+2 funny stories, explanations for the techs 
+
+1 think about list of techs, how to implement, and how to show
+2 think about how to configure them
+3 more choices
+
+5 work on initial techs that shape the villages
+  a slavery (cultures with tech take over villages, cultures without destroy villages, though slavery cultures can still destroy villages)
+  b prostitution (cultures with tech have a high chance to convert outsiders, but not enemies, based on conflict, conflict is a double)
+  c early disease (cultures with tech spread the tech, the tech damages based on liberalism, but burns itself out)
+  d domestication (precursor to disease, gives population boost)
+  e archery (extra damage, population boost)
+  f copper (extra damage, population boost)
+  g tin (population boost if tin is nearby)
+  h bronze (requires copper, tin, needs tin nearby, damage, pop boost)
+  i long distance trade (can procure long distance resources, but potentially fragile)
+  j religious story techs increase max size, but slavery then reduces that
+  k tolerance (requires slavery, revolts cause damage instead of destroying rule of law)
+  (add a few techs that do different clothing and weapons)  
+4 start picking technologies that will increase the max
+
+
+1 100 story-techs
+  a story about a man who rose from the dead after 3 days (slight max to population health, slight boost to average age)
+    after hearing this story people were more likely to go extra lengths to check for life 
+    before burying people.  Occasionally a few more would be saved, additionally it teaches
+    more humility in medicine
+  b hippocratic oath- (+ to pop health + to average age) The earliest healthcare was completely 
+    random.  In the purest scientific method people tried everything and then checked if they 
+    became better.  Unfortunately they weren't so great at double blind studies so they tended
+    to see more positive results than were strictly warranted.  The hippocratic oath taught them
+    to not trust medical knowledge that harmed patients.
+  c hammurabi
+  d flood myth
+  e african myths
+  f other myths
+  g superstitious dieties
+  h monotheism
+  i stonehenge - Keeping proper track of time was essential to predicting
+   the weather which was essential to growing crops. *pop boost)
+  j godking - (precursor is leader, reduced conflict with enemies)
+    There is a natural human instinct to hype individuals to godlike
+    porportions.  If your leader is a god then your enemies should
+    fear warring with you (comes quicker with high fundamentalism
+    which is essentially just the desire to take things to an extreme)
+    (note it should go leader, great spiritual leader, partially god,
+     godking).  On this tech there is an additional story which is
+     basically (leader or whatever title) is abusing his people. 
+      
+2 intrapersonal conflict
+  a leaders analyze the situation and can make decisions based on the lay of the land.
+  b they can call for increased aggression against a specific target based on cultural differences,
+    greed, or revenge
+  c to start with there should be dozens of leaders and splitting because of low tech for large 
+   societies but there should be cultural influence (ie techs).  Then over time leaders should
+   go on campaigns where they become larger, but eventually lose on a rule of law failure
+
+
 1 logic to allow for choices
-  a restrict trade to within leaders (secrecy)
+  #a restrict trade to within leaders (secrecy), then increment to different kinds of open trade
 
 1 work on meaningful results based on choices
   a dump a bunch of random stat techs out there
@@ -53,56 +199,6 @@ make the turns be year + double
 after a suitable amount of turns (ie to where things are relatively distributed
 then a technology should be introduced.  Most techs should be superior enough that they take over the majority of the 
 curtain with new behavior/stats
-5 work on initial techs that shape the villages
-  a slavery (cultures with tech take over villages, cultures without destroy villages, though slavery cultures can still destroy villages)
-  b prostitution (cultures with tech have a high chance to convert outsiders, but not enemies, based on conflict, conflict is a double)
-  c early disease (cultures with tech spread the tech, the tech damages based on liberalism, but burns itself out)
-  d domestication (precursor to disease, gives population boost)
-  e archery (extra damage, population boost)
-  f copper (extra damage, population boost)
-  g tin (population boost if tin is nearby)
-  h bronze (requires copper, tin, needs tin nearby, damage, pop boost)
-  i long distance trade (can procure long distance resources, but potentially fragile)
-  j religious story techs increase max size, but slavery then reduces that
-  k tolerance (requires slavery, revolts cause damage instead of destroying rule of law)
-  (add a few techs that do different clothing and weapons)  
-4 start picking technologies that will increase the max
-
-
-1 100 story-techs
-  a story about a man who rose from the dead after 3 days (slight max to population health, slight boost to average age)
-    after hearing this story people were more likely to go extra lengths to check for life 
-    before burying people.  Occasionally a few more would be saved, additionally it teaches
-    more humility in medicine
-  b hippocratic oath- (+ to pop health + to average age) The earliest healthcare was completely 
-    random.  In the purest scientific method people tried everything and then checked if they 
-    became better.  Unfortunately they weren't so great at double blind studies so they tended
-    to see more positive results than were strictly warranted.  The hippocratic oath taught them
-    to not trust medical knowledge that harmed patients.
-  c hammurabi
-  d flood myth
-  e african myths
-  f other myths
-  g superstitious dieties
-  h monotheism
-  i stonehenge - Keeping proper track of time was essential to predicting
-   the weather which was essential to growing crops. *pop boost)
-  j godking - (precursor is leader, reduced conflict with enemies)
-    There is a natural human instinct to hype individuals to godlike
-    porportions.  If your leader is a god then your enemies should
-    fear warring with you (comes quicker with high fundamentalism
-    which is essentially just the desire to take things to an extreme)
-    (note it should go leader, great spiritual leader, partially god,
-     godking).  On this tech there is an additional story which is
-     basically (leader or whatever title) is abusing his people. 
-      
-2 intrapersonal conflict
-  a leaders analyze the situation and can make decisions based on the lay of the land.
-  b they can call for increased aggression against a specific target based on cultural differences,
-    greed, or revenge
-  c to start with there should be dozens of leaders and splitting because of low tech for large 
-   societies but there should be cultural influence (ie techs).  Then over time leaders should
-   go on campaigns where they become larger, but eventually lose on a rule of law failure
      
 3 change the time scale (have a number of years and then a % for the year  
 
