@@ -95,6 +95,21 @@ public class DemographicRule extends VParams {
 	public void init(FullMapData fmd) {
 		singleton = this;
 
+		for(HashMapData hmd : fmd){
+			String name = null;
+			if(hmd.containsKey(Demographics.hominids)){
+				name = Demographics.hominids;
+			} else if(hmd.containsKey(Demographics.neanderthals)){
+				name = Demographics.neanderthals;
+			}
+			if(name != null){
+				create similar to previous idea
+				they will behave roughly equivalent to the mystic quest
+				object, but the difference is that they will occasionally 
+				split.
+			}
+		}
+		
 		beginningStories.add(new BasicStory("damagesword.png","Young men are excessively fighting",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.3,VConstants.chance,.4,VConstants.conflict,.5),new CauseDeaths(.1)));
 		beginningStories.add(new BasicStory("damageheal.png","Young women are very fertile",new PBase(Demographics.female,.4,Age.YOUNG_ADULT,.4,VConstants.chance,.4),new Birth(.1)));
 		beginningStories.add(new BasicStory("damagepunch.png","The elders send some young men on a mystical quest",new PBase(VConstants.size,.6,Demographics.male,.4,Demographics.averageAge,.7,VConstants.chance,.4),new MysticalQuest()));
@@ -320,6 +335,8 @@ public class DemographicRule extends VParams {
 		public static final String genocide = "genocide";
 		public static final String simpleLayrnx = "simpleLayrnx";
 		public static final String giant = "giant";
+		public static final String hominids = "hominids";
+		public static final String neanderthals = "neanderthals";
 		public static boolean chart=false;
 		public static Chart c =new Chart();{
 			c.setType(Type.SPLINE);
