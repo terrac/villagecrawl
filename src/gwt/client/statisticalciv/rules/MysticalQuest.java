@@ -168,7 +168,7 @@ public class MysticalQuest implements PBaseRule {
 		return true;
 	}
 
-	private void doYoungMen(PBase p, HashMapData hmd) {
+	public static LivingBeing doYoungMen(PBase p, HashMapData hmd) {
 
 		LivingBeing lb = addPerson(hmd);
 		lb.getAlterHolder().put(VConstants.weapon, new Item("dagger"));
@@ -235,7 +235,7 @@ public class MysticalQuest implements PBaseRule {
 				return new Returnable(true);
 			}
 		});
-
+		return lb;
 	}
 
 	public static LivingBeing addPerson(HashMapData hmd) {

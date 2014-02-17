@@ -106,6 +106,9 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 	}
 
 	public static LivingBeing createPerson(String traitnames) {
+		return createPerson(traitnames, true);
+	}
+	public static LivingBeing createPerson(String traitnames,boolean doHair) {
 		if (traitnames.startsWith(VConstants.livingbeing)) {
 			traitnames = traitnames
 					.substring(VConstants.livingbeing.length() + 1);
@@ -171,7 +174,9 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 
 		lb.setTeam(tarr[0]);
 		// generateRandomItems(lb);
-		doHair(lb);
+		if(doHair){
+			doHair(lb);			
+		}
 		
 		if(tarr.length > 1&& person.containsKey(VConstants.name)){
 			lb.put(VConstants.name,
@@ -395,13 +400,17 @@ public class RandomPersonCreation extends VParams implements RandomCreation {
 
 	public static LivingBeing addRandomPerson(HashMapData hmd, String monname,
 			String team) {
+		return addRandomPerson(hmd, monname, team, true);
+	}
+	public static LivingBeing addRandomPerson(HashMapData hmd, String monname,
+				String team,boolean doHair) {
 		String gender = VConstants.male;
 		if (VConstants.getRandom().nextBoolean()) {
 			gender = VConstants.female;
 		}
 
 		LivingBeing lb = RandomPersonCreation.createPerson(monname + " "
-				+ gender);
+				+ gender,doHair);
 		lb.setTeam(team);
 		// lb.put(VConstants.image, "/images/goblin.png");
 		// lb.getTemplate().setRationalChild("main", "recruitable");

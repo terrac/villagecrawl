@@ -111,17 +111,17 @@ public class DemographicCiv extends ClientBuild2 {
 		
 		BuildMap bm1 = new BuildMap(charmap, 
 				  ""
-				+ "wwwwwwwwwwwwwwww"
-				+ "wwww         www"
-				+ "   n     n      "
-				+ "w            n  "
-				+ "ww  n    n     w"
+				+ "wwwwwwwwwwwwwwww\\n"
+				+ "wwww         www\\n"
+				+ "   n     n      \\n"
+				+ "w            n  \\n"
+				+ "ww  n    n     w\\n"
 				+ "wwwwwwwwwwwww ww\\n"
 				+ "wwdddddddddddwww\\n"
-				+ "wwddddhdddhddddw\\n"
-				+ "wwwddddddddddddw\\n"
-				+ "wwwww        www\\n"
-				+ "wwwwwtrht t wwww\\n"
+				+ "wwdddddddddddddw\\n"
+				+ "wwwhdddddddddddw\\n"
+				+ "wwww        hwww\\n"
+				+ "wwwwwtr t t wwww\\n"
 				+ "wwwwwtttttr wwww\\n"
 				+ "wwwwww  r  wwwww\\n"
 				+ "wwwwwww p wwwwww\\n"
@@ -163,8 +163,8 @@ public class DemographicCiv extends ClientBuild2 {
 		charmap.put("f", fish);
 		SimpleMD pop = new SimpleMD(VConstants.gate,SConstants.farm);
 		charmap.put("p", pop);
-		charmap.put("h", Demographics.hominids);
-		charmap.put("n", Demographics.neanderthals);		
+		charmap.put("h", new SimpleMD(Demographics.hominids,""));
+		charmap.put("n", new SimpleMD(Demographics.neanderthals,""));		
 		return charmap;
 	}
 

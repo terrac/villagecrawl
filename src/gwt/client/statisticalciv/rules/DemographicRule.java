@@ -103,10 +103,7 @@ public class DemographicRule extends VParams {
 				name = Demographics.neanderthals;
 			}
 			if(name != null){
-				create similar to previous idea
-				they will behave roughly equivalent to the mystic quest
-				object, but the difference is that they will occasionally 
-				split.
+				ProtoHuman.addProtoHuman(hmd, name);
 			}
 		}
 		

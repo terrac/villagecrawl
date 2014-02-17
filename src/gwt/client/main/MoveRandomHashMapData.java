@@ -17,7 +17,7 @@ public class MoveRandomHashMapData extends BaseMoveMap<HashMapData>{
 		super(scope,descr);
 	}
 	public MoveRandomHashMapData() {
-	
+		put(VConstants.radius, 1);
 	}
 @Override
 protected HashMapData findNewMD(FullMapData fullMapData, LivingBeing person) {
@@ -28,11 +28,14 @@ protected HashMapData findNewMD(FullMapData fullMapData, LivingBeing person) {
 		int yr = VConstants.getRandom().nextInt(getRadius()*2+1);
 		xr -= getRadius();
 		yr -= getRadius();
+		count++;
 		if(xr == 0&& yr== 0){
 			continue;
 		}
 		md =fullMapData.getData(person.getX() + xr, person.getY() + yr);
-		count++;
+		if(md != null&&md.isBlock()){
+			md = null;
+		}
 	}
 	return md;
 }

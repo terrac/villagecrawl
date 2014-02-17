@@ -118,7 +118,12 @@ public static String vault =
  "/images/doll/weapon/katana.png," +
  "/images/doll/weapon/pick_axe.png," +
  "/images/doll/weapon/sickle.png," +
- "/images/doll/weapon/scimitar.png" 
+ "/images/doll/weapon/scimitar.png,"+ 
+ "/images/waterdamage.png,"+ 
+ "/images/doll/base/giant-female.png,"+ 
+ "/images/doll/base/giant-male.png,"+ 
+ "/images/doll/base/orc-female.png,"+
+ "/images/doll/base/orc-male.png";
  
 
  ;

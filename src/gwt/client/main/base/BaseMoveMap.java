@@ -26,7 +26,7 @@ public abstract class BaseMoveMap<T extends MapData> extends OObjectB{
 		return getS(VConstants.description);
 	}
 	public int getRadius() {
-		return getInt(VConstants.radius);
+		return (Integer) get(VConstants.radius);
 	}
 
 

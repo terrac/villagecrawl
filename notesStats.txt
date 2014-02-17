@@ -1,6 +1,99 @@
-1 add mystic quest stuff for proto humans (check for errors)
+1 the neanderthals/early hominids should be beaten when thrown spears are developed
+2 chains of story techs.  Each village is at a specific part of the story and new parts
+  are dropped in
+  a write techs from random elements
+    (basically after a random amount of time pull from basic list or from current chain in list
+  b write more techs (hundreds)  
+
+
+
+1 wr
+ite code that does the randomness and introduces the special elements
+2 think more about composing early stories into normal events
+  (ie from fundamentalism to liberalism to disease)
+  fundamentalism increases as disease kills, and naturally decereases to 10% over time
+3 fundamentalism spawns stories, liberalism does too, just pick stories and initially write
+  them while doing the effects.  The key concept is that something happens and the enduring 
+  things are considered responses to actions.
+  a story about the son of concept.  At first they just say I am x son of Y.  Then they shorten
+    it.  Then they forget its meaning compleetly and make it a part of some names.
+  b story about the dump in the river for justice and an explanation for why they accept if
+    the person survives (the society respects the strength to survive the river more than
+    questionable morality)
+  c    
+1st story based event
+  gilgamesh terrorises own citizens  (create a giant, run some lines of gilgamesh, giant destroys
+  nearby enemy villages, causes massive fighting in own village)
+  einkadu (giant who is a wild man, if goes to same village then gilgamesh stops terrorizing
+  village)
+  (note, those names are used, but the theme gets repeated
+  river flooding
+  huge flood (normal flood has a chance of wiping out the village)
+  mystical quest
+  (mystical quest added, once that tech is added villages just do it on their own)
+  (slavery - this population has the ability to take complicated technologies of other villages)
+  (indentured servitude - reduces conflict (which starts out really high)
+  (sheep domestication - leads to disease, boost in max population)
+  (early laws - (pick specific ones, and show how they were developed)
+  (early religion - (do the same), they increase max population by small amounts
+   and allow for larger max leaders (ie 1 might add .4 to the max villages, so you get several
+   and you have another village)
+  http://anthro.palomar.edu/homo2/mod_homo_5.htm 
+  (do graphs and stuff to show the effectiveness of your choices, and have them all have long
+  lasting parts (like doing a flood deposits sediment)
+  
+goals
+
+1 a new look at history (ideally a gradual look) (so like a gradual explanation of neanderthals
+2 choices that let you customize who will win (what type of civ) and rewards that fit with the story
+  
+  
+  
+So you pick stories and your people gradually fight against early hominids, but they don't
+start winning until spear throwing is introduced.
+disease and other things then alter the balance of power and cause villages to be destroyed
+trading then causes tech to be spread to friendly villages   
+
+1 think about text explanations
+  a neanderthals.  Ancient myth and legend of many people in europe speak about the giants who
+  came before man and who were killed off by the ancient gods.  Likewise the neanderthals were
+  bigger than the average human and were killed off by humans.  These mythologies tend to also
+  represent the weapons of these figures as a spear that is thrown.  For example Zeus wielded
+  a lightning bolt that acted like a thrown spear and defeated the titans.  Odin defeated the
+  frost giants and wields the spear Gungir.  
+  
+2 think about more choices (lots and lots of choices, simulation worries come much much much later)
+  a place down stories, religious elements, etc
+  b some might have no effect, some might have a small or a large long term effect
+    some might have a great short term effect
+  c pick earliest myths (hammurabi's laws, gilgamesh, flood myth).  They get mixed and traded
+    (but serious tech doesn't unless the same leader is there), 
+  d the basic idea is that you mix and match cultures, they mix and match with each other
+    and then they evolve into modern concepts while having effects that change things mixed
+    in too.
+  e a key component is that it should feel realistic and give insight into how people think
+    dispelling the idea that their responses are irrational  
+  f so early laws give extra flavor and context (ie you click on one, you click on a village
+   , an event happens and then the response is done    
+     
+1 timeline
+  a check to see if humans should do agriculture later 
+    (if so then think about some alternative gameplay then, while keeping core)
+    (eventually you would get an ability to place down a farm which some humans would go to
+     and propagate from)
+  b don't make it based on time, make it based on choices (so if you stop it will continue
+    to play, but stop advancing)
+  c have disasters move things backwards, other things move forwards, but you have to get
+    through the disasters to move things along.
+  d research about spear throwing technology being key to conquering neanderthals
+    (so for example eventually you would place down spear throwing and those would conquer
+     their neighbors and then spread out)   
+
+
 2 think about text explanations
 3 think about more choices (lots and lots of choices, simulation worries come much much much later)
+
+1 add mystic quest stuff for proto humans (check for errors)
 
 3 for humans add some additional timeline based options to where if you put them
   on humans at the edge then they will take off and conquer the neandethals
