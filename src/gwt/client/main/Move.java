@@ -52,7 +52,12 @@ public class Move extends OObject implements WhatSound{
 	private Path movepath;
 
 
-
+	public int length(){
+		if(movepath == null){
+			return 0;
+		}
+		return movepath.getLength();
+	}
 	private Integer movepathindex;
 	
 	public Move shouldShowMove(){

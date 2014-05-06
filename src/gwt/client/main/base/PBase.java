@@ -28,7 +28,7 @@ public class PBase implements MarkerInterface {
 		}
 	}
 	
-	private Map<String, Object> objMap = new HashMap<String, Object>();
+	 Map<String, Object> objMap = new HashMap<String, Object>();
 
 	public void setObjMap(Map<String, Object> objMap) {
 		this.objMap = objMap;

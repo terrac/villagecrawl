@@ -3,12 +3,9 @@ package gwt.client.game.display;
 import gwt.client.game.AttachUtil;
 import gwt.client.main.VConstants;
 import gwt.client.map.HashMapData;
-import gwt.client.map.MapData;
+import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 import java.util.Map;
-
-import org.moxieapps.gwt.highcharts.client.Chart;
-import org.moxieapps.gwt.highcharts.client.Series.Type;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -30,8 +27,17 @@ public class HMDDisplay extends UIVParams {
 		if(current == null){
 			return;
 		}
-		HTML ht = (HTML) dhmd.getWidget(0);
+		Demographics d = (Demographics) current.get(VConstants.demographics);
 		
+		HTML ht = (HTML) dhmd.getWidget(0);
+		if(d != null){
+			ht.setVisible(false);
+			d.c.setVisible(true);
+			d.execute();
+		}else {
+			ht.setVisible(true);
+			d.c.setVisible(false);
+		}
 		ht.setHTML(current.getPosition()+" <br> "+current.toString().replace("\n","<br>"));
 		
 
@@ -67,6 +73,7 @@ public class HMDDisplay extends UIVParams {
 		final HTML w = new HTML();
 		
 		dhmd.add(w);
+		dhmd.add(Demographics.c);
 
 		w.setSize("20em", "21em");
 		dhmd.setSize("20em", "20em");

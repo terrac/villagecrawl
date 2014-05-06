@@ -110,6 +110,9 @@ public class MysticalQuest implements PBaseRule {
 
 		@Override
 		public boolean execute(OObject oo, final LivingBeing person) {
+			if(((Move) oo).length()> 7){
+				return false;
+			}
 			FullMapData fullMapData = person.getParent().getParent();
 			double conflict = .3;
 			if (VConstants.getRandom().nextDouble() < conflict) {

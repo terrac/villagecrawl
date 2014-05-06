@@ -79,10 +79,12 @@ public class DemographicRule extends VParams {
 //		  i long distance trade (can procure long distance resources, but potentially fragile)
 //		  j religious story techs increase max size, but slavery then reduces that
 //		  k tolerance (requires slavery, revolts cause damage instead of destroying rule of law)
-		addTech(Demographics.slavery,"red");
-		addTech(Demographics.prostution,"yellow");
-		addTech(Demographics.earlyDisease,"blue");
-		  
+//		addTech(Demographics.slavery,"red");
+//		addTech(Demographics.prostution,"yellow");
+//		addTech(Demographics.earlyDisease,"blue");
+		addTech(Demographics.gang_warfare, "red");
+		addTech(Demographics.sexual_freedom, "blue");
+		
 	}
 	
 	private List<PBase> leadersList = new ArrayList();
@@ -139,6 +141,8 @@ public class DemographicRule extends VParams {
 				for(Object a : gate.getListCreate(VConstants.technology)){
 					addTech((String)a, hmd);
 				}
+				addTech(Demographics.gang_warfare, hmd);
+				addTech(Demographics.sexual_freedom, hmd);
 				Age.ageYears(50,getDemo(hmd),hmd);
 
 			}
@@ -174,7 +178,12 @@ public class DemographicRule extends VParams {
 		hmd.getMapData(VConstants.gate).put(VConstants.overlay,CultureTrade.getOverlay(hmd));
 		getDemo(hmd).put(DCon.fundamentalism,DemographicRule.getSingleton().getType(VConstants.leader).getPBase(Demographics.getHighestCultureName(hmd)).getDouble(DCon.fundamentalism));	
 		
-		getDemo(hmd).getListCreate(VConstants.technology).addAll(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
+		List<String> techList = getDemo(hmd).getListCreate(VConstants.technology);
+		techList.addAll(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
+		for(String tech: techList){
+			PBase t = new PBase(VConstants.percent,VConstants.getRandom().nextDouble());
+			getDemo(hmd).getPBase(Demographics.technologyMap).put(tech, t);
+		}
 		getDemo(hmd).getListCreate(Demographics.technologyColor).addAll(DemographicRule.getDemo(home).getListCreate(Demographics.technologyColor));
 		Age.ageYears(50,getDemo(hmd),hmd);
 	}
@@ -320,6 +329,9 @@ public class DemographicRule extends VParams {
 		return new DemographicRule().copyProperties(this);
 	}	
 	public static class Demographics extends PBase{
+		public static final String technologyMap = "techMap";
+		public static final String sexual_freedom = "Sexual Freedom";
+		public static final String gang_warfare = "Gang Warfare";
 		public static final String earlyDisease = "earlyDisease";
 		public static final String prostution = "prostitution";
 		public static final String slavery = "slavery";
@@ -349,7 +361,7 @@ public class DemographicRule extends VParams {
 			// TODO Auto-generated method stub
 			//if(current != this){
 				List<Integer> ageList =this.getListCreate(VConstants.age);
-				
+				c.getSeries()[0].setPoints(new Number[]{getDouble(VConstants.size),5,5});
 				c.removeAllSeries();
 				Series s = 	c.createSeries();
 				

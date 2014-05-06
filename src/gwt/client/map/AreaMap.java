@@ -3,27 +3,15 @@ package gwt.client.map;
 import gwt.client.astar.world.Mover;
 import gwt.client.astar.world.WorldMap;
 import gwt.client.main.IFullMapExecute;
-import gwt.client.main.OneCharacterMap;
 import gwt.client.main.Person;
 import gwt.client.main.Point;
 import gwt.client.main.VConstants;
-import gwt.client.main.base.LivingBeing;
 import gwt.client.map.runners.GetForNearby;
 import gwt.client.output.ImageCache;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.persistence.Id;
-import javax.persistence.Transient;
-
-import org.apache.commons.lang.ArrayUtils;
-
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.core.java.util.Collections;
-import com.googlecode.objectify.annotation.Serialized;
 
 public class AreaMap<T extends MapData,E extends MapData> extends HMapData implements WorldMap, Iterable<T> {
 	public int xdisplay = 0; 
