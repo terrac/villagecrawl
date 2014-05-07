@@ -17,6 +17,9 @@ public class CauseDeaths implements PBaseRule{
 	public boolean run(PBase p, HashMapData hmd, FullMapData fmd) {
 		Age.kill(p, Age.YOUNG_ADULT, amt *p.getDouble(VConstants.size));
 		RuleOfLaw.checkFailure(hmd);
+		if(DemographicRule.getDemo(hmd).getSize() < 20 ){
+			DemographicRule.removeVillage(hmd);
+		}
 		return true;
 	}
 }

@@ -3,6 +3,7 @@ package gwt.client.game.display;
 import gwt.client.game.AttachUtil;
 import gwt.client.main.VConstants;
 import gwt.client.map.HashMapData;
+import gwt.client.map.MapData;
 import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 import java.util.Map;
@@ -27,17 +28,22 @@ public class HMDDisplay extends UIVParams {
 		if(current == null){
 			return;
 		}
-		Demographics d = (Demographics) current.get(VConstants.demographics);
-		
 		HTML ht = (HTML) dhmd.getWidget(0);
-		if(d != null){
-			ht.setVisible(false);
-			d.c.setVisible(true);
-			d.execute();
-		}else {
-			ht.setVisible(true);
-			d.c.setVisible(false);
+		
+		MapData md = current.getMapData(VConstants.gate);
+		if(null != md){
+			Demographics d = (Demographics) md.get(VConstants.demographics);
+			if(d != null){
+				ht.setVisible(false);
+				d.c.setVisible(true);
+				d.execute();
+			}else {
+				ht.setVisible(true);
+				d.c.setVisible(false);
+			}
 		}
+		
+		
 		ht.setHTML(current.getPosition()+" <br> "+current.toString().replace("\n","<br>"));
 		
 

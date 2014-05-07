@@ -27,6 +27,7 @@ import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 import gwt.shared.ClientBuild;
 
 public class MysticalQuest implements PBaseRule {
+	
 	protected static final class FightVillage extends OObject {
 		@Override
 		public Returnable execute(FullMapData fullMapData, LivingBeing person) {
@@ -113,8 +114,14 @@ public class MysticalQuest implements PBaseRule {
 			if(((Move) oo).length()> 7){
 				return false;
 			}
-			FullMapData fullMapData = person.getParent().getParent();
+			HashMapData h = person.getParent();
+			Demographics demo = DemographicRule.getDemo(h);
 			double conflict = .3;
+			if (demo != null) {
+				conflict = demo.getTechScore(Demographics.gang_warfare);
+			}
+			
+			FullMapData fullMapData = person.getParent().getParent();
 			if (VConstants.getRandom().nextDouble() < conflict) {
 				HashMapData hmd = fullMapData.getNearby(person,
 						new GetForNearby<HashMapData>(fullMapData) {

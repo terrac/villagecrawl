@@ -1,41 +1,18 @@
 package gwt.client.statisticalciv.rules;
 
-import gwt.client.EntryPoint;
-import gwt.client.game.display.UImage;
-import gwt.client.game.vparams.BuildMap;
-import gwt.client.game.vparams.CopySelection;
-import gwt.client.game.vparams.DisplayPopup;
-import gwt.client.game.vparams.random.RandomPersonCreation;
-import gwt.client.item.Item;
+import gwt.client.game.display.LogDisplay;
 import gwt.client.item.SimpleMD;
-import gwt.client.main.Move;
-import gwt.client.main.MoveRandomHashMapData;
-import gwt.client.main.PTemplate;
-import gwt.client.main.Point;
-import gwt.client.main.Returnable;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.LivingBeing;
-import gwt.client.main.base.OObject;
 import gwt.client.main.base.PBase;
-import gwt.client.main.base.Parameters;
-import gwt.client.main.base.SimpleOObject;
 import gwt.client.map.FullMapData;
 import gwt.client.map.HashMapData;
 import gwt.client.map.MapData;
-import gwt.client.map.runners.GetForNearby;
-import gwt.client.statisticalciv.ConflictRule;
-import gwt.client.statisticalciv.FoodRule;
 import gwt.client.statisticalciv.SConstants;
-import gwt.client.statisticalciv.TechnologyRule;
-import gwt.client.statisticalciv.oobjects.TechnologyAction;
-import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
-import gwt.shared.ClientBuild;
-import gwt.shared.StatisticalCiv;
 import gwt.shared.datamodel.VParams;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +23,6 @@ import org.moxieapps.gwt.highcharts.client.Series;
 import org.moxieapps.gwt.highcharts.client.Series.Type;
 
 import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.widgetideas.graphics.client.Color;
 
 public class DemographicRule extends VParams {
 
@@ -79,9 +54,9 @@ public class DemographicRule extends VParams {
 //		  i long distance trade (can procure long distance resources, but potentially fragile)
 //		  j religious story techs increase max size, but slavery then reduces that
 //		  k tolerance (requires slavery, revolts cause damage instead of destroying rule of law)
-//		addTech(Demographics.slavery,"red");
-//		addTech(Demographics.prostution,"yellow");
-//		addTech(Demographics.earlyDisease,"blue");
+		addTech(Demographics.slavery,"purple");
+		addTech(Demographics.prostution,"yellow");
+		addTech(Demographics.earlyDisease,"orange");
 		addTech(Demographics.gang_warfare, "red");
 		addTech(Demographics.sexual_freedom, "blue");
 		
@@ -91,7 +66,7 @@ public class DemographicRule extends VParams {
 	
 	private List<PBase> tLeadersList = new ArrayList();
 	
-	public static BasicStory flood = new BasicStory("waterdamage.png","Flooding causes massive",.1,new CauseDeaths(.4));
+	public static BasicStory flood = new BasicStory("waterdamage.png","Flooding causes massive",.1,new CauseDeaths(.95));
 	
 	
 	public void init(FullMapData fmd) {
@@ -143,6 +118,12 @@ public class DemographicRule extends VParams {
 				}
 				addTech(Demographics.gang_warfare, hmd);
 				addTech(Demographics.sexual_freedom, hmd);
+				List<String> techList = getDemo(hmd).getListCreate(VConstants.technology);
+				
+				for(String tech: techList){
+					PBase t = new PBase(VConstants.percent,VConstants.getRandom().nextDouble());
+					getDemo(hmd).getType(Demographics.technologyMap).put(tech, t);
+				}
 				Age.ageYears(50,getDemo(hmd),hmd);
 
 			}
@@ -181,8 +162,10 @@ public class DemographicRule extends VParams {
 		List<String> techList = getDemo(hmd).getListCreate(VConstants.technology);
 		techList.addAll(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
 		for(String tech: techList){
-			PBase t = new PBase(VConstants.percent,VConstants.getRandom().nextDouble());
-			getDemo(hmd).getPBase(Demographics.technologyMap).put(tech, t);
+			double pct=getDemo(hmd).getTechScore(tech);
+			PBase t = new PBase(VConstants.percent,Math.abs(pct+(VConstants.getRandom().nextDouble()*.4 - .2)));
+			//LogDisplay.log("new Village "+tech+" "+t.getDouble(VConstants.percent), 2);
+			getDemo(hmd).getType(Demographics.technologyMap).put(tech, t);
 		}
 		getDemo(hmd).getListCreate(Demographics.technologyColor).addAll(DemographicRule.getDemo(home).getListCreate(Demographics.technologyColor));
 		Age.ageYears(50,getDemo(hmd),hmd);
@@ -347,8 +330,13 @@ public class DemographicRule extends VParams {
 		public static final String hominids = "hominids";
 		public static final String neanderthals = "neanderthals";
 		public static boolean chart=false;
-		public static Chart c =new Chart();{
-			c.setType(Type.SPLINE);
+		public static Series series;
+		public static Chart c =new Chart();
+		static{
+			c.setType(Type.COLUMN);
+			c.getXAxis().setCategories("Population","Sexual Freedom","Gang Warfare");
+			series=c.createSeries();
+			c.addSeries(series);
 		}
 		static Demographics current;
 		public Demographics() {
@@ -356,21 +344,23 @@ public class DemographicRule extends VParams {
 			put(Demographics.male,.5);
 			put(Demographics.averageAge,.5);
 		}
-		
+		long currentTime;
 		public void execute() {
+			if(currentTime > new Date().getTime()){
+				return;
+			}
+			currentTime = new Date().getTime() + 1000;
 			// TODO Auto-generated method stub
 			//if(current != this){
 				List<Integer> ageList =this.getListCreate(VConstants.age);
-				c.getSeries()[0].setPoints(new Number[]{getDouble(VConstants.size),5,5});
-				c.removeAllSeries();
-				Series s = 	c.createSeries();
+				series.setPoints(new Number[]{getDouble(VConstants.size),getTechScore(Demographics.gang_warfare)*100,getTechScore(Demographics.sexual_freedom)*100});
 				
-				for(int a= 0; a < ageList.size(); a++){
-					s.addPoint(ageList.get(a));
-				}
-				c.addSeries(s);
 //				current = this;
 //			}
+		}
+
+		public double getTechScore(String key) {
+			return getType(Demographics.technologyMap).getType(key).getDouble(VConstants.percent);
 		}
 		NumberFormat d = NumberFormat.getFormat("##%");
 		NumberFormat de = NumberFormat.getFormat("##");
