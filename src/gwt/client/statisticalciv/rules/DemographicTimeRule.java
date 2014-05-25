@@ -51,7 +51,7 @@ public class DemographicTimeRule extends VParams {
 		techs.add(new PBase(VConstants.name,Demographics.earlyDisease,VConstants.count,3));
 	}
 	
-	int year = 0;
+	public static int year = 0;
 	double yearPct = 0;
 	double increment = .07;
 	@Override

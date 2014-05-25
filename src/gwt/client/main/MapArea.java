@@ -220,8 +220,8 @@ public class MapArea extends MapData {
 		// }
 		if (htmlOut.getCurrentlyFollowed() != null
 				&& htmlOut.getCurrentlyFollowed().getParent() != null) {
-			htmlOut.displayAreaMap(htmlOut.getCurrentlyFollowed().getParent()
-					.getParent());
+//			htmlOut.displayAreaMap(htmlOut.getCurrentlyFollowed().getParent()
+//					.getParent());
 		} else {
 			htmlOut.displayAreaMap(htmlOut.currentFMD);
 		}

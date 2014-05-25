@@ -20,7 +20,7 @@ public class ClickSelect extends VParams {
 			return;
 		}
 		LivingBeing lb=(LivingBeing) map.get(AttachUtil.OBJECT);
-		EntryPoint.game.getHtmlOut().setCurrentlyFollowedUnset(lb);
+		EntryPoint.game.getHtmlOut().setCurrentlyFollowed(lb.getParent());
 		
 	}
 	

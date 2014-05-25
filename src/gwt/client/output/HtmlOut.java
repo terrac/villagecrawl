@@ -28,6 +28,7 @@ import gwt.client.map.SymbolicMap;
 import gwt.client.output.html.Click;
 import gwt.client.output.html.GCanvas;
 import gwt.client.rpc.IExecute;
+import gwt.client.statisticalciv.rules.DemographicRandomEffects;
 import gwt.client.statisticalciv.rules.DemographicRule;
 import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
@@ -46,6 +47,8 @@ import com.google.gwt.canvas.dom.client.FillStrokeStyle;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.CanvasElement;
 import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
@@ -55,6 +58,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -351,44 +355,49 @@ public class HtmlOut extends MainPanel<GCanvas> {
 						}
 						drawTechs(symbolicShell2,y,x,hashMapData,imgCache);
 					}
-
+					if(hashMapData == getCurrentlyFollowed()){
+						imgCache.addCache(x, y, "selected");
+						drawImage(symbolicShell2, y, x,
+								"/images/selected.png");
+							
+					}
 					
 					if (lb != null) {
 						imgCache.setCache(x, y, lb.getId());
 
 
-						if (cfList.contains(lb)) {
-							if (lb.getParent() == null) {
-								continue;
-							}
-
-							// Point p=lb.getPosition();
-							imgCache.addCache(x, y, "selected");
-							drawImage(symbolicShell2, y, x,
-									"/images/selected.png");
-
-							OObject current = lb.getTemplate().getCurrent();
-							if (current != null) {
-								IPhysical ipy = current.getTopOParent()
-										.getDisplayPosition();
-								if (ipy != null) {
-									if (ipy instanceof HashMapData) {
-										if (parent.equals(((HashMapData) ipy)
-												.getParent())) {
-											imgCache.addCache(x, y,
-													"displayimg");
-											drawImage(symbolicShell2,
-													ipy.getY() - ys, ipy.getX()
-															- xs, current
-															.getTopOParent()
-															.getDisplayImage());
-										}
-									}
-
-								}
-							}
-
-						}
+//						if (cfList.contains(lb)) {
+//							if (lb.getParent() == null) {
+//								continue;
+//							}
+//
+//							// Point p=lb.getPosition();
+//							imgCache.addCache(x, y, "selected");
+//							drawImage(symbolicShell2, y, x,
+//									"/images/selected.png");
+//
+//							OObject current = lb.getTemplate().getCurrent();
+//							if (current != null) {
+//								IPhysical ipy = current.getTopOParent()
+//										.getDisplayPosition();
+//								if (ipy != null) {
+//									if (ipy instanceof HashMapData) {
+//										if (parent.equals(((HashMapData) ipy)
+//												.getParent())) {
+//											imgCache.addCache(x, y,
+//													"displayimg");
+//											drawImage(symbolicShell2,
+//													ipy.getY() - ys, ipy.getX()
+//															- xs, current
+//															.getTopOParent()
+//															.getDisplayImage());
+//										}
+//									}
+//
+//								}
+//							}
+//
+//						}
 						Context2d c2d = symbolicShell2.getContext2d();
 						c2d.setLineWidth(5);
 						Integer inter = (Integer) lb.getStats().get(
@@ -480,11 +489,14 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		if(demo == null){
 			return;
 		}
-		List<String> techNames = demo.getListCreate(Demographics.technologyColor);
+		
+		List<String> techNames = DemographicRule.currentTechs;
 		for(int a = 0; a < 4&&a < techNames.size(); a++){
 			String name = techNames.get(a);
-			symbolicShell2.getContext2d().setFillStyle(name);
-			symbolicShell2.getContext2d().fillRect(x*imagesize+a*8, y*imagesize+24, 8, 8);
+			String color = demo.getTechColor(name);
+			double score = demo.getTechScore(name);
+			symbolicShell2.getContext2d().setFillStyle(color);
+			symbolicShell2.getContext2d().fillRect(x*imagesize+a*8, y*imagesize+24, 8, 8*score);
 		}
 	}
 
@@ -654,15 +666,15 @@ public class HtmlOut extends MainPanel<GCanvas> {
 
 	}
 
-	ErrorHandler imageerrorhandler = new ErrorHandler() {
-
-		@Override
-		public void onError(ErrorEvent event) {
-
-			Image img = (Image) event.getSource();
-
-		}
-	};
+//	ErrorHandler imageerrorhandler = new ErrorHandler() {
+//
+//		@Override
+//		public void onError(ErrorEvent event) {
+//
+//			Image img = (Image) event.getSource();
+//
+//		}
+//	};
 
 	int displays = 0;
 
@@ -671,6 +683,32 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		// hp.add(new ExitDisplay().getWidgetAndInit());
 		Widget pause = new PauseDisplay().getWidgetAndInit();
 		HorizontalPanel hp = new HorizontalPanel();
+		hp.add(new UIVParams() {
+			Button but;
+			@Override
+			public Widget getWidget() {
+				// TODO Auto-generated method stub
+				return but;
+			}
+			@Override
+			public void init() {
+				but= new Button();
+				but.setText("Remove selection");
+				
+				but.setSize("20em", "5em");
+				
+
+				ClickHandler pause = new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						DemographicRandomEffects.removeSelection();
+					}
+				};
+
+				but.addClickHandler(pause);
+			}
+		}.getWidgetAndInit());
 		hp.add(pause);
 		//gdp = new Label("Score");
 		//hp.add(gdp);
@@ -900,7 +938,7 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		});
 	}
 
-	public LivingBeing getCurrentOrLastSelectedPerson() {
+	public HashMapData getCurrentOrLastSelectedPerson() {
 
 		if (getCurrentlyFollowed() != null) {
 			return getCurrentlyFollowed();

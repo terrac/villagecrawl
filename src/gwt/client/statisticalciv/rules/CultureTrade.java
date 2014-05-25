@@ -126,7 +126,7 @@ public class CultureTrade implements PBaseRule {
 			return;
 		}
 		String tech=(String)VConstants.getRandomFromList(DemographicRule.getDemo(home).getListCreate(VConstants.technology));
-		DemographicRule.getSingleton().addTech(tech, hmd);
+		DemographicRule.getSingleton().addTech(tech, demo,.5);
 		
 	}
 }

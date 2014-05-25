@@ -31,7 +31,9 @@ public class Age implements PBaseRule{
 	}
 	public static void ageOneYear(PBase p, HashMapData hmd) {
 		Demographics demo = (Demographics)p;
-		birth(demo, .1,hmd);
+		double birthRate = .1;
+		birthRate += demo.getTechScore(Demographics.sexual_freedom) * .1;
+		birth(demo, birthRate,hmd);
 		List<Integer> ageList =p.getListCreate(VConstants.age);
 		
 		int averageAge=30;
@@ -79,6 +81,18 @@ public class Age implements PBaseRule{
 		for(String a : names){
 			p.put(a, p.getDouble(a)/size);
 		}
+		double d=p.getDouble(VConstants.maxsize);
+		if(d == 0){
+			d = size;
+		} else {
+			double mSize=(d + size)/2;
+			if(mSize > d){
+				d++;
+			} else {
+				d--;
+			}
+		}
+		p.put(VConstants.maxsize, d);
 		p.put(VConstants.size, size);
 	}
 	//eventually have an option to hit others for a certain %

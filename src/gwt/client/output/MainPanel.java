@@ -38,11 +38,12 @@ public abstract class MainPanel <Canvas> extends PBase{
 	protected int symbolicXSize = 700;
 	int symbolicYSize = 700;
 	public boolean startOpen = false;
-	private LivingBeing currentlyFollowed;
-	public LivingBeing getCurrentlyFollowed() {
+	//could eventually change to be either
+	private HashMapData currentlyFollowed;
+	public HashMapData getCurrentlyFollowed() {
 		return currentlyFollowed;
 	}
-	public void setCurrentlyFollowed(LivingBeing currentlyFollowed) {
+	public void setCurrentlyFollowed(HashMapData currentlyFollowed) {
 		this.currentlyFollowed = currentlyFollowed;
 	}
 	public List<LivingBeing> cfList = new ArrayList<LivingBeing>();
@@ -194,7 +195,7 @@ public abstract class MainPanel <Canvas> extends PBase{
 		if(getCurrentlyFollowed() != null&&getCurrentlyFollowed().getParent() != null){
 			
 			
-			displayMapData(getCurrentlyFollowed().getParent());
+			displayMapData(getCurrentlyFollowed());
 			
 //			if(currentlyFollowed.equals(lb)){
 //				if(!currentlyFollowed.getParent().getParent().equals(lastMap)){
@@ -292,7 +293,7 @@ public abstract class MainPanel <Canvas> extends PBase{
 				if(ent.getValue().equals(sender)){
 					
 					HashMapData md= ent.getKey().getData(x / imagesize, y / imagesize);
-					
+					setCurrentlyFollowed(md);
 					AttachUtil.run(AttachUtil.clickfmd, md, EntryPoint.game.getMapArea().getMap());
 					displayMapData(  md);
 				}
@@ -303,38 +304,10 @@ public abstract class MainPanel <Canvas> extends PBase{
 
 
 
-	protected LivingBeing lastSelected;
+	protected HashMapData lastSelected;
 
 	abstract public  void displayMapData(HashMapData mapData) ;
-	public void setCurrentlyFollwedUnset(HashMapData mapData) {
-		
-		LivingBeing lb = (LivingBeing) mapData.get(VConstants.livingbeing);
-		setCurrentlyFollowedUnset(lb);
-	}
-	public void setCurrentlyFollowedUnset(LivingBeing lb) {
-		if(unsetC){
-			return;
-		}
-		
-		if(lb != null){
-			if(lb.getParent() != null){
-				//lb.getParent().drawn = null;
-				lb.getParent().getParent().getImgCache().clearPositional(lb.getParent().getX(), lb.getParent().getY());
-			}
-			
-			setCurrentlyFollowed( lb);
-			cfList.clear();
-			cfList.add(lb);
-		} else {
-			lastSelected  = getCurrentlyFollowed();
-			setCurrentlyFollowed(null);
-			
-			unsetC = true;
-		}
-		if(!cfList.contains(getCurrentlyFollowed())){
-			cfList.clear();
-		}
-	}
+	
 	public void refreshFmds(){
 			displaySymbolicMap(EntryPoint.game.getMapArea().getMap());
 			if(currentFMD == null){

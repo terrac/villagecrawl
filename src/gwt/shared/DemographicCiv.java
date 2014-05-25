@@ -144,6 +144,37 @@ public class DemographicCiv extends ClientBuild2 {
 
 		return bm1;
 	}
+	
+	public static BuildMap spreadNorth(){
+		PBase charmap = buildCharMap();
+		
+		
+		BuildMap bm1 = new BuildMap(charmap, 
+				  "wwdddddddddddwww\\n"
+				+ "wwdddddddddddddw\\n"
+				+ "wwwhdddddddddddw\\n"
+				+ "wwww        hwww\\n"
+				+ "wwwwwtr t t wwww\\n"
+				+ "wwwwwtttttr wwww\\n"
+				+ "wwwwww  r  wwwww\\n"
+				+ "wwwwwww p wwwwww\\n"
+				+ "wwwwwwwwwwwwwwww", "mainarea");
+		PBase resource = new PBase();
+		
+		bm1.put(VConstants.resource, resource);
+
+		resource.getListCreate(VConstants.leftclick)
+				.add(new CopySelection("bagselection"));
+
+		resource.put(VConstants.defaultimage, "/images/grass.png");
+
+		resource.getType(VConstants.resource).put(VConstants.image,
+				"/images/itemshop.png");
+		resource.getType(VConstants.resource).put(VConstants.sound,
+				"tradingmusic");
+
+		return bm1;
+	}
 
 
 

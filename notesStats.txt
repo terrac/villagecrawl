@@ -1,3 +1,237 @@
+1 more events, cards, maps
+  a first map sticks with current cards
+  b introduce more cards/speciality cards at certain time periods.
+  c statistics demonstrating choices as well as a physically different map
+    1 people killed through violence from other people,natural disasters,natural means, old age
+     a life expectancy
+     b peope born
+     c total pop
+    2 ancient humanoid vs human population
+    3 a high level of gang warfare should spur a lot of conflict
+      b zero gang warfare should have zero conflict (but still conflict with humanoids)
+      c gang warfare should cause minor damage to the city initiating and major to the attacked
+        allowing for a steady state to be achieved normally (ie 100% gang warfare and 01% 
+        are hard to maintain)
+    4 a sexual freedom should spur population growth and rapid expansion
+      b on the initial level if you leave it for long enough the domestication of the dog    
+        should occur.  After that happens disease should hit sexual freedom cultures harder
+2 additional maps
+  a bronze age
+    1 complex trade networks(traders that specifically trade for tin, tin revealed on map
+      bronze allows for a population and fighting bonus)
+    2 lasting structures (event that changes picture of village, even destruction does
+      not remove the picture)
+    3 introduction of smallpox
+      a disease that causes massive damage based on sexual freedom
+        (ie 20+% sexual freedom destroys the population based on sexual freedom and then
+         reduces it slightly while potentialy destroying the village (a 20% chance for 20%
+         every few turns)
+  b expand europe
+    1 neanderthals
+    2 cold weather adaptations
+    3 precursor culture elements
+    4 maybe iron
+  c expand asia         
+    1 tropical weather adaptations
+    2 precursor culture elements
+    3    
+  d iron age
+    a fundamentalist culture and disease resistance
+    b iron reducing need for complex trade
+    c northern invaders
+
+1 the current issue is that the cards given are completely random.  They will need to be weighted so that the clicking is compelling
+2 on clicking there should be an alert ("clicking this will cause a flood", and "don't show this again) (eventually, and it should add a button to go back to that)
+  start with a button
+3 more events, cards,
+
+1 two bars showing the two techs
+  a take the existing one and turn into a function given a starting position
+  b do green and blue
+  c at 50 the abilities stop coming and you get to see how the village plays out
+    with some rare abilities maybe
+  b make village only get built once person gets to spot
+    
+
+1 extreme civilization
+  a extremely fast building
+  b make village only get built once person gets to spot
+  c more contextual visual clues
+  d pause to track the progress of your civ
+
+1e1a (build or use existing spread north map, add an explanation, and a time limit with scoring at the end)
+
+
+goal
+ 1 make pruning fun
+   a make the last card always be selected, add in a "settle" card and a "increase pop" card along with more and different disasters
+   b run long tests and debug (log information and put into charts so that can test whether or not they are working, like number of attacks)
+   c sexual freedom increases population quickly(slow down overall population growth though), gang warfare increases combat(already done)
+   d keep a running max population (ie max over last 20 turns, if less than 80% of max then no mystical quest and a note)
+   e initial time limit is 200 years, at that point it tells you if you failed or succeeded and displays charts
+     1 different success games http://en.wikipedia.org/wiki/Early_human_migrations (eventually try for exact dates) http://en.wikipedia.org/wiki/Paleolithic
+     	a spread north (just africa)
+     	b commit x damage to early hominids (turn the map into a part of africa)
+     	c spread along the coast to austrialia
+     	d spread into europe
+  f add technologies along this time
+ 2 make size be a multi bar chart that represents ages
+DemographicRule
+1 disable all extra functionality (ie everything, except orcs and neanderthals)
+#2 put two techs on the add village method and give them an expression
+
+3 add one basic story that does the mystical quest
+  #a the mystical quest has a % chance of attacking same as gang warfare, 
+  #and a % chance of settling with sexual freedom
+  #b settling can change the % of the previous villages techs up to 20%
+  #c the high charts bar for these two techs should be visible along with pop
+4 flooding destroys population
+  a villages with less than 80% pop don't do the mystical quest action
+  b in this way you can hit the villages you don't like and they will slowly recover
+  c hostile villages will do the same thing
+  d flooding destroys between 20 and 80% of a population
+    if the pop is below 20% it dissolves the village
+5 specialization
+  a when specialization is added the leaders are added to any village that has it
+  b every turn it has a small chance to introduce a new tech or move the chain down on a tech
+    if the appropriate amount of time has passed for that tech        
+  c it essentially is the beginning of all of those techs
+  d now traders can come out 
+  e traders/attackers spread culture which expands the empire
+  f disasters (disease/attacks/flooding) split up large empires
+6 disease
+  a On all contact the calculate disease gets run
+  b disease provides its own heirarchy of techs
+  c over time disease resistance will build, but fruitful takes a major hit
+  d techs start appearing that allow fruitful to stay, but restrict other parts of society
+  e many different diseases occur over time (from different domesticated animals)
+
+7 history
+  a villages record their history (attacks,flooding,etc, damage recorded) in both
+    a narrative format and in charts
+  b overall charts inside a tab for other views (like overall agressiveness, overall etc)  
+8 warfare
+  a villages take advantage of destruction to attack neighbors
+  b they stop after a while
+  c they retaliate
+  d they take advantage of warfare to attack neighbors
+
+goals
+ a simple inital pruning game
+   1 a defined start and end date
+   2 charts with different overall %
+   3 leaderboards by statistics (see about integrating with google plus)
+
+
+  
+1 inital stat is fruitful/hostile with an exact population
+  a initial sexual freedom tech
+  b initial gang warfare tech
+  c both have a % expression on them
+2 initial card is flooding
+3 initial event is spread/attack
+4 attack fights/spread creates, depending on stats of town to determine chance of each happening
+5 some reason to use card
+  a use disasters to prune like a garden\
+  b some towns are fruitful (certain philosophies and such do that)
+  c some towns are hostile (same)
+  d some are (eventually) diseased
+  e some are combinations (like fruitful and hostile)
+6 so you can create either a fruitful or hostile town, and you can also create a combination
+
+7 disease is added (domestication of the dog)
+  a (on contact has a chance of killing and spreading disease)  
+  b over time disease resistance will build, but fruitful takes a major hit
+  c techs start appearing that allow fruitful to stay, but restrict other parts of society
+  d many different diseases occur over time (from different domesticated animals)
+  
+8 specialization is added 
+  a specialization is a tech that leads to others
+  b it will introduce certain techs that make the villages that have it overwhelm the others
+  c so you will see brief empires with the associated trade and spread inside them
+  
+  
+9 science is added
+  a rapid technological development
+  
+1 3 stats
+  a population
+  b health
+  c happiness
+  d attack power
+2 these are represented as a bar chart
+  a they can only be updated once every 500 milliseconds
+  b this is done in highcharts  
+
+1 3 visual things that give a direct boost to a single stat
+  a restrict next one given (to take time to do)
+  b trade increases wealth
+  c fertility increases people
+  d dancing increases happiness
+2 one that hurts a stat
+  a flood hurts amount of people
+3 stats cause random chance of event
+  a happy civs do their own happy events more often
+  b agressive
+4 stats are happiness/health/numbers (techs)
+5 the goal is to watch history unfold as you click on and set techs
+  techs boost a stat until everyone has that tech
+6 techs spread
+7 the rest  
+8 some sound effects
+
+1 techs + explanations
+2 techs spread
+3 the goal is simply to model history
+  a first goal is to damage the orc
+  b then when they are killed off give a note about them
+    (the logs expand out into explanations)
+  c second is to damage the neanderthals
+    (also an explanation
+  d third goal is to have 5 techs in addition to some basic powers
+    each tech slowly spreads and alters behavior
+    (the basic idea is that techs follow from one to the other 
+     so proliferation - > disease -> ban disease causing things -> etc  
+      
+
+
+1 whats your name (attacks family)
+  people respond by using fake names
+  names have power spiritual stuff
+1 tech banning anal sex with men (and specificaly only this, oral is allowed)
+ then it goes to no sex
+ then it goes to no love between 2 men
+
+1 minor techs showing culture/military/finance
+
+
+2 make sure that they each are seperate things
+
+1 minor techs = google drive type stuff which has minor changes,but which collectively do
+  major changes (
+2 major techs = smallpox->fundamentalism and associated increase in death of surrounding cultures
+, throwing spears and associated destructive power increase, iron swords and same destructive
+power increase
+  
+3 over time all techs advance into new forms
+
+
+1 organize every single tech I have ever thought of and put it into a list
+2 turn each one into a card that opens up on clicking
+3 setup the rules so that the cards do somethingc
+  a lots of little cards only do minor changes (and those techs propagate through trade)
+  b occasionally you get major cards that do massive changes
+  c there are a list of statistics which show what kind of changes you can make
+  d ie for example if you put the smallpox card on a peaceful civ it will expand out, killing other
+    civs and spreading its peaceful culture techs (ie everyone has most techs, but those will become
+    a higher %
+  e if you put it on a warrior civ that civ will do the same with its techs (but you will see more
+    attacking and hatred, whereas peaceful would do it through trade)
+  f and initially for both they will be hurting and wont do anything    
+
+1 drop in google drive story techs
+2 watch and observe, especially try on the phone
+
 1 the neanderthals/early hominids should be beaten when thrown spears are developed
 2 chains of story techs.  Each village is at a specific part of the story and new parts
   are dropped in

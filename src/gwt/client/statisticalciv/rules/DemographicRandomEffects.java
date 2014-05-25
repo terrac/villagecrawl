@@ -1,5 +1,6 @@
 package gwt.client.statisticalciv.rules;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import gwt.client.game.vparams.quest.ComplexCityGenerator;
 import gwt.client.game.vparams.random.RandomPersonCreation;
 import gwt.client.item.Item;
 import gwt.client.item.SimpleMD;
+import gwt.client.main.Point;
 import gwt.client.main.VConstants;
 import gwt.client.main.base.LivingBeing;
 import gwt.client.main.base.PBase;
@@ -71,21 +73,24 @@ public class DemographicRandomEffects extends VParams {
 
 	}
 	
-	public static void addDisaster() {
+	public static void addStory(final BasicStory bs) {
 		final BagMap bagMap = (BagMap) EntryPoint.game.get(VConstants.bagmap);
 
 //		MapDataAreaMap bm = bagMap.getBagMap();
-		final SimpleMD data = new SimpleMD(VConstants.visualdamage, "waterdamage");
+		final SimpleMD data = new SimpleMD(VConstants.visualdamage, bs.popup);
 		AttachUtil.attach(AttachUtil.placed, new VParams() {
 			@Override
 			public void execute(Map<String, Object> map) {
+				if(bagMap.selected == null){
+					return;
+				}
 				HashMapData hashmapdata = (HashMapData) map
 						.get(AttachUtil.OBJECT);
 				hashmapdata = hashmapdata.getParent().getNearKeyValue(VConstants.gate, SConstants.farm, hashmapdata, 3);
 				if(hashmapdata == null){
 					return;
 				}
-				DemographicRule.flood.run(DemographicRule.getDemo(hashmapdata),hashmapdata,null);
+				bs.run(DemographicRule.getDemo(hashmapdata),hashmapdata,null);
 				endSelection(bagMap);
 
 			}
@@ -102,20 +107,18 @@ public class DemographicRandomEffects extends VParams {
 //		if(next == null){
 //			return;
 //		}
-		int count = VConstants.getRandom().nextInt(2);
-		if(count == 0){
-			//start cultural trade on click
-			addTrade();
+		if(DemographicTimeRule.year > 50){
+			return;
 		}
-		else if(count == 1){
-			//red effect, shows water image, says massive flooding
-			// (note, make sure regular disasters do the images
-			addDisaster();
-			
-		}
+		addStory(VConstants.getRandomFromList(bsList));
 	}
 
-	
+	static List<BasicStory> bsList = new ArrayList<BasicStory>();static{
+		bsList.add(DemographicRule.fertility);
+		bsList.add(DemographicRule.fight);
+		bsList.add(DemographicRule.flood);
+		bsList.add(DemographicRule.settle);
+	}
 	// fills in any missing spaces
 	public static void shiftDown(MapData data) {
 
@@ -135,11 +138,21 @@ public class DemographicRandomEffects extends VParams {
 		bagMap.update();
 	}
 	public static void endSelection(final BagMap bagMap) {
-		bagMap.getBagMap().setData(bagMap.selected, null);
-		
-		bagMap.selected = null;
+
+//		bagMap.getBagMap().setData(bagMap.selected, null);
+//		MapData data = bagMap.getBagMap().getData(new Point(bagMap.getBagMap().getXsize()-1,bagMap.getBagMap().getYsize()-1));
+//		bagMap.setSelection(data);
+//		bagMap.selected = null;
 		bagMap.update();
 		
 		nextRandom();
+	}
+	
+	public static void removeSelection(){
+		BagMap bagMap = (BagMap) EntryPoint.game.get(VConstants.bagmap);
+			//bagMap.getBagMap().setData(bagMap.selected, null);
+			bagMap.selected = null;			
+			bagMap.update();
+			
 	}
 }

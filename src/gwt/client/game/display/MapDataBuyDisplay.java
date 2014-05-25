@@ -122,15 +122,15 @@ public class MapDataBuyDisplay extends UIVParams{
 				
 				//subtract gold, add item to current person
 				
-				LivingBeing lb=EntryPoint.game.getHtmlOut().getCurrentOrLastSelectedPerson();
-				if(md instanceof Item){
-					//lb.getItems().put(md.clone());
-					lb.addItems(md.clone());
-				}
-				if(md instanceof LivingBeing){
-					HashMapData hmd=lb.getParent().getParent().getNearestEmpty(lb);
-					hmd.putLivingBeing((LivingBeing) md);
-				}
+//				LivingBeing lb=EntryPoint.game.getHtmlOut().getCurrentOrLastSelectedPerson();
+//				if(md instanceof Item){
+//					//lb.getItems().put(md.clone());
+//					lb.addItems(md.clone());
+//				}
+//				if(md instanceof LivingBeing){
+//					HashMapData hmd=lb.getParent().getParent().getNearestEmpty(lb);
+//					hmd.putLivingBeing((LivingBeing) md);
+//				}
 			}
 		});
 	}

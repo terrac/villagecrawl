@@ -297,13 +297,13 @@ public class GCanvas extends FocusWidget {
 				}
 			}
 		}
-		htmlOut.cfList = GameUtil.getPlayerTeam(htmlOut.cfList);
-		if (htmlOut.cfList.size() > 0
-				&& !htmlOut.cfList.contains(htmlOut.getCurrentlyFollowed())) {
-			htmlOut.setCurrentlyFollowed(htmlOut.cfList.get(0));
-		} else {
-			htmlOut.setCurrentlyFollowed(null);
-		}
+//		htmlOut.cfList = GameUtil.getPlayerTeam(htmlOut.cfList);
+//		if (htmlOut.cfList.size() > 0
+//				&& !htmlOut.cfList.contains(htmlOut.getCurrentlyFollowed())) {
+//			htmlOut.setCurrentlyFollowed(htmlOut.cfList.get(0));
+//		} else {
+//			htmlOut.setCurrentlyFollowed(null);
+//		}
 	}
 
 	public void setUpperLeftAndLowerRight(Point upperLeft, Point lowerRight) {
@@ -328,42 +328,42 @@ public class GCanvas extends FocusWidget {
 	}
 
 	private void doRightClick(Event event) {
-		int x;
-		int y;
-		x = getCanvasX(event);
-
-		y = getCanvasY(event);
-
-		LivingBeing currentlyFollowed = this.htmlOut.getCurrentlyFollowed();
-		if (currentlyFollowed == null || currentlyFollowed.getParent() == null) {
-			return;
-		}
-		HashMapData hmd = currentlyFollowed.getParent().getParent().getData(
-				x / HtmlOut.imagesize, y / HtmlOut.imagesize);
-
-		if (htmlOut.cfList.size() < 1) {
-			htmlOut.cfList.add(currentlyFollowed);
-		}
-
-		if (hmd.getParent().containsKey(VConstants.rightclick)) {
-			AttachUtil.run(VConstants.rightclick, hmd, hmd.getParent());
-			return;
-		}
-		for (LivingBeing cf : htmlOut.cfList) {
-			cf.getTemplate().clear();
-			// should fix to put in a proper action , and then attach
-			// via a param (or maybe just an oobject?)
-
-			LivingBeing lb = hmd.getLivingBeing();
-
-			if (lb != null && lb.get(VConstants.team) != null
-					&& !lb.get(VConstants.team).equals(cf.get(VConstants.team))) {
-				cf.getTemplate().push(new Attack(lb, cf));
-				continue;
-			}
-			cf.getTemplate().push(new PickUp());
-			cf.getTemplate().push(new Move(hmd, "movetoandgather"));
-		}
+//		int x;
+//		int y;
+//		x = getCanvasX(event);
+//
+//		y = getCanvasY(event);
+//
+//		LivingBeing currentlyFollowed = this.htmlOut.getCurrentlyFollowed();
+//		if (currentlyFollowed == null || currentlyFollowed.getParent() == null) {
+//			return;
+//		}
+//		HashMapData hmd = currentlyFollowed.getParent().getParent().getData(
+//				x / HtmlOut.imagesize, y / HtmlOut.imagesize);
+//
+//		if (htmlOut.cfList.size() < 1) {
+//			htmlOut.cfList.add(currentlyFollowed);
+//		}
+//
+//		if (hmd.getParent().containsKey(VConstants.rightclick)) {
+//			AttachUtil.run(VConstants.rightclick, hmd, hmd.getParent());
+//			return;
+//		}
+//		for (LivingBeing cf : htmlOut.cfList) {
+//			cf.getTemplate().clear();
+//			// should fix to put in a proper action , and then attach
+//			// via a param (or maybe just an oobject?)
+//
+//			LivingBeing lb = hmd.getLivingBeing();
+//
+//			if (lb != null && lb.get(VConstants.team) != null
+//					&& !lb.get(VConstants.team).equals(cf.get(VConstants.team))) {
+//				cf.getTemplate().push(new Attack(lb, cf));
+//				continue;
+//			}
+//			cf.getTemplate().push(new PickUp());
+//			cf.getTemplate().push(new Move(hmd, "movetoandgather"));
+//		}
 	}
 
 	protected int getCanvasX(Event event) {

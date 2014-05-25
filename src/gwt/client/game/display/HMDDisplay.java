@@ -37,13 +37,13 @@ public class HMDDisplay extends UIVParams {
 				ht.setVisible(false);
 				d.c.setVisible(true);
 				d.execute();
-			}else {
-				ht.setVisible(true);
-				d.c.setVisible(false);
+				return;
 			}
 		}
 		
-		
+		ht.setVisible(true);
+		Demographics.c.setVisible(false);
+	
 		ht.setHTML(current.getPosition()+" <br> "+current.toString().replace("\n","<br>"));
 		
 

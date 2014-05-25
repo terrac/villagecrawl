@@ -27,7 +27,7 @@ public class BasicStory implements PBaseRule{
 	PBaseRule pbr;
 	private Double chance;
 	private PBase correlations;
-	private String popup;
+	String popup;
 
 
 	public BasicStory(String popup,String message, PBaseRule pbr) {
@@ -90,7 +90,7 @@ public class BasicStory implements PBaseRule{
 		if(pbr != null){
 			if(pbr.run(p, hmd, fmd)){
 				DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
-						 new UImage("/images/"+popup)));
+						 new UImage("/images/"+popup+".png")));
 				displayPopup.displaypopup(hmd,hmd.getPosition(),  3);							
 				LogDisplay.log(message, 2);
 				

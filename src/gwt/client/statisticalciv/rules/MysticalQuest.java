@@ -1,6 +1,7 @@
 package gwt.client.statisticalciv.rules;
 
 import gwt.client.game.OCommand;
+import gwt.client.game.display.LogDisplay;
 import gwt.client.game.display.UImage;
 import gwt.client.game.vparams.DisplayPopup;
 import gwt.client.game.vparams.random.RandomPersonCreation;
@@ -169,8 +170,11 @@ public class MysticalQuest implements PBaseRule {
 		// also do a random chance of killing some of them off
 		// if random says no the living either come back in disgrace or become
 		// hermits
-		if (p.getDouble(Age.YOUNG_ADULT) < .03
-				|| p.getDouble(VConstants.size) < 50) {
+		double maxsize = p.getDouble(VConstants.maxsize);
+		double size = p.getDouble(VConstants.size);
+		if (maxsize == 0||size/maxsize<.8 ) {
+			LogDisplay.log("Village is not ready for a quest", 2);
+			LogDisplay.log("Maxsize:"+maxsize+"size:"+size, 2);
 			return false;
 		}
 		doYoungMen(p, hmd);

@@ -186,6 +186,7 @@ public class BagMap extends UIVParams {
 		}
 	}
 
+	
 	// public void addOverlay(Point selected2, String string) {
 	// Map<Point,String> omap = (Map<Point, String>) get(VConstants.overmap);
 	// if(omap == null){

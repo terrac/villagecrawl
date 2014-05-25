@@ -120,6 +120,9 @@ public static String vault =
  "/images/doll/weapon/sickle.png," +
  "/images/doll/weapon/scimitar.png,"+ 
  "/images/waterdamage.png,"+ 
+ "/images/airdamage.png,"+ 
+ "/images/damagefireball.png,"+ 
+ "/images/damageheal.png,"+ 
  "/images/doll/base/giant-female.png,"+ 
  "/images/doll/base/giant-male.png,"+ 
  "/images/doll/base/orc-female.png,"+

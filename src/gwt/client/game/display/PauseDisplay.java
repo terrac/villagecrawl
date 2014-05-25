@@ -40,7 +40,7 @@ public PauseDisplay() {
 		 but= new Button();
 			but.setText("pause");
 			
-			but.setSize("40em", "5em");
+			but.setSize("20em", "5em");
 			
 
 			ClickHandler pause = new ClickHandler() {
