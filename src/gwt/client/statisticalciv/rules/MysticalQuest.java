@@ -22,6 +22,7 @@ import gwt.client.map.MapData;
 import gwt.client.map.runners.GetForNearby;
 import gwt.client.statisticalciv.PeopleRule;
 import gwt.client.statisticalciv.SConstants;
+import gwt.client.statisticalciv.Statistics;
 import gwt.client.statisticalciv.TechnologyRule;
 import gwt.client.statisticalciv.oobjects.RemovePerson;
 import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
@@ -59,9 +60,12 @@ public class MysticalQuest implements PBaseRule {
 				minPopulation = 100;
 			}
 
+			double deaths = person.getPopulation().getDouble(VConstants.size)
+					* multiplier;
 			Age.kill(demo, Age.YOUNG_ADULT,
-					person.getPopulation().getDouble(VConstants.size)
-							* multiplier);
+					deaths);
+			Statistics.getSingleton().addKills(deaths,false);
+			
 			RuleOfLaw.checkFailure(hmd);
 			if (demo.getDouble(VConstants.size) < minPopulation) {
 				
@@ -201,7 +205,10 @@ public class MysticalQuest implements PBaseRule {
 				// if they do they increment a raid counter which warrior
 				// creation uses
 				final HashMapData home = getHome(person);
-
+				if(home == null){
+					person.death();
+					return null;
+				}
 				HashMapData hmd = fullMapData.getNearby(person,
 						new GetForNearby<HashMapData>(fullMapData) {
 							@Override
@@ -262,8 +269,12 @@ public class MysticalQuest implements PBaseRule {
 	}
 
 	protected static void setHome(LivingBeing person) {
+		HashMapData nearestVillage = getNearestVillage(person);
+		if(nearestVillage == null){
+			return;
+		}
 		person.getPopulation().put(VConstants.home,
-				getNearestVillage(person).getPosition());
+				nearestVillage.getPosition());
 	}
 
 	protected static HashMapData getHome(LivingBeing person) {
@@ -272,6 +283,9 @@ public class MysticalQuest implements PBaseRule {
 			setHome(person);
 
 			p = (Point) person.getPopulation().get(VConstants.home);
+			if(p == null){
+				return null;
+			}
 		}
 		return person.getParent().getParent().getData(p);
 	}

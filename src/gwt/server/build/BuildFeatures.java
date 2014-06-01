@@ -70,26 +70,24 @@ public class BuildFeatures extends HttpServlet {
 			resp.getWriter().write("<br><br><a href=http://127.0.0.1:8888/Villagedc.html?gwt.codesvr=127.0.0.1:9997&gamekey="+sg.getKey().getId()+">"+sg.getName()+"</a></br>");	
 		}
 		
-//		Game doAnimalBabies = ClientBuild.doAnimalBabies();
-//		addFeature(resp, st, name, doAnimalBabies);
-//		addFeature(resp, st, "ebbandflow", ClientBuild.doEbbAndFlow());
-//		addFeature(resp, st, "manypeople", ClientBuild.doManyPeople());
-//
-//		
-//		resp.getWriter().write("finished");
-//		resp.getWriter().write(""+SDao.getServerGameDao().ofy().query(ServerGame.class).list());
 	}
 
 	public static void build(GUser person) {
 		
 		
-		//addResources(person);
 		AttachUtil.shouldRun = false;
 
 
-		Key<ServerGame> eGame = addFeature(person,"Spread North (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions(DemographicCiv.spreadNorth()));
+		Key<ServerGame> eGame = addFeature(person,"First map (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions(DemographicCiv.firstMap()));
 		person.add(eGame);
-		
+
+		Key<ServerGame> aGame = addFeature(person,"Spread North (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions(DemographicCiv.spreadNorth()));
+		person.add(aGame);
+
+		//examples(person);
+	}
+
+	public static void examples(GUser person) {
 		Key<ServerGame> dGame = addFeature(person,"Demographic Civ (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions());
 		person.add(dGame);
 
@@ -97,8 +95,6 @@ public class BuildFeatures extends HttpServlet {
 
 		Key<ServerGame> fGame = addFeature(person,"Demographic Civ Bigger (try me)",DemographicCiv.doBasicMap(),DemographicCiv.doActions(DemographicCiv.getMap4()));
 		person.add(fGame);
-
-		
 		
 		Key<ServerGame> firstGame = addFeature(person,"StatcivSmall (try me)",StatisticalCiv.doBasicMap(),ClientBuild2.doPeople(),StatisticalCiv.doActions(),StatisticalCiv.doTechnology());
 		person.add(firstGame);
@@ -108,49 +104,8 @@ public class BuildFeatures extends HttpServlet {
 //		
 		Key<ServerGame> sGame = addFeature(person,"Haggle ( work in progress )",ClientBuildDungeon.doBasicDungeon(),ClientBuild2.doPeople(),ClientBuildDungeon.doInitialAdventurers());
 		person.add(sGame);
-		
-		//person.add(addFeature(person,"Adventurer vs Undead",ClientBuild.doDC1(),ClientBuildAvU.doInitialAdventurers(),ClientBuild2.doPeople(),ClientBuildAvU.doPeople(),ClientBuildAvU.doFirstBattle()));
 
-		
-		
-		
-		
-		
 		person.add(addFeature(person,"Adventurers vs Monsters (work in progress)",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(false),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(false),ClientBuildAvZ.doFireNecromancer(),ClientBuildAvZ.doIllusionGnome()));
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		person.add(addFeature(person,"Adventurers vs undead debug",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(true),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(false),ClientBuildAvZ.doFireNecromancer(),ClientBuildAvZ.doIllusionGnome()));
-//
-//		
-//		person.add(addFeature(person,"Adventurers vs undead debug 1",ClientBuild.doDC1(),ClientBuildAvZ.doInitialAdventurers(true),ClientBuild2.doPeople(),ClientBuildAvZ.doAdventurerScenes(true),ClientBuildAvZ.doIllusionGnome(),ClientBuildAvZ.doFireNecromancer()));
-
-
-		
-		
-		
-		//person.add(addFeature(person,"Story Debug",ClientBuild.doDC1(),ClientBuild2.doInitialPick(true),ClientBuild2.doStory(),ClientBuild2.doPeople(),ClientBuild2.doInn(),ClientBuild2.doMageTower(),ClientBuild2.doScenes(),ClientBuild2.doCity(),ClientBuild2.doMerchantArea(),ClientBuild2.doCircus(),ClientBuild2.doEvent()));
-		//person.add(addFeature(person,"Story",ClientBuild.doDC1(),ClientBuild2.doInitialPick(false),ClientBuild2.doStory(),ClientBuild2.doPeople(),ClientBuild2.doInn(),ClientBuild2.doMageTower(),ClientBuild2.doScenes(),ClientBuild2.doCity(),ClientBuild2.doMerchantArea(),ClientBuild2.doCircus(),ClientBuild2.doEvent()));
-		//person.add(addFeature(person,"Scenes",ClientBuild.doDC1(),ClientBuild2.doInitialPick(),ClientBuild2.doRandomOvermap(),ClientBuild2.doPeople(),ClientBuild2.doInn(),ClientBuild2.doMageTower(),ClientBuild2.doScenes(),ClientBuild2.doCity(),ClientBuild2.doMerchantArea(),ClientBuild2.doCircus()));
-		//person.add(addFeature(person,"Dungeon crawl basic",ClientBuild.doDC1()));
-		//person.add(addFeature(person,"Dungeon crawl first level",ClientBuild.doDC1(),ClientBuild.doFirstMapEnemies()));		
-		//person.add(addFeature(person,"Shoshaku",ClientBuild.doBuddhism()));
-		//person.add(addFeature(person,"First two levels",ClientBuild.doDC1(),ClientBuild.doFirstMapEnemies(),ClientBuild.doExitDisplayAndSecondMap()));
-		//person.add(addFeature(person,"Tower defense",ClientBuild.doDC1(),ClientBuild.doTowerDefense()));		
-		//person.add(addFeature(person,"Summoner",ClientBuild.doDC1(),ClientBuild.doSummoner()));
-		//person.add(addFeature(person,"Jomon village",ClientBuild.doJomon()));
 		SDao.getGUserDao().put(person);
 	}
 

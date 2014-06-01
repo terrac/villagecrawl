@@ -26,7 +26,16 @@ import org.moxieapps.gwt.highcharts.client.Series.Type;
 import org.moxieapps.gwt.highcharts.client.plotOptions.PlotOptions;
 
 import com.google.appengine.api.datastore.Entity;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class DemographicRule extends VParams {
 
@@ -81,7 +90,7 @@ public class DemographicRule extends VParams {
 	
 	public void init(FullMapData fmd) {
 		singleton = this;
-
+		
 		for(HashMapData hmd : fmd){
 			String name = null;
 			if(hmd.containsKey(Demographics.hominids)){
@@ -112,7 +121,7 @@ public class DemographicRule extends VParams {
 		leadersList.add(new PBase(VConstants.name,"g",VConstants.overlay,"trade"));
 		leadersList.add(new PBase(VConstants.name,"h",VConstants.overlay,"water"));
 
-		hatredStories.add(new BasicStory("damagesword.png","The elders send some young men to fight against a hated town",new War()));
+		hatredStories.add(new BasicStory("damagesword","The elders send some young men to fight against a hated town",new War()));
 
 		pbrList.add(new Age());
 
@@ -147,10 +156,17 @@ public class DemographicRule extends VParams {
 
 	public void addLeader(PBase leader, HashMapData hmd) {
 		// TODO Auto-generated method stub
+		if(getShowLeader()){
+			return;
+		}
+		
 		Demographics.getCulture(getDemo(hmd)).put(leader.getS(VConstants.name),1.0);
 		getType(VConstants.leader).put(leader.getS(VConstants.name), leader);
 		hmd.getMapData(VConstants.gate).put(VConstants.overlay,CultureTrade.getOverlay(hmd));
 		
+	}
+	boolean getShowLeader() {
+		return false;
 	}
 	static int count = 0;
 	public static void addVillage(HashMapData hmd, HashMapData home){
@@ -188,6 +204,7 @@ public class DemographicRule extends VParams {
 		hmd.remove(VConstants.gate);
 	}
 	DemographicTimeRule dtr = new DemographicTimeRule();
+	protected Boolean showIntro = true;
 	@Override
 	public void execute(Map<String, Object> map) {
 		FullMapData fmd = getFMD(map);
@@ -299,6 +316,9 @@ public class DemographicRule extends VParams {
 	}
 		
 	public static Demographics getDemo(HashMapData hmd,boolean create) {
+		if(hmd == null){
+			return null;
+		}
 		MapData mapData = hmd.getMapData(VConstants.gate);
 		if(mapData == null||!mapData.getValue().equals(SConstants.farm)){
 			return null;
@@ -564,6 +584,26 @@ public class DemographicRule extends VParams {
 
 	public PBase getLeader(Demographics p) {
 		return getLeader(Demographics.getHighestCultureName(p));
+		
+	}
+	
+	public void message(String message){
+		final PopupPanel popup = new PopupPanel();
+		final CheckBox cb = new CheckBox("Don't show again");
+	    
+		VerticalPanel vp = new VerticalPanel();
+	    vp.add(new Label(message));
+	    Button button = new Button("Close", new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				popup.hide();
+				showIntro =cb.getValue();
+			}
+		});
+	    vp.add(cb);
+	    vp.add(button);
+	    popup.center();
 		
 	}
 }

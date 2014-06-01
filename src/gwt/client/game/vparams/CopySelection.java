@@ -34,6 +34,7 @@ public class CopySelection extends VParams {
 		
 		String selectionpb = getS(VConstants.selectionname);
 		MapData o=(MapData) VExpression.getValue(selectionpb, EntryPoint.game);
+		
 		if(o == null){
 			return;
 		}

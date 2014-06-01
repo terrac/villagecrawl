@@ -89,10 +89,12 @@ public class BasicStory implements PBaseRule{
 		
 		if(pbr != null){
 			if(pbr.run(p, hmd, fmd)){
-				DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
-						 new UImage("/images/"+popup+".png")));
-				displayPopup.displaypopup(hmd,hmd.getPosition(),  3);							
-				LogDisplay.log(message, 2);
+				if(hmd.getParent().people.size() > 0){
+					DisplayPopup displayPopup = new DisplayPopup(ClientBuild.list(
+							 new UImage("/images/"+popup+".png")));
+					displayPopup.displaypopup(hmd,hmd.getPosition(),  3);							
+					LogDisplay.log(message, 2);
+				}
 				
 			}
 		}

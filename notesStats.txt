@@ -1,11 +1,52 @@
+1 statistics class
+  a add statistics (tag natural,violence,death, amount)
+  b add (death, age, amount)
+  c add (born, amount)
+  d subtract people born from people who died 
+  e human, violence, death, amount
+  f
+1 statistics
+  a enough has been done to make the game fun
+  b now it is time to give some results
+  1 people killed through violence from other people,natural disasters,natural means, old age
+     a life expectancy
+     b peope born
+     c total pop
+     
+1 civilization
+  #a only two bars #(bars grow downward, maybe they should grow upward)(too hard)
+  #b small landlocked map
+  #c only disaster is flooding, only other ability is spread
+  #d it has a "intro/explantion which pops up the first time, can be selected to not run. after clicking it moves to a button.
+  #e minimize side and top parts (just a "Back" link at the top)
+    #1 remove tab, that should be at options
+    #2 change page to not show links, just a back to list button
+    #3
+  #f add an enable/disable leader toggle which runs as a game property
+  #g make the time stay at 2 digits
+  #h make the simplest map have no orcs in it and be a small subset of africa
+2
+
+1 simple events
+2 cites
+
+-1 events
+  a event where the leader suppresses the young men
+    (many different associated stories with one event, and a few different properties maybe)
+  b event where the leader doesn't employ the young men
+  c jobs program (ie useless employment)
+  d increase capitalism
+    1 items start being collected
+    2 eventually people start being collected
+  e decrease capitalism
+  f increase sexual/decrease sexual, same with gang warfare
+-1 feminine events
+  a 
 1 more events, cards, maps
   a first map sticks with current cards
   b introduce more cards/speciality cards at certain time periods.
   c statistics demonstrating choices as well as a physically different map
-    1 people killed through violence from other people,natural disasters,natural means, old age
-     a life expectancy
-     b peope born
-     c total pop
+  
     2 ancient humanoid vs human population
     3 a high level of gang warfare should spur a lot of conflict
       b zero gang warfare should have zero conflict (but still conflict with humanoids)

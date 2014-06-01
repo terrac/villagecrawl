@@ -4,6 +4,7 @@ import gwt.client.main.VConstants;
 import gwt.client.main.base.PBase;
 import gwt.client.map.FullMapData;
 import gwt.client.map.HashMapData;
+import gwt.client.statisticalciv.Statistics;
 
 public class CauseDeaths implements PBaseRule{
 	double amt;
@@ -19,6 +20,7 @@ public class CauseDeaths implements PBaseRule{
 	public boolean run(PBase p, HashMapData hmd, FullMapData fmd) {
 		double size = amt *p.getDouble(VConstants.size);
 		size = Math.max(size, minAmount);
+		Statistics.getSingleton().addKills(size,true);
 		Age.kill(p, Age.YOUNG_ADULT, size);
 		RuleOfLaw.checkFailure(hmd);
 		if(DemographicRule.getDemo(hmd).getSize() < 20 ){

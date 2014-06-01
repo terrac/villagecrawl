@@ -19,6 +19,7 @@ import gwt.client.main.base.SimpleOObject;
 import gwt.client.map.FullMapData;
 import gwt.client.map.HashMapData;
 import gwt.client.map.runners.GetForNearby;
+import gwt.client.statisticalciv.Statistics;
 import gwt.client.statisticalciv.UVLabel;
 import gwt.client.statisticalciv.oobjects.TechnologyAction;
 import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
@@ -31,6 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.widgetideas.graphics.client.Color;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
@@ -52,14 +54,15 @@ public class DemographicTimeRule extends VParams {
 	}
 	
 	public static int year = 0;
-	double yearPct = 0;
+	double yearPct = .00;
 	double increment = .07;
 	@Override
 	public void execute(Map<String, Object> map) {
 		yearPct+= increment;
 		yearChange = yearPct > 1;
 		if(yearChange){
-			yearPct = 0;
+			Statistics.getSingleton().timeInterval(year);
+			yearPct = .00;
 			year++;
 			for(PBase pb : techs){
 				if(pb.getInt(VConstants.count) < year){
@@ -71,8 +74,8 @@ public class DemographicTimeRule extends VParams {
 		}
 		
 		UVLabel label=(UVLabel) EntryPoint.game.get(VConstants.score);
-		label.setText(year+" "+yearPct);
-
+		label.setText(year+" "+NumberFormat.getDecimalFormat().format(yearPct));
+		label.getWidget().setWidth("4em");
 	}
 	
 	@Override

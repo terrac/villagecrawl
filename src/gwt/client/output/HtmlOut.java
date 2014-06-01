@@ -3,6 +3,7 @@ package gwt.client.output;
 import gwt.client.EntryPoint;
 import gwt.client.edit.BagMap;
 import gwt.client.game.AttachUtil;
+import gwt.client.game.VExpression;
 import gwt.client.game.VisualDamage;
 import gwt.client.game.display.DemographicDisplay;
 import gwt.client.game.display.HMDDisplay;
@@ -28,6 +29,7 @@ import gwt.client.map.SymbolicMap;
 import gwt.client.output.html.Click;
 import gwt.client.output.html.GCanvas;
 import gwt.client.rpc.IExecute;
+import gwt.client.statisticalciv.Statistics;
 import gwt.client.statisticalciv.rules.DemographicRandomEffects;
 import gwt.client.statisticalciv.rules.DemographicRule;
 import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
@@ -66,6 +68,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
+import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.graphics.client.ImageLoader;
@@ -220,6 +223,8 @@ public class HtmlOut extends MainPanel<GCanvas> {
 
 		final VerticalPanel vp = new VerticalPanel();
 		panel.add(vp, "options");
+		panel.add(Statistics.getSingleton().getWidget(),"Statistics");
+		panel.addBeforeSelectionHandler(Statistics.getSingleton().getSelectionHandler());
 		SpeedDisplay speedDisplay = new SpeedDisplay();
 
 		vp.add(speedDisplay.getWidgetAndInit());
@@ -703,6 +708,8 @@ public class HtmlOut extends MainPanel<GCanvas> {
 					@Override
 					public void onClick(ClickEvent event) {
 						DemographicRandomEffects.removeSelection();
+						VExpression.setValue("bagselection", null, EntryPoint.game);
+						
 					}
 				};
 
@@ -716,6 +723,34 @@ public class HtmlOut extends MainPanel<GCanvas> {
 		if(uivpar != null){
 			hp.add(uivpar.getWidgetAndInit());
 		}
+		
+		hp.add(new UIVParams() {
+			Button but;
+			@Override
+			public Widget getWidget() {
+				// TODO Auto-generated method stub
+				return but;
+			}
+			@Override
+			public void init() {
+				but= new Button();
+				but.setText("How To play");
+				
+				but.setSize("10em", "5em");
+				
+
+				ClickHandler pause = new ClickHandler() {
+
+					@Override
+					public void onClick(ClickEvent event) {
+						Window.Location.assign("youtube video");
+					}
+				};
+
+				but.addClickHandler(pause);
+			}
+		}.getWidgetAndInit());
+
 		VerticalPanel vp = new VerticalPanel();
 		flextable.setWidget(0, 0, vp);
 		vp.add(hp);
@@ -733,11 +768,23 @@ public class HtmlOut extends MainPanel<GCanvas> {
 //		flextable.setWidget(1, 0, canvasPanel);
 //		flextable.getCellFormatter().getElement(1, 0).getStyle().setDisplay(Display.BLOCK);
 		VerticalPanel displayData = new VerticalPanel();
-		HMDDisplay hmdDisplay = new DemographicDisplay();
+		final HMDDisplay hmdDisplay = new DemographicDisplay();
 		AttachUtil.attach(DISPLAY_MAP_DATA, hmdDisplay, this);
 //		flextable.getElement().getStyle().setTableLayout(TableLayout.FIXED);
 //		flextable.setPixelSize(800, 600);
-		LogDisplay ld = new LogDisplay();
+		final LogDisplay ld = new LogDisplay();
+		final ToggleButton tb = new ToggleButton();
+		tb.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				hmdDisplay.getWidget().setVisible(tb.getValue());
+				ld.getWidget().setVisible(tb.getValue());
+			}
+		});
+		tb.setValue(true);
+		tb.setText("Toggle Right");
+		displayData.add(tb);
 		displayData.add(hmdDisplay.getWidgetAndInit());
 
 		displayData.add(ld.getWidgetAndInit());

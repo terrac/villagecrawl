@@ -9,6 +9,7 @@ import gwt.client.main.base.PBase;
 import gwt.client.map.FullMapData;
 import gwt.client.map.HashMapData;
 import gwt.client.statisticalciv.SConstants;
+import gwt.client.statisticalciv.Statistics;
 import gwt.client.statisticalciv.rules.DemographicRule.Demographics;
 
 public class Age implements PBaseRule{
@@ -16,7 +17,8 @@ public class Age implements PBaseRule{
 	public static final String YOUNG_ADULT = "young adult";
 	static List<String> names= Arrays.asList(new String[]{"infant","child",YOUNG_ADULT,"adult","middle aged","elderly"});
 	static List<Integer> ranges = Arrays.asList(new Integer[]{0,5,12,21,34,65,99999});
-	
+	static double totalAgeYears =0;
+	static double totalPopulation = 0;
 	List<DemograpicMapping> mappingList = new ArrayList<Age.DemograpicMapping>();
 	{
 		mappingList.add(new DemograpicMapping(.5, VConstants.conflict, DCon.fundamentalism));
@@ -28,6 +30,13 @@ public class Age implements PBaseRule{
 		ageOneYear(p,hmd);
 
 		return true;
+	}
+	public static void resetStats(){
+		totalAgeYears = 0;
+		totalPopulation = 0;
+	}
+	public static void addStatistics(){
+		Statistics.getSingleton().addAverage(totalAgeYears/totalPopulation);
 	}
 	public static void ageOneYear(PBase p, HashMapData hmd) {
 		Demographics demo = (Demographics)p;
@@ -67,6 +76,8 @@ public class Age implements PBaseRule{
 			if(number <= 0&& a == ageList.size()-1){
 				ageList.remove(a);
 			}
+			totalAgeYears += number * a;
+			totalPopulation += number;
 		}
 		double size = 0;
 		for(int a = 0; a < names.size(); a++){
@@ -97,7 +108,6 @@ public class Age implements PBaseRule{
 	}
 	//eventually have an option to hit others for a certain %
 	public static void kill(PBase p,String name, double size){
-		
 		
 		double subtracted=size;
 		List<Integer> ageList =p.getListCreate(VConstants.age);

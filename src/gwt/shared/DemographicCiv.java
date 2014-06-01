@@ -176,6 +176,38 @@ public class DemographicCiv extends ClientBuild2 {
 		return bm1;
 	}
 
+	
+	public static BuildMap firstMap(){
+		PBase charmap = buildCharMap();
+		
+		
+		BuildMap bm1 = new BuildMap(charmap, 
+				  "   m            \\n"
+				+ "  mmm           \\n"
+				+ " mmm            \\n"
+				+ "  m   ttt       \\n"
+				+ "     tttt       \\n"
+				+ "     ttttt      \\n"
+				+ "      tt        \\n"
+				+ "                \\n"
+				+ "       p        ", "mainarea");
+		PBase resource = new PBase();
+		
+		bm1.put(VConstants.resource, resource);
+
+		resource.getListCreate(VConstants.leftclick)
+				.add(new CopySelection("bagselection"));
+
+		resource.put(VConstants.defaultimage, "/images/grass.png");
+
+		resource.getType(VConstants.resource).put(VConstants.image,
+				"/images/itemshop.png");
+		resource.getType(VConstants.resource).put(VConstants.sound,
+				"tradingmusic");
+
+		return bm1;
+	}
+
 
 
 	public static PBase buildCharMap() {

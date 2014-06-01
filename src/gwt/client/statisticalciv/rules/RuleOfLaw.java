@@ -12,6 +12,9 @@ import gwt.shared.ClientBuild;
 public class RuleOfLaw {
 
 	public static void checkFailure(HashMapData city) {
+		if(!DemographicRule.getSingleton().getShowLeader()){
+			return;
+		}
 		Demographics demo = DemographicRule.getDemo(city);
 		//turn into a point based formula
 		//add check for above max size

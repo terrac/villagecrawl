@@ -81,8 +81,14 @@ public class DemographicRandomEffects extends VParams {
 		AttachUtil.attach(AttachUtil.placed, new VParams() {
 			@Override
 			public void execute(Map<String, Object> map) {
+				
 				if(bagMap.selected == null){
 					return;
+				}
+				bagMap.getBagMap().setData(bagMap.selected, null);
+				if(finished){
+					removeSelection();
+					bagMap.update();
 				}
 				HashMapData hashmapdata = (HashMapData) map
 						.get(AttachUtil.OBJECT);
@@ -101,21 +107,23 @@ public class DemographicRandomEffects extends VParams {
 		shiftDown(data);
 
 	}
-
+	static boolean finished = false;
 	public static void nextRandom() {
 //		PBase next = VConstants.getRandomFromPBase3(EntryPoint.getCulture(VConstants.randomeffect).getList(VConstants.list));
 //		if(next == null){
 //			return;
 //		}
-		if(DemographicTimeRule.year > 50){
+		if(DemographicTimeRule.year > 10){
+			finished = true;
+			shiftDown(null);
 			return;
 		}
 		addStory(VConstants.getRandomFromList(bsList));
 	}
 
 	static List<BasicStory> bsList = new ArrayList<BasicStory>();static{
-		bsList.add(DemographicRule.fertility);
-		bsList.add(DemographicRule.fight);
+		//bsList.add(DemographicRule.fertility);
+		//bsList.add(DemographicRule.fight);
 		bsList.add(DemographicRule.flood);
 		bsList.add(DemographicRule.settle);
 	}
@@ -127,6 +135,7 @@ public class DemographicRandomEffects extends VParams {
 
 		for (int a = bm.getYsize(); a >= 0 ; a--) {
 			if (bm.getData(0, a) == null) {
+				//bm.setData(0, a + 1, null);
 				continue;
 			}
 			bm.setData(0, a + 1, bm.getData(0, a));

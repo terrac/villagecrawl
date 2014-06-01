@@ -77,12 +77,12 @@ public class HMDDisplay extends UIVParams {
 //		Image image = new Image();
 //		dhmd.add(image);
 		final HTML w = new HTML();
+		Demographics.c.setSize("20em","20em");
+		w.setSize("20em", "21em");
+		dhmd.setSize("20em", "20em");
 		
 		dhmd.add(w);
 		dhmd.add(Demographics.c);
-
-		w.setSize("20em", "21em");
-		dhmd.setSize("20em", "20em");
 		w.addClickHandler(new ClickHandler() {
 			
 			@Override
