@@ -167,7 +167,6 @@ public class DemographicCiv extends ClientBuild2 {
 				.add(new CopySelection("bagselection"));
 
 		resource.put(VConstants.defaultimage, "/images/grass.png");
-
 		resource.getType(VConstants.resource).put(VConstants.image,
 				"/images/itemshop.png");
 		resource.getType(VConstants.resource).put(VConstants.sound,

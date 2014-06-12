@@ -41,7 +41,7 @@ public class Age implements PBaseRule{
 	public static void ageOneYear(PBase p, HashMapData hmd) {
 		Demographics demo = (Demographics)p;
 		double birthRate = .1;
-		birthRate += demo.getTechScore(Demographics.sexual_freedom) * .1;
+		birthRate += demo.getTechScore(Demographics.protect_women) * .1;
 		birth(demo, birthRate,hmd);
 		List<Integer> ageList =p.getListCreate(VConstants.age);
 		

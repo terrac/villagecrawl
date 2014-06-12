@@ -29,6 +29,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -39,7 +40,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class DemographicRule extends VParams {
 
-	public static final List<String> currentTechs = Arrays.asList(new String[]{Demographics.sexual_freedom,Demographics.gang_warfare});
+	public static final List<String> currentTechs = Arrays.asList(new String[]{Demographics.protect_women,Demographics.gang_warfare});
 
 
 	public DemographicRule() {
@@ -74,7 +75,7 @@ public class DemographicRule extends VParams {
 		addTech(Demographics.prostution,"yellow");
 		addTech(Demographics.earlyDisease,"orange");
 		addTech(Demographics.gang_warfare, "red");
-		addTech(Demographics.sexual_freedom, "blue");
+		addTech(Demographics.protect_women, "blue");
 		
 	}
 	
@@ -134,17 +135,59 @@ public class DemographicRule extends VParams {
 				villageList.add(hmd);
 				EntryPoint.game.getHtmlOut().displayMapData(hmd);
 				for(Object a : gate.getListCreate(VConstants.technology)){
-					addTech((String)a, demo,.5);
+					DemographicTechRule.getSingleton().addTech((String)a, demo,.5);
 				}
-				addTech(Demographics.gang_warfare, demo,.5);
-				addTech(Demographics.sexual_freedom, demo,.5);
+				DemographicTechRule.getSingleton().addTech(Demographics.gang_warfare, demo,.5);
+				DemographicTechRule.getSingleton().addTech(Demographics.protect_women, demo,.5);
 				
 				Age.ageYears(50,getDemo(hmd),hmd);
 
 			}
 		}
 		new DemographicRandomEffects();
+		
+		toRefactor();
+		
 		init = true;
+	}
+
+	public void toRefactor() {
+		EntryPoint.game.put(VConstants.intro, "Welcome, place down the items on the left to alter the map");
+		String intro = EntryPoint.game.getS(VConstants.intro);
+		if(null != intro){
+			final PopupPanel pp=new PopupPanel();
+			VerticalPanel vp = new VerticalPanel();
+			pp.add(vp);
+			Label introL = new Label(intro);
+			vp.add(introL);
+			CheckBox checkbox = new CheckBox("Don't show Again");
+		
+			checkbox.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					CheckBox c = (CheckBox) event.getSource();
+					Cookies.setCookie(VConstants.intro,""+ c.getValue());
+				}
+			});
+			vp.add(checkbox);
+			introL.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					EntryPoint.game.pauseToggle();
+					pp.hide();
+				}
+			});
+			if(!Boolean.FALSE.equals(Cookies.getCookie(VConstants.intro))){
+				pp.center();
+				EntryPoint.game.pause();
+			}
+		}
+		
+		EntryPoint.game.put(Demographics.birth, .5);
+		EntryPoint.game.put(Demographics.combat, .5);
+		
 	}
 
 	private void addTech(String prostution,String color) {
@@ -349,8 +392,10 @@ public class DemographicRule extends VParams {
 		return new DemographicRule().copyProperties(this);
 	}	
 	public static class Demographics extends PBase{
+		public static final String combat = "combat";
+		public static final String birth = "birth";
 		public static final String technologyMap = "techMap";
-		public static final String sexual_freedom = "Sexual Freedom";
+		public static final String protect_women = "Protect Women";
 		public static final String gang_warfare = "Gang Warfare";
 		public static final String earlyDisease = "earlyDisease";
 		public static final String prostution = "prostitution";
@@ -406,16 +451,14 @@ public class DemographicRule extends VParams {
 			//if(current != this){
 				List<Integer> ageList =this.getListCreate(VConstants.age);
 				seriesPop.setPoints(new Number[]{getDouble(VConstants.size)});
-				seriesTech1.setPoints(new Number[]{getTechScore(Demographics.gang_warfare)*100});
-				seriesTech2.setPoints(new Number[]{getTechScore(Demographics.sexual_freedom)*100});
+				seriesTech1.setPoints(new Number[]{DemographicTechRule.getTechScore(this,Demographics.gang_warfare)*100});
+				seriesTech2.setPoints(new Number[]{DemographicTechRule.getTechScore(this,Demographics.protect_women)*100});
 				
 				current = this;
 //			}
 		}
 
-		public double getTechScore(String key) {
-			return getType(Demographics.technologyMap).getType(key).getDouble(VConstants.percent);
-		}
+		
 		public String getTechColor(String key){
 			return techMap.get(key).getS(VConstants.color);
 		}
@@ -555,22 +598,11 @@ public class DemographicRule extends VParams {
 				}
 			}
 		}
-		addTech(s, demo,.5);
+		DemographicTechRule.getSingleton().addTech(s, demo,.5);
 	}
 
-	public void addTech(String s,Demographics demo,double percent) {
-		if(s == null){
-			return;
-		}
-		//PBase.addToListIfNotExists(getDemo(hmd),VConstants.technology,s);
-		//PBase.addToListIfNotExists(getDemo(hmd),Demographics.technologyColor,getTech(s).getS(VConstants.color));
-		demo.getType(Demographics.technologyMap).put(s, new PBase(VConstants.percent,percent));
-		
-	}
+	
 
-	public boolean hasTech(String tech) {
-		return getTech(tech) != null;
-	}
 
 	public static boolean isSameLeader(HashMapData village1,
 			HashMapData village2) {

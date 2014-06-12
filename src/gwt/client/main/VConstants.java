@@ -361,6 +361,7 @@ public class VConstants {
 	public static final String hatred = "hatred";
 	public static final String computed = "computed";
 	public static final String color = "color";
+	public static final String intro = "intro";
 	
 	
 	public static String string = "string";
