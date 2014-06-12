@@ -560,6 +560,11 @@ public class DemographicRule extends VParams {
 			}
 			return 1.0;
 		}
+
+
+		public double getTechScore(String gangWarfare) {
+			return .5;
+		}
 	}
 	public static boolean isVillage(HashMapData hashmapdata) {
 		MapData gate = hashmapdata.getMapData(VConstants.gate);
@@ -637,5 +642,9 @@ public class DemographicRule extends VParams {
 	    vp.add(button);
 	    popup.center();
 		
+	}
+
+	public boolean hasTech(String genocide) {
+		return false;
 	}
 }
